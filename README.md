@@ -57,7 +57,7 @@
 
 - **企画・構成・監修**：江橋　山毛
 - **コーディング・実装**：山毛
-- **アドバイザー・ChatGPT**：江橋　codex OpenAI GPT-4o Claude Gemini 
+- **アドバイザー・ChatGPT**：江橋　codex OpenAI GPT-4o Claude Gemini じる
  
 ---
 
