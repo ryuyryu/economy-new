@@ -55,10 +55,10 @@
 
 ## 🙋‍♂️ Contributors
 
-- **企画・構成・監修**：〇〇（@yourname）
-- **コーディング・実装**：〇〇（@teammate）
-- **アドバイザー・ChatGPT**：OpenAI GPT-4
-
+- **企画・構成・監修**：江橋　山毛
+- **コーディング・実装**：山毛
+- **アドバイザー・ChatGPT**：江橋　codex OpenAI GPT-4o Claude Gemini 
+ 
 ---
 
 ## 📎 License
