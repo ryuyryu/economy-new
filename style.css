@@ -1,0 +1,19 @@
+/* 基本のスタイル。スマホでも見やすいようにシンプルにする */
+body {
+    font-family: sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* ゲーム画面の枠を中央に配置 */
+#gameCanvas {
+    background-color: #ffffff;
+    border: 2px solid #333;
+}
