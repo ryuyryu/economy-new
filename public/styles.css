@@ -7,6 +7,14 @@ body {
     background-color: #f0f0f0;
 }
 
+/* 背景画像を設定するクラス */
+.start-bg {
+    /* 画像ファイルへのパス */
+    background-image: url("images/start_screen.webp");
+    background-size: cover;       /* 画面いっぱいに表示 */
+    background-position: center;  /* 中央寄せ */
+}
+
 #container {
     padding-top: 40vh; /* 画面中央付近に配置 */
 }
