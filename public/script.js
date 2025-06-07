@@ -10,5 +10,7 @@ window.onload = function() {
     startButton.addEventListener('click', function() {
         // 簡単なメッセージを表示
         alert('ゲームを始めましょう！');
+        // game_screen.html に移動
+        window.location.href = 'game_screen.html';
     });
 };

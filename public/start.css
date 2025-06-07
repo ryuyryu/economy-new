@@ -1,0 +1,19 @@
+/* スタート画面の背景パターンを設定 */
+body {
+    /* ドット風のストライプ背景 */
+    background-image: repeating-linear-gradient(
+        45deg,
+        #d9d9d9 0 15px,
+        #cfcfcf 15px 30px
+    );
+    /* ドットがくっきり見えるようにする */
+    image-rendering: pixelated;
+    margin: 0;
+    padding: 0;
+}
+
+/* タイトルの文字色を設定 */
+h1 {
+    color: #3b82f6; /* 青色 */
+}
+
