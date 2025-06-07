@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>コンサルタント経済シミュレーション</title>
-    <!-- スタイルシートを読み込みます -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECON – Start</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 外部CSSを読み込み -->
+  <link rel="stylesheet" href="start.css" />
+  <!-- 外部JavaScriptを読み込み -->
+  <script defer src="start.js"></script>
 </head>
-<body>
-    <!-- 画面中央に配置するコンテナ -->
-    <div id="container">
-        <h1>ゲームスタート</h1>
-        <!-- スタートボタン -->
-        <button id="startButton">開始</button>
+  <body class="h-screen w-screen flex items-center justify-center select-none">
+    <!-- タイトルとボタンをまとめるラッパー -->
+    <div class="flex flex-col md:flex-row items-center gap-4">
+      <!-- ゲームタイトル -->
+      <h1 class="text-6xl font-extrabold tracking-wider drop-shadow-lg animate-pulse">
+        ECON
+      </h1>
+      <!-- スタートボタン -->
+      <button id="startButton" class="px-4 py-2 bg-blue-500 text-white rounded">
+        開始
+      </button>
     </div>
-    <!-- JavaScript を読み込みます -->
-    <script src="script.js"></script>
-</body>
+  </body>
 </html>
