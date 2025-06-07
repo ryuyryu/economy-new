@@ -1,7 +1,7 @@
 {
   "name": "economy-new",
   "version": "1.0.0",
-  "description": "スタート画面の設計、江橋からの画像データかCSSかでデザイン予定。Game名の表示やタップでスタートを機能として実装します。 ページの切り替え先はgeme_screen.html。画像データがないの一先ずコードのみで設計中",
+  "description": "スタート画面のデザインや画像配置を進めています。Game名の表示とタップでスタートする機能を実装予定です。",
   "main": "index.js",
   "scripts": {
     "test": "jest"
