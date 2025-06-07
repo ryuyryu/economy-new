@@ -1,0 +1,17 @@
+/* 全体の背景と文字色を設定 */
+body {
+    /* シンプルなストライプ背景 */
+    background-image: repeating-linear-gradient(45deg, #f2f2f2 0, #f2f2f2 10px, #e0e0e0 10px, #e0e0e0 20px);
+    color: #333;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* ボタンを中央に配置して見やすくする */
+#startButton {
+    margin-top: 40vh; /* 画面中央付近に表示 */
+    font-size: 1.2rem;
+    padding: 0.5em 2em;
+}
