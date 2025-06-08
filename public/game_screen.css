@@ -1,3 +1,4 @@
+
 /* ゲーム画面のレイアウトを整えるシンプルなスタイル */
 body {
     font-family: sans-serif;
@@ -7,7 +8,8 @@ body {
     background-color: #f0f0f0;
 }
 
-#game-container {
+
+#container {
     padding-top: 40vh; /* 画面中央付近に配置 */
 }
 
