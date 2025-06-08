@@ -1,15 +1,15 @@
 
 // JSDOMはjest環境ですでに有効
 
-describe('public/script.js', () => {
+describe('public/start_screen.js', () => {
   beforeEach(() => {
     // テスト用のHTMLを設定
     document.body.innerHTML = '<button id="startButton"></button>';
     // alertをモック
     global.alert = jest.fn();
-    // script.jsを読み込み、window.onload を実行
+    // start_screen.jsを読み込み、window.onload を実行
     jest.isolateModules(() => {
-      require('../public/script.js');
+      require('../public/start_screen.js');
     });
     window.onload();
   });
