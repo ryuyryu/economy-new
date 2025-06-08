@@ -1,4 +1,5 @@
-/* スタート画面のレイアウトを整えるシンプルなスタイル */
+
+/* ゲーム画面のレイアウトを整えるシンプルなスタイル */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -6,6 +7,7 @@ body {
     text-align: center;
     background-color: #f0f0f0;
 }
+
 
 #container {
     padding-top: 40vh; /* 画面中央付近に配置 */
