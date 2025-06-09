@@ -9,13 +9,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- 外部CSSを読み込み -->
   <link rel="stylesheet" href="start_screen.css" />
-  <!-- 外部JavaScriptを読み込み -->
-  <script defer src="start_screen.js"></script>
+    <!-- 外部JavaScriptを読み込み -->
+    <script defer src="start_screen.js"></script>
 </head>
-  <body class="h-screen w-screen flex items-center justify-center select-none">
-    <!-- 中央にゲームタイトルのみ表示し、画面全体をタップで遷移 -->
-    <h1 class="text-6xl font-extrabold tracking-wider text-blue-500 drop-shadow-lg animate-pulse">
-      ECON
-    </h1>
+  <body class="select-none">
+    <!-- 背景画像を全画面に表示 -->
+    <div class="relative w-full h-screen bg-cover bg-center" style="background-image: url('/images/game_screen.webp')">
+      <!-- タイトル位置を調整して中央付近に表示 -->
+      <div class="absolute top-1/3 w-full flex justify-center">
+        <!-- タイトルの背面に半透明のオーバーレイを敷く -->
+        <div class="bg-black bg-opacity-50 px-4 py-2">
+          <h1 class="text-white text-5xl md:text-6xl font-bold drop-shadow-md">
+            ECON
+          </h1>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
