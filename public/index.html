@@ -9,13 +9,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- 外部CSSを読み込み -->
   <link rel="stylesheet" href="start_screen.css" />
-  <!-- 外部JavaScriptを読み込み -->
-  <script defer src="start_screen.js"></script>
+  
+  <!-- React本体をCDNから読み込み -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <!-- ReactDOMもCDNから読み込み -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- React版のスタート画面スクリプトを読み込み -->
+  <script defer src="start_screen_react.js"></script>
 </head>
-  <body class="h-screen w-screen flex items-center justify-center select-none">
-    <!-- 中央にゲームタイトルのみ表示し、画面全体をタップで遷移 -->
-    <h1 class="text-6xl font-extrabold tracking-wider text-blue-500 drop-shadow-lg animate-pulse">
-      ECON
-    </h1>
+  <body class="h-screen w-screen">
+    <!-- React コンポーネントをマウントするための要素 -->
+    <div id="root"></div>
   </body>
 </html>
