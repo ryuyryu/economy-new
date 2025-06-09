@@ -4,24 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ゲーム画面</title>
+    <!-- Tailwind の読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 画面表示用のCSS -->
     <link rel="stylesheet" href="game_screen.css">
+    <!-- ドロワー操作用のJavaScript -->
+    <script defer src="game_screen.js"></script>
 </head>
-<body>
-    <!-- ヘッダー：ゲームタイトルを表示 -->
-    <header id="header">
-        <h1>ECON</h1>
+
+<body class="select-none">
+    <!-- ヘッダー：ターン数・タイトル・評価・ドロワーボタン -->
+    <header class="bg-gray-800 text-white flex justify-between items-center p-4">
+        <div id="turn" class="text-sm">ターン: 1</div>
+        <h1 class="text-lg font-bold">ECON ゲーム</h1>
+        <div class="flex items-center">
+            <span id="rating" class="mr-4 text-sm">評価: ★0</span>
+            <button id="drawerButton" class="bg-blue-500 px-3 py-1 rounded">メニュー</button>
+        </div>
     </header>
 
-    <!-- ステータスバー：スコアや時間を表示する予定 -->
-    <div id="status-bar">
-        <span id="score">スコア: 0</span>
-        <span id="time">時間: 0</span>
+    <!-- ステータスバー：所持金・物価水準・金利 -->
+    <div id="statusBar" class="bg-gray-100 flex justify-around text-sm py-2">
+        <div>所持金: <span id="money">0</span>円</div>
+        <div>物価水準: <span id="price">100</span></div>
+        <div>金利: <span id="interest">0%</span></div>
     </div>
 
-    <!-- ゲームのメインコンテンツを配置 -->
-    <div id="game-container">
-        <h2>ここからゲームが始まります</h2>
+    <!-- ゲームコンテナ -->
+    <div id="game-container" class="p-4">
+        <h1>ここからゲームが始まります</h1>
         <p>コンテンツは今後追加予定です。</p>
+    </div>
+
+    <!-- 詳細情報を表示するドロワー -->
+    <div id="drawer" class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform translate-x-full transition-transform">
+        <button id="closeDrawer" class="p-2">閉じる</button>
+        <h2 class="text-lg p-2">詳細情報</h2>
+        <p class="p-2">ここに詳細情報を表示します。</p>
     </div>
 </body>
 </html>
