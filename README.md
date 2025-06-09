@@ -8,6 +8,9 @@
 現実の経済変動や経営課題をもとに、分析・提案・戦略構築のスキルを磨くことができます。
 
 ---
+## 📝 開発方針
+
+- コードや画面の表記は **すべて日本語** で統一します
 
 ## 🎯 実装予定機能一覧
 
@@ -86,5 +89,4 @@ npm test
 
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
 
