@@ -8,9 +8,32 @@ body {
     background-color: #f0f0f0;
 }
 
+/* ヘッダーの簡易スタイル */
+header {
+    background-color: #333;
+    color: white;
+    padding: 0.5em 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* ステータスバーの簡易スタイル */
+#status-bar {
+    background-color: #666;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em 0;
+    position: fixed;
+    top: 3rem; /* ヘッダーの高さ分ずらす */
+    width: 100%;
+}
+
 
 #game-container {
-    padding-top: 40vh; /* 画面中央付近に配置 */
+    padding-top: 40vh;
+    margin-top: 6rem; /* ヘッダーとステータスバーの高さ分の余白 */
 }
 
 button {
