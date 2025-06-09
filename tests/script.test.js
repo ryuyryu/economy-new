@@ -1,22 +1,42 @@
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
 
-// JSDOMはjest環境ですでに有効
+// start_screen.js の挙動を簡易的な環境でテストする
 
 describe('public/start_screen.js', () => {
+  let context;
+  let listeners;
+
   beforeEach(() => {
-    // テスト用のHTMLを設定
-    document.body.innerHTML = '<button id="startButton"></button>';
-    // alertをモック
-    global.alert = jest.fn();
-    // start_screen.jsを読み込み、window.onload を実行
-    jest.isolateModules(() => {
-      require('../public/start_screen.js');
-    });
-    window.onload();
+    listeners = {};
+    context = {
+      window: { location: { href: '' }, onload: null },
+      document: {
+        body: {
+          addEventListener: (ev, fn) => { listeners[ev] = fn; }
+        },
+        getElementById: jest.fn(() => ({
+          addEventListener: (ev, fn) => { listeners['button'] = fn; }
+        }))
+      },
+      alert: jest.fn()
+    };
+
+    vm.createContext(context);
+    const code = fs.readFileSync(path.join(__dirname, '../public/start_screen.js'), 'utf8');
+    vm.runInContext(code, context);
+    context.window.onload();
   });
 
-  test('ボタンをクリックするとメッセージが表示される', () => {
-    const btn = document.getElementById('startButton');
-    btn.click();
-    expect(global.alert).toHaveBeenCalledWith('ゲームを始めましょう！');
+  test('ボタンをクリックするとメッセージが表示され遷移先が設定される', () => {
+    listeners['button']();
+    expect(context.alert).toHaveBeenCalledWith('ゲームを始めましょう！');
+    expect(context.window.location.href).toBe('game_screen.html');
+  });
+
+  test('画面全体をクリックすると window.location.href が変わる', () => {
+    listeners['click']();
+    expect(context.window.location.href).toBe('game_screen.html');
   });
 });
