@@ -1,5 +1,5 @@
 // Reactを使ったスタート画面のスクリプト
-// 画面のどこをクリックしても game_screen.html へ遷移します
+// 画面のどこをクリックしても React版のゲーム画面へ遷移します
 
 // ① Reactの機能を使うために変数に取り出します
 const { useEffect } = React;
@@ -18,8 +18,8 @@ function StartScreen() {
 
   // 画面全体が押されたら遷移する処理
   const handleClick = () => {
-    // ゲーム画面へ移動
-    window.location.href = 'game_screen.html';
+    // React版のゲーム画面へ移動
+    window.location.href = 'game_screen_react.html';
   };
 
   // JSX で画面の見た目を記述します

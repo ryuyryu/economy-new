@@ -1,19 +1,12 @@
+/* ゲーム画面用の追加スタイル */
+/* Tailwind CSS をメインに使うため、最低限の設定だけを記載します */
 
-/* ゲーム画面のレイアウトを整えるシンプルなスタイル */
 body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    background-color: #f0f0f0;
+  margin: 0;
+  font-family: sans-serif;
 }
 
-
-#game-container {
-    padding-top: 40vh; /* 画面中央付近に配置 */
-}
-
-button {
-    font-size: 1.2rem;
-    padding: 0.5em 2em;
+/* ドロワーの重なり順を明示 */
+#drawer {
+  z-index: 10;
 }
