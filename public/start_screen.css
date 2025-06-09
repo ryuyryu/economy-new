@@ -1,13 +1,13 @@
-/* スタート画面の背景パターンを設定 */
+/* スタート画面の背景画像を設定 */
 body {
-    /* ドット風のストライプ背景 */
-    background-image: repeating-linear-gradient(
-        45deg,
-        #d9d9d9 0 15px,
-        #cfcfcf 15px 30px
-    );
-    /* ドットがくっきり見えるようにする */
-    image-rendering: pixelated;
+    /* game_screen.webp を背景に指定 */
+    background-image: url('images/game_screen.webp');
+    /* 画像を中央に表示し、はみ出さないよう全体を収める */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* スクロールしても背景を固定する */
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
 }
