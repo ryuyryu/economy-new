@@ -8,6 +8,9 @@
 現実の経済変動や経営課題をもとに、分析・提案・戦略構築のスキルを磨くことができます。
 
 ---
+## 📝 開発方針
+
+- コードや画面の表記は **すべて日本語** で統一します
 
 ## 🎯 実装予定機能一覧
 
@@ -53,7 +56,6 @@
 ブラウザで `public/index.html` を開き、画面をタップするとゲームがスタートします。
 スタート画面の背景は少し暗めの画像を使用しているため、CSSの `brightness()` で明るさを調整しています。
 
-
 ## 🧪 テスト実行方法
 
 テストを動かすには **Node.js と npm** が必要です。初めてこのリポジトリを
@@ -82,5 +84,4 @@ npm test
 
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
 
