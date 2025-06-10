@@ -62,7 +62,7 @@ function GameScreen() {
   const [history, setHistory] = useState([100]);
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
-  // 財政赤字カードの表示状態
+  // 財政赤字カードの表示状態-v
   const [showDeficitCard, setShowDeficitCard] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
@@ -212,6 +212,8 @@ function GameScreen() {
         )
       )
     ),
+    // GDP成長率のカード表示
+    showGdpCard ? React.createElement(GdpCard, { gdp: stats.gdp }) : null,
     // ドロワーオーバーレイ
     React.createElement('div', {
       id: 'drawerOverlay',
@@ -242,7 +244,13 @@ function GameScreen() {
         ),
         React.createElement(
           'li',
-          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          {
+            className: 'flex justify-between p-2 bg-gray-50 rounded cursor-pointer',
+            onClick: () => {
+              setShowGdpCard(v => !v);
+              closeDrawer();
+            }
+          },
           'GDP成長率',
           React.createElement('span', null, `${stats.gdp.toFixed(1)}%`)
         ),
