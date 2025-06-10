@@ -50,12 +50,6 @@ function GameScreen() {
         next.debtGDP += (Math.random() - 0.5) * 0.05;
         next.trade += (Math.random() - 0.5) * 100;
         next.money += Math.floor(Math.random() * 500);
-        if (Math.random() < 0.1) {
-          next.cpi += 5;
-          setToast('📰 インフレショック! CPI+5');
-          // 2.5秒後にトーストを消す
-          setTimeout(() => setToast(null), 2500);
-        }
         // CPIの履歴を更新（最大20件）
         setHistory(h => {
           const data = h.length >= 20 ? h.slice(1) : h;
