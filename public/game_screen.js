@@ -3,11 +3,9 @@
 
 // DOMContentLoaded イベントは DOM の構築が終わったときに発火します
 // ページが準備できたら各要素を取得してイベントを設定します
-window.addEventListener('DOMContentLoaded', function () {
   // --- 要素の取得 ----------------------------------
   const drawer = document.getElementById('drawer');
   const drawerBtn = document.getElementById('drawerBtn');
-  const closeDrawerBtn = document.getElementById('closeDrawer');
   const overlay = document.getElementById('drawerOverlay');
   const statsBtn = document.getElementById('statsBtn');
   const modal = document.getElementById('statsModal');
@@ -29,10 +27,6 @@ window.addEventListener('DOMContentLoaded', function () {
   // ボタンを押すとドロワーを開く
   drawerBtn.addEventListener('click', openDrawer);
 
-  // ドロワー内の「戻る」ボタンでも閉じられるようにする
-  if (closeDrawerBtn) {
-    closeDrawerBtn.addEventListener('click', closeDrawer);
-  }
 
   // オーバーレイをクリックした場合も閉じる
   overlay.addEventListener('click', closeDrawer);
