@@ -23,6 +23,13 @@ function GameScreen() {
   });
   // CPIの履歴を簡易グラフ用に保持
   const [history, setHistory] = useState([100]);
+  // 各経済指数の変化量を保持（アニメ表示用）
+  const [change, setChange] = useState({
+    cpi: 0,
+    unemp: 0,
+    rate: 0,
+    gdp: 0
+  });
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
   // 画面右上のトースト用メッセージ
@@ -50,6 +57,13 @@ function GameScreen() {
         next.debtGDP += (Math.random() - 0.5) * 0.05;
         next.trade += (Math.random() - 0.5) * 100;
         next.money += Math.floor(Math.random() * 500);
+        // 変化量を記録しておく
+        setChange({
+          cpi: next.cpi - prev.cpi,
+          unemp: next.unemp - prev.unemp,
+          rate: next.rate - prev.rate,
+          gdp: next.gdp - prev.gdp
+        });
         // CPIの履歴を更新（最大20件）
         setHistory(h => {
           const data = h.length >= 20 ? h.slice(1) : h;
@@ -92,7 +106,7 @@ function GameScreen() {
         React.createElement('h1', { className: 'text-2xl font-bold' }, 'ECON'),
         React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')
       ),
-      // 主要4指数を大きめに表示
+      // 主要4指数を大きめに表示（変化量はアニメーション付き）
       React.createElement(
         'div',
         { className: 'mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm sm:text-lg font-mono text-center' },
@@ -100,25 +114,65 @@ function GameScreen() {
           'div',
           { className: 'flex items-center justify-center gap-1 p-1 rounded text-red-600 bg-red-100 font-semibold' },
           React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `CPI ${stats.cpi.toFixed(1)}`
+          `CPI ${stats.cpi.toFixed(1)}`,
+          React.createElement(
+            'span',
+            {
+              className:
+                'ml-1 text-xs stat-change ' +
+                (change.cpi >= 0 ? 'text-lime-400' : 'text-red-400') +
+                ' animate-pulse'
+            },
+            `${change.cpi >= 0 ? '+' : ''}${change.cpi.toFixed(1)}%`
+          )
         ),
         React.createElement(
           'div',
           { className: 'flex items-center justify-center gap-1 p-1 rounded text-blue-600 bg-blue-100 font-semibold' },
           React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `失業率 ${stats.unemp.toFixed(1)}%`
+          `失業率 ${stats.unemp.toFixed(1)}%`,
+          React.createElement(
+            'span',
+            {
+              className:
+                'ml-1 text-xs stat-change ' +
+                (change.unemp >= 0 ? 'text-lime-400' : 'text-red-400') +
+                ' animate-pulse'
+            },
+            `${change.unemp >= 0 ? '+' : ''}${change.unemp.toFixed(1)}%`
+          )
         ),
         React.createElement(
           'div',
           { className: 'flex items-center justify-center gap-1 p-1 rounded text-green-600 bg-green-100 font-semibold' },
           React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `金利 ${stats.rate.toFixed(1)}%`
+          `金利 ${stats.rate.toFixed(1)}%`,
+          React.createElement(
+            'span',
+            {
+              className:
+                'ml-1 text-xs stat-change ' +
+                (change.rate >= 0 ? 'text-lime-400' : 'text-red-400') +
+                ' animate-pulse'
+            },
+            `${change.rate >= 0 ? '+' : ''}${change.rate.toFixed(1)}%`
+          )
         ),
         React.createElement(
           'div',
           { className: 'flex items-center justify-center gap-1 p-1 rounded text-yellow-600 bg-yellow-100 font-semibold' },
           React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `GDP ${stats.gdp.toFixed(1)}%`
+          `GDP ${stats.gdp.toFixed(1)}%`,
+          React.createElement(
+            'span',
+            {
+              className:
+                'ml-1 text-xs stat-change ' +
+                (change.gdp >= 0 ? 'text-lime-400' : 'text-red-400') +
+                ' animate-pulse'
+            },
+            `${change.gdp >= 0 ? '+' : ''}${change.gdp.toFixed(1)}%`
+          )
         )
       )
     ),
