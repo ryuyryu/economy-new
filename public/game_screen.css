@@ -19,3 +19,13 @@ body {
 #drawer {
   z-index: 10;
 }
+
+/* 経済指数の変化を示すアニメーション */
+.diff-change {
+  animation: diffFlash 0.8s ease-in-out;
+}
+
+@keyframes diffFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
