@@ -94,10 +94,30 @@ function GameScreen() {
       React.createElement(
         'div',
         { className: 'mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm sm:text-lg font-mono text-center' },
-        React.createElement('div', { className: 'text-red-300 font-semibold' }, `CPI ${stats.cpi.toFixed(1)}`),
-        React.createElement('div', { className: 'text-blue-300 font-semibold' }, `失業率 ${stats.unemp.toFixed(1)}%`),
-        React.createElement('div', { className: 'text-green-300 font-semibold' }, `金利 ${stats.rate.toFixed(1)}%`),
-        React.createElement('div', { className: 'text-yellow-300 font-semibold' }, `GDP ${stats.gdp.toFixed(1)}%`)
+        React.createElement(
+          'div',
+          { className: 'flex items-center justify-center gap-1 p-1 rounded text-red-600 bg-red-100 font-semibold' },
+          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
+          `CPI ${stats.cpi.toFixed(1)}`
+        ),
+        React.createElement(
+          'div',
+          { className: 'flex items-center justify-center gap-1 p-1 rounded text-blue-600 bg-blue-100 font-semibold' },
+          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
+          `失業率 ${stats.unemp.toFixed(1)}%`
+        ),
+        React.createElement(
+          'div',
+          { className: 'flex items-center justify-center gap-1 p-1 rounded text-green-600 bg-green-100 font-semibold' },
+          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
+          `金利 ${stats.rate.toFixed(1)}%`
+        ),
+        React.createElement(
+          'div',
+          { className: 'flex items-center justify-center gap-1 p-1 rounded text-yellow-600 bg-yellow-100 font-semibold' },
+          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
+          `GDP ${stats.gdp.toFixed(1)}%`
+        )
       )
     ),
     // ドロワー
