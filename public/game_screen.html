@@ -1,44 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>ECON – Game</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-screen bg-gray-100 text-white font-sans">
+<body class="h-screen overflow-hidden">
 
-  <!-- ヘッダー -->
-  <header class="bg-gray-900 flex justify-between items-center px-4 py-3 shadow-md">
-    <button id="drawerBtn" class="text-2xl hover:text-sky-400 transition">☰</button>
+  <!-- ヘッダー: 収入と評価を表示 -->
+  <header class="bg-gray-800 text-white flex justify-between items-center px-4 py-2">
+    <button id="drawerBtn" class="text-2xl">☰</button>
     <div class="flex gap-6 text-lg font-mono">
       <span>💰 <span id="money">12,300</span></span>
       <span>★ <span id="rating">4.5</span></span>
     </div>
   </header>
-
-  <!-- サイドドロワー（横から） -->
-  <aside id="drawer" class="fixed top-0 left-0 h-full w-64 transform -translate-x-full transition-transform duration-300 bg-gray-800 z-40 shadow-lg">
-    <nav class="p-4 space-y-4 text-white">
-      <h2 class="text-xl font-bold mb-4">メニュー</h2>
-      <button id="statsBtn" class="block w-full text-left py-2 px-4 bg-sky-700/80 hover:bg-sky-600 rounded transition">
-        📊 経済指標
-      </button>
-      <button class="block w-full text-left py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded transition">
-        🗂 クライアント情報
-      </button>
-      <button class="block w-full text-left py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded transition">
-        📜 提案履歴
-      </button>
+  <!-- サイドドロワー -->
+  <aside id="drawer" class="fixed top-0 left-0 h-full w-64 -translate-x-full transition-transform bg-white shadow-lg z-40">
+    <nav class="p-4 space-y-4">
+      <button id="statsBtn" class="w-full text-left py-2 px-3 bg-gray-100 rounded">📊 経済指標</button>
+      <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">🗂 クライアント情報</button>
+      <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">📜 履歴</button>
     </nav>
   </aside>
 
-  <!-- モーダル（ポップ） -->
+  <!-- モーダル -->
   <div id="statsModal" class="fixed inset-0 hidden items-center justify-center z-50">
     <div id="modalBg" class="absolute inset-0 bg-black/60"></div>
-    <div class="relative bg-white text-gray-900 rounded shadow-xl w-11/12 max-w-md p-6 z-10">
-      <button id="closeModal" class="absolute top-2 right-3 text-xl text-gray-700">×</button>
-      <h2 class="text-xl font-bold mb-3">経済指標</h2>
-      <ul class="space-y-2 font-mono">
+    <div class="relative bg-white rounded shadow-lg w-11/12 max-w-md p-6 space-y-4 z-10">
+      <button id="closeModal" class="absolute top-2 right-3 text-xl">×</button>
+      <h2 class="text-xl font-bold mb-2">経済指標</h2>
+      <ul class="space-y-1 font-mono">
         <li>CPI: <span id="cpi">102.4</span></li>
         <li>失業率: <span id="unemp">4.2</span>%</li>
         <li>GDP成長率: <span id="gdp">1.8</span>%</li>
@@ -47,8 +39,24 @@
     </div>
   </div>
 
-  <!-- スクリプト読み込み -->
-  <script src="game_screen.js"></script>
+  <script>
+    // ドロワーやモーダルの要素を取得
+    const drawer   = document.getElementById('drawer');
+    const drawerBtn= document.getElementById('drawerBtn');
+    const statsBtn = document.getElementById('statsBtn');
+    const modal    = document.getElementById('statsModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalBg  = document.getElementById('modalBg');
+
+    // ドロワーボタンを押すと、ドロワーを開閉
+    drawerBtn.onclick = () => drawer.classList.toggle('-translate-x-full');
+    // 経済指標ボタンでモーダルを表示
+    statsBtn.onclick  = () => { modal.classList.remove('hidden'); };
+    // モーダルの "×" ボタンで非表示
+    closeBtn.onclick  = () => { modal.classList.add('hidden'); };
+    // 背景クリックでもモーダルを閉じる
+    modalBg.onclick   = () => { modal.classList.add('hidden'); };
+  </script>
 
 </body>
 </html>
