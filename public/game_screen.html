@@ -1,53 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ECON – Screen</title>
-  <!-- React 版は game_screen_react.html を参照 -->
+  <meta charset="UTF-8">
+  <title>ECON – Game</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="game_screen.css" />
 </head>
-<body class="bg-gray-100 select-none">
+<body class="h-screen overflow-hidden">
 
-  <!-- ターン表示 -->
-  <div id="turn" class="text-center py-1 bg-gray-800 text-white text-sm">🕒 ターン:1</div>
-
-  <!-- ヘッダー -->
-  <header class="bg-gray-800 text-white px-4 py-2 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">ECON</h1>
-    <div class="flex gap-1 text-yellow-400 text-lg">★ <span id="rating">4.5</span></div>
-    <button onclick="toggleDrawer()" class="text-2xl">☰</button>
+  <!-- ヘッダー: 収入と評価を表示 -->
+  <header class="bg-gray-800 text-white flex justify-between items-center px-4 py-2">
+    <button id="drawerBtn" class="text-2xl">☰</button>
+    <div class="flex gap-6 text-lg font-mono">
+      <span>💰 <span id="money">12,300</span></span>
+      <span>★ <span id="rating">4.5</span></span>
+    </div>
   </header>
 
-  <!-- ステータスバー -->
-  <div class="flex justify-around bg-gray-900/60 py-2 text-lg font-mono">
-    <div>💰 <span id="money">0</span>円</div>
-    <div>📈 <span id="cpi">100</span></div>
-    <div>📉 <span id="unemp">4.2</span>%</div>
-    <div>🏦 <span id="rate">0</span>%</div>
-    <div>🌐 <span id="gdp">1.8</span>%</div>
-  </div>
+  <!-- サイドドロワー -->
+  <aside id="drawer" class="fixed top-0 left-0 h-full w-64 -translate-x-full transition-transform bg-white shadow-lg z-40">
+    <nav class="p-4 space-y-4">
+      <button id="statsBtn" class="w-full text-left py-2 px-3 bg-gray-100 rounded">📊 経済指標</button>
+      <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">🗂 クライアント情報</button>
+      <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">📜 履歴</button>
+    </nav>
+  </aside>
 
-  <!-- ドロワー -->
-  <div id="drawer" class="hidden absolute top-14 left-0 w-full bg-white shadow-lg z-10">
-    <section class="p-4 border-b">
-      <h2 class="font-semibold mb-1">📊 経済データ</h2>
-      <p>GDP:+1.8% / 産業構成:製造40% IT25%</p>
-    </section>
-    <section class="p-4">
-      <h2 class="font-semibold mb-1">📜 履歴</h2>
-      <ul class="list-disc ml-5 text-sm">
-        <li>法人税減税 → ★+1</li>
+  <!-- モーダル -->
+  <div id="statsModal" class="fixed inset-0 hidden items-center justify-center z-50">
+    <div id="modalBg" class="absolute inset-0 bg-black/60"></div>
+    <div class="relative bg-white rounded shadow-lg w-11/12 max-w-md p-6 space-y-4 z-10">
+      <button id="closeModal" class="absolute top-2 right-3 text-xl">×</button>
+      <h2 class="text-xl font-bold mb-2">経済指標</h2>
+      <ul class="space-y-1 font-mono">
+        <li>CPI: <span id="cpi">102.4</span></li>
+        <li>失業率: <span id="unemp">4.2</span>%</li>
+        <li>GDP成長率: <span id="gdp">1.8</span>%</li>
+        <li>政策金利: <span id="rate">1.2</span>%</li>
       </ul>
-    </section>
+    </div>
   </div>
 
-  <!-- トースト表示エリア -->
-  <div id="toast" class="hidden fixed top-16 right-4 bg-red-600 text-white px-4 py-2 rounded shadow"></div>
+  <script>
+    // ドロワーやモーダルの要素を取得
+    const drawer   = document.getElementById('drawer');
+    const drawerBtn= document.getElementById('drawerBtn');
+    const statsBtn = document.getElementById('statsBtn');
+    const modal    = document.getElementById('statsModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalBg  = document.getElementById('modalBg');
 
-  <!-- スクリプト読み込み -->
-  <script src="game_screen.js"></script>
+    // ドロワーボタンを押すと、ドロワーを開閉
+    drawerBtn.onclick = () => drawer.classList.toggle('-translate-x-full');
+    // 経済指標ボタンでモーダルを表示
+    statsBtn.onclick  = () => { modal.classList.remove('hidden'); };
+    // モーダルの "×" ボタンで非表示
+    closeBtn.onclick  = () => { modal.classList.add('hidden'); };
+    // 背景クリックでもモーダルを閉じる
+    modalBg.onclick   = () => { modal.classList.add('hidden'); };
+  </script>
+
 </body>
 </html>
-
