@@ -1,7 +1,9 @@
 // ゲーム画面の操作をまとめたスクリプト
 // ドロワーとモーダルの開閉のみを担当します
 
-window.onload = function () {
+// DOMContentLoaded イベントは DOM の構築が終わったときに発火します
+// ページが準備できたら各要素を取得してイベントを設定します
+window.addEventListener('DOMContentLoaded', function () {
   // --- 要素の取得 ----------------------------------
   const drawer = document.getElementById('drawer');
   const drawerBtn = document.getElementById('drawerBtn');
@@ -38,4 +40,4 @@ window.onload = function () {
       modal.classList.add('hidden');
     });
   });
-};
+}, { capture: true });
