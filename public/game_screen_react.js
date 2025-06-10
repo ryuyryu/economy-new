@@ -127,18 +127,22 @@ function GameScreen() {
             'div',
             {
               id: 'drawer',
-              className:
-                'fixed top-0 right-0 h-full w-2/3 sm:w-64 bg-white shadow-lg z-10 overflow-y-auto',
+              className: 'fixed top-0 right-0 h-full w-2/3 sm:w-64 bg-white shadow-lg z-10 flex flex-col',
             },
             React.createElement(
               'ul',
-              { className: 'p-4 space-y-2 text-sm list-none' },
+              { className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
               React.createElement('li', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
               React.createElement('li', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
               React.createElement('li', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
               React.createElement('li', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
               React.createElement('li', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
               React.createElement('li', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
+            ),
+            React.createElement(
+              'button',
+              { onClick: toggleDrawer, className: 'm-4 self-end px-3 py-2 bg-gray-100 rounded border' },
+              '戻る'
             )
           );
         })()

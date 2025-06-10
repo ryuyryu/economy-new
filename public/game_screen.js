@@ -5,6 +5,7 @@ window.onload = function () {
   // --- 要素の取得 ----------------------------------
   const drawer = document.getElementById('drawer');
   const drawerBtn = document.getElementById('drawerBtn');
+  const closeDrawerBtn = document.getElementById('closeDrawer');
   const statsBtn = document.getElementById('statsBtn');
   const modal = document.getElementById('statsModal');
   const modalBg = document.getElementById('modalBg');
@@ -16,6 +17,14 @@ window.onload = function () {
     drawer.classList.toggle('-translate-x-full');
     drawer.classList.toggle('translate-x-0');
   });
+
+  // ドロワー内の「戻る」ボタンでも閉じられるようにする
+  if (closeDrawerBtn) {
+    closeDrawerBtn.addEventListener('click', () => {
+      drawer.classList.add('-translate-x-full');
+      drawer.classList.remove('translate-x-0');
+    });
+  }
 
   // --- モーダル表示処理 ----------------------------
   statsBtn.addEventListener('click', () => {
