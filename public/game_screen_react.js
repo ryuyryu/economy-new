@@ -71,6 +71,14 @@ function GameScreen() {
   // ドロワーの開閉
   const toggleDrawer = () => setDrawerOpen(o => !o);
 
+  // ドロワーのclassを状態に応じて生成
+  const drawerClasses = [
+    'fixed top-0 right-0 h-full w-2/3 sm:w-64',
+    'bg-white shadow-lg z-10 overflow-y-auto',
+    'transform transition-transform duration-300',
+    drawerOpen ? 'translate-x-0' : 'translate-x-full'
+  ].join(' ');
+
   return React.createElement(
     'div',
     { className: 'bg-gray-100 select-none' },
@@ -121,28 +129,20 @@ function GameScreen() {
       )
     ),
     // ドロワー
-    drawerOpen
-      ? (() => {
-          return React.createElement(
-            'div',
-            {
-              id: 'drawer',
-              className:
-                'fixed top-0 right-0 h-full w-2/3 sm:w-64 bg-white shadow-lg z-10 overflow-y-auto',
-            },
-            React.createElement(
-              'ul',
-              { className: 'p-4 space-y-2 text-sm list-none' },
-              React.createElement('li', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
-              React.createElement('li', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
-              React.createElement('li', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
-              React.createElement('li', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
-              React.createElement('li', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
-              React.createElement('li', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
-            )
-          );
-        })()
-      : null,
+    React.createElement(
+      'div',
+      { id: 'drawer', className: drawerClasses },
+      React.createElement(
+        'ul',
+        { className: 'p-4 space-y-2 text-sm list-none' },
+        React.createElement('li', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
+        React.createElement('li', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
+        React.createElement('li', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
+        React.createElement('li', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
+        React.createElement('li', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
+        React.createElement('li', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
+      )
+    ),
     // トースト
     toast
       ? React.createElement(
