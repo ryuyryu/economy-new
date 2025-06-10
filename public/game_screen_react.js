@@ -5,46 +5,62 @@
 // ReactからuseRefも取り出しておく
 const { useState, useEffect, useRef } = React;
 
-// 経済指標をカード形式で表示するコンポーネント
-function IndicatorListCard({ stats }) {
+// ----------------------
+// 政策金利カードコンポーネント
+// ----------------------
+// props.rate : 表示する政策金利
+// props.onClose : 閉じるボタンを押したときの処理
+function PolicyRateCard(props) {
   return React.createElement(
     'div',
-    { className: 'm-4 p-4 bg-white rounded-lg shadow' },
-    React.createElement('h2', { className: 'text-lg font-bold mb-2' }, 'インジケーター一覧'),
+    { className: 'fixed inset-0 flex items-center justify-center z-40' },
+    // カード背後の半透明背景
+    React.createElement('div', {
+      className: 'absolute inset-0 bg-black/40',
+      onClick: props.onClose,
+    }),
+    // 実際のカード本体
     React.createElement(
-      'ul',
-      { className: 'space-y-2 text-sm list-none' },
+      'div',
+      {
+        className:
+          'relative bg-white rounded-xl shadow-lg w-11/12 max-w-sm p-4 space-y-3 z-10',
+      },
       React.createElement(
-        'li',
-        { className: 'flex justify-between p-2 bg-gray-50 rounded' },
-        '消費者物価指数',
-        React.createElement('span', null, stats.cpi.toFixed(1))
+        'h2',
+        { className: 'text-lg font-bold' },
+        '政策金利'
       ),
       React.createElement(
-        'li',
-        { className: 'flex justify-between p-2 bg-gray-50 rounded' },
-        '失業率',
-        React.createElement('span', null, `${stats.unemp.toFixed(1)}%`)
+        'p',
+        { className: 'text-3xl font-mono text-center' },
+        `${props.rate.toFixed(1)}%`
       ),
       React.createElement(
-        'li',
-        { className: 'flex justify-between p-2 bg-gray-50 rounded' },
-        'GDP成長率',
-        React.createElement('span', null, `${stats.gdp.toFixed(1)}%`)
+        'p',
+        { className: 'text-sm text-gray-600' },
+        '中央銀行が短期金利を調整するときの基準値です。'
       ),
       React.createElement(
-        'li',
-        { className: 'flex justify-between p-2 bg-gray-50 rounded' },
-        '政策金利',
-        React.createElement('span', null, `${stats.rate.toFixed(1)}%`)
-      ),
-      React.createElement(
-        'li',
-        { className: 'flex justify-between p-2 bg-gray-50 rounded' },
-        '財政赤字/GDP比',
-        React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
+        'button',
+        {
+          onClick: props.onClose,
+          className: 'w-full bg-gray-100 rounded py-1',
+        },
+        '閉じる'
       )
     )
+// GDP成長率を表示するカードコンポーネント
+// props.gdp で現在のGDP成長率を受け取ります
+function GdpCard({ gdp }) {
+  return React.createElement(
+    'div',
+    {
+      className:
+        'mx-4 my-4 p-4 bg-white rounded shadow text-center font-mono',
+    },
+    React.createElement('h2', { className: 'text-lg font-bold mb-2' }, 'GDP成長率'),
+    React.createElement('p', { className: 'text-xl' }, `${gdp.toFixed(1)}%`)
   );
 }
 
@@ -68,10 +84,12 @@ function GameScreen() {
   const [history, setHistory] = useState([100]);
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // GDPカード表示のON/OFF
+  const [showGdpCard, setShowGdpCard] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
-  // インジケーター一覧カードの表示・非表示を管理
-  const [showIndicatorList, setShowIndicatorList] = useState(false);
+  // 政策金利カードの表示状態
+  const [showPolicyRateCard, setShowPolicyRateCard] = useState(false);
   // 指数の前回値を保持するための参照
   const prevStatsRef = useRef(stats);
   // 各指数の変化量を状態として保持
@@ -218,8 +236,8 @@ function GameScreen() {
         )
       )
     ),
-    // インジケーター一覧カードの表示
-    showIndicatorList ? React.createElement(IndicatorListCard, { stats }) : null,
+    // GDP成長率のカード表示
+    showGdpCard ? React.createElement(GdpCard, { gdp: stats.gdp }) : null,
     // ドロワーオーバーレイ
     React.createElement('div', {
       id: 'drawerOverlay',
@@ -238,17 +256,52 @@ function GameScreen() {
         { className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
         React.createElement(
           'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '消費者物価指数',
+          React.createElement('span', null, stats.cpi.toFixed(1))
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '失業率',
+          React.createElement('span', null, `${stats.unemp.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
           {
-            className: 'p-2 bg-gray-100 rounded cursor-pointer text-center',
+            className: 'flex justify-between p-2 bg-gray-50 rounded cursor-pointer',
             onClick: () => {
-              setShowIndicatorList(o => !o);
+              setShowGdpCard(v => !v);
               closeDrawer();
             }
           },
-          'インジケーター一覧'
+          'GDP成長率',
+          React.createElement('span', null, `${stats.gdp.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
+          {
+            className: 'flex justify-between p-2 bg-gray-50 rounded cursor-pointer',
+            onClick: () => setShowPolicyRateCard(o => !o),
+          },
+          '政策金利',
+          React.createElement('span', null, `${stats.rate.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '財政赤字/GDP比',
+      React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
         )
       )
     ),
+    // 政策金利カードの表示
+    showPolicyRateCard
+      ? React.createElement(PolicyRateCard, {
+          rate: stats.rate,
+          onClose: () => setShowPolicyRateCard(false),
+        })
+      : null,
     // トースト
     toast
       ? React.createElement(
