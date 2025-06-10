@@ -188,7 +188,7 @@ function GameScreen() {
       className: overlayClasses,
       onClick: closeDrawer
     }),
-    // ドロワー
+    // ドロワー本体
     React.createElement(
       'div',
       {
@@ -198,17 +198,36 @@ function GameScreen() {
       React.createElement(
         'ul',
         { className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
-        React.createElement('li', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
-        React.createElement('li', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
-        React.createElement('li', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
-        React.createElement('li', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
-        React.createElement('li', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
-        React.createElement('li', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
-      ),
-      React.createElement(
-        'button',
-        { onClick: toggleDrawer, className: 'm-4 self-end px-3 py-2 bg-gray-100 rounded border' },
-        '戻る'
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '消費者物価指数',
+          React.createElement('span', null, stats.cpi.toFixed(1))
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '失業率',
+          React.createElement('span', null, `${stats.unemp.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          'GDP成長率',
+          React.createElement('span', null, `${stats.gdp.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '政策金利',
+          React.createElement('span', null, `${stats.rate.toFixed(1)}%`)
+        ),
+        React.createElement(
+          'li',
+          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          '財政赤字/GDP比',
+          React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
+        )
       )
     ),
     // トースト
