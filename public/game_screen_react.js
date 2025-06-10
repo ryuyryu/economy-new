@@ -123,39 +123,22 @@ function GameScreen() {
     // ドロワー
     drawerOpen
       ? (() => {
-          // CPI履歴から折れ線グラフのポイントを計算
-          const max = Math.max(...history);
-          const min = Math.min(...history);
-          const points = history
-            .map((v, i) => {
-              const x = (i / (history.length - 1)) * 100;
-              const y = 40 - ((v - min) / (max - min || 1)) * 40;
-              return `${x},${y}`;
-            })
-            .join(' ');
-
           return React.createElement(
             'div',
-            { id: 'drawer', className: 'absolute top-16 left-0 w-full bg-white shadow-lg z-10' },
+            {
+              id: 'drawer',
+              className:
+                'fixed top-0 right-0 h-full w-2/3 sm:w-64 bg-white shadow-lg z-10 overflow-y-auto',
+            },
             React.createElement(
-              'section',
-              { className: 'p-4 grid grid-cols-2 gap-2 text-sm' },
-              React.createElement('div', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
-              React.createElement('div', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
-              React.createElement('div', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
-              React.createElement('div', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
-              React.createElement('div', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
-              React.createElement('div', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
-            ),
-            React.createElement(
-              'section',
-              { className: 'p-4 border-t' },
-              React.createElement('h2', { className: 'font-semibold mb-1' }, 'CPI推移'),
-              React.createElement(
-                'svg',
-                { viewBox: '0 0 100 40', className: 'w-full h-24 bg-gray-50' },
-                React.createElement('polyline', { points, fill: 'none', stroke: 'blue', strokeWidth: 2 })
-              )
+              'ul',
+              { className: 'p-4 space-y-2 text-sm list-none' },
+              React.createElement('li', { className: 'flex justify-between' }, '為替', React.createElement('span', null, stats.fx.toFixed(1))),
+              React.createElement('li', { className: 'flex justify-between' }, '10年国債', React.createElement('span', null, `${stats.yield.toFixed(1)}%`)),
+              React.createElement('li', { className: 'flex justify-between' }, '消費者信頼感', React.createElement('span', null, stats.cci.toFixed(1))),
+              React.createElement('li', { className: 'flex justify-between' }, 'PMI', React.createElement('span', null, stats.pmi.toFixed(1))),
+              React.createElement('li', { className: 'flex justify-between' }, '財政赤字/GDP', React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)),
+              React.createElement('li', { className: 'flex justify-between' }, '貿易収支', React.createElement('span', null, `${stats.trade.toFixed(0)}億円`))
             )
           );
         })()
