@@ -22,12 +22,13 @@
     </div>
   </header>
   <!-- サイドドロワー -->
-  <aside id="drawer" class="fixed top-0 left-0 h-full w-64 -translate-x-full transition-transform bg-white shadow-lg z-40">
-    <nav class="p-4 space-y-4">
+  <aside id="drawer" class="fixed top-0 left-0 h-full w-64 -translate-x-full transition-transform bg-white shadow-lg z-40 flex flex-col relative">
+    <nav class="p-4 space-y-4 flex-1">
       <button id="statsBtn" class="w-full text-left py-2 px-3 bg-gray-100 rounded">📊 経済指標</button>
       <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">🗂 クライアント情報</button>
       <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">📜 履歴</button>
     </nav>
+    <button id="closeDrawer" class="absolute bottom-4 right-4 px-3 py-2 bg-gray-100 rounded border">戻る</button>
   </aside>
 
   <!-- モーダル -->
