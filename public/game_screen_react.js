@@ -5,6 +5,20 @@
 // ReactからuseRefも取り出しておく
 const { useState, useEffect, useRef } = React;
 
+// GDP成長率を表示するカードコンポーネント
+// props.gdp で現在のGDP成長率を受け取ります
+function GdpCard({ gdp }) {
+  return React.createElement(
+    'div',
+    {
+      className:
+        'mx-4 my-4 p-4 bg-white rounded shadow text-center font-mono',
+    },
+    React.createElement('h2', { className: 'text-lg font-bold mb-2' }, 'GDP成長率'),
+    React.createElement('p', { className: 'text-xl' }, `${gdp.toFixed(1)}%`)
+  );
+}
+
 function GameScreen() {
   // 経済指標を状態として管理
   // 10種類の経済指数をまとめて stats というオブジェクトで保持
@@ -25,6 +39,8 @@ function GameScreen() {
   const [history, setHistory] = useState([100]);
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // GDPカード表示のON/OFF
+  const [showGdpCard, setShowGdpCard] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
   // 指数の前回値を保持するための参照
@@ -173,6 +189,8 @@ function GameScreen() {
         )
       )
     ),
+    // GDP成長率のカード表示
+    showGdpCard ? React.createElement(GdpCard, { gdp: stats.gdp }) : null,
     // ドロワーオーバーレイ
     React.createElement('div', {
       id: 'drawerOverlay',
@@ -203,7 +221,13 @@ function GameScreen() {
         ),
         React.createElement(
           'li',
-          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          {
+            className: 'flex justify-between p-2 bg-gray-50 rounded cursor-pointer',
+            onClick: () => {
+              setShowGdpCard(v => !v);
+              closeDrawer();
+            }
+          },
           'GDP成長率',
           React.createElement('span', null, `${stats.gdp.toFixed(1)}%`)
         ),
