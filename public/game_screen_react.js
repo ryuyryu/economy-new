@@ -85,7 +85,10 @@ function GameScreen() {
     // ヘッダー（タイトルとメニュー）
     React.createElement(
       'header',
-      { className: 'bg-gray-800 text-white px-4 py-2' },
+      {
+        className:
+          'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white px-4 py-2',
+      },
       React.createElement(
         'div',
         { className: 'flex justify-between items-center' },
@@ -95,30 +98,41 @@ function GameScreen() {
       // 主要4指数を大きめに表示
       React.createElement(
         'div',
-        { className: 'mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm sm:text-lg font-mono text-center' },
+        {
+          className:
+            'mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm sm:text-lg font-mono text-center',
+        },
         React.createElement(
           'div',
-          { className: 'flex items-center justify-center gap-1 p-1 rounded text-red-600 bg-red-100 font-semibold' },
-          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `CPI ${stats.cpi.toFixed(1)}`
+          {
+            className:
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+          },
+          `CPI: ${stats.cpi.toFixed(1)}`
         ),
         React.createElement(
           'div',
-          { className: 'flex items-center justify-center gap-1 p-1 rounded text-blue-600 bg-blue-100 font-semibold' },
-          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `失業率 ${stats.unemp.toFixed(1)}%`
+          {
+            className:
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+          },
+          `失業率: ${stats.unemp.toFixed(1)}%`
         ),
         React.createElement(
           'div',
-          { className: 'flex items-center justify-center gap-1 p-1 rounded text-green-600 bg-green-100 font-semibold' },
-          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `金利 ${stats.rate.toFixed(1)}%`
+          {
+            className:
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+          },
+          `金利: ${stats.rate.toFixed(1)}%`
         ),
         React.createElement(
           'div',
-          { className: 'flex items-center justify-center gap-1 p-1 rounded text-yellow-600 bg-yellow-100 font-semibold' },
-          React.createElement('span', { className: 'w-2 h-2 bg-current rounded' }),
-          `GDP ${stats.gdp.toFixed(1)}%`
+          {
+            className:
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+          },
+          `GDP: ${stats.gdp.toFixed(1)}%`
         )
       )
     ),
