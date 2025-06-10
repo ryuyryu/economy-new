@@ -87,14 +87,21 @@ function GameScreen() {
 
   // ドロワーの開閉
   const toggleDrawer = () => setDrawerOpen(o => !o);
+  const closeDrawer = () => setDrawerOpen(false);
 
   // ドロワーのclassを状態に応じて生成
   const drawerClasses = [
     'fixed top-0 right-0 h-full w-2/3 sm:w-64',
-    'bg-white shadow-lg z-10 overflow-y-auto',
+    'bg-white shadow-lg z-30 overflow-y-auto',
     'transform transition-transform duration-300',
     'translate-x-full',
     drawerOpen ? 'drawer-open' : ''
+  ].join(' ');
+
+  const overlayClasses = [
+    'fixed inset-0 bg-black/30',
+    'transition-opacity duration-300',
+    drawerOpen ? 'overlay-show' : ''
   ].join(' ');
 
   // 変化量を表示するためのヘルパー
@@ -175,6 +182,12 @@ function GameScreen() {
         )
       )
     ),
+    // ドロワーオーバーレイ
+    React.createElement('div', {
+      id: 'drawerOverlay',
+      className: overlayClasses,
+      onClick: closeDrawer
+    }),
     // ドロワー
     React.createElement(
       'div',
