@@ -3,7 +3,16 @@
 
 body {
   margin: 0;
-  font-family: sans-serif;
+  /* デフォルトはOrbitron */
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* 小さめの文字には読みやすい日本語フォントを適用 */
+.text-sm,
+.text-base,
+.text-xs,
+.font-mono {
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 /* ドロワーの重なり順を明示 */
