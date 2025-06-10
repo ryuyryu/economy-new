@@ -5,6 +5,43 @@
 // ReactからuseRefも取り出しておく
 const { useState, useEffect, useRef } = React;
 
+// 財政赤字/GDP比を大きく表示するカードコンポーネント
+// value: 指標の数値, onClose: 閉じるボタンを押したときの処理
+function DeficitCard({ value, onClose }) {
+  return React.createElement(
+    'div',
+    { className: 'fixed inset-0 flex items-center justify-center z-40' },
+    // 背景の半透明オーバーレイ。クリックでカードを閉じる
+    React.createElement('div', {
+      className: 'absolute inset-0 bg-black/40',
+      onClick: onClose,
+    }),
+    // カード本体
+    React.createElement(
+      'div',
+      { className: 'relative bg-white rounded-lg shadow-lg p-4 z-10 w-11/12 max-w-xs' },
+      React.createElement(
+        'h2',
+        { className: 'text-lg font-bold mb-2 text-center' },
+        '財政赤字/GDP比'
+      ),
+      React.createElement(
+        'p',
+        { className: 'text-3xl font-mono text-center' },
+        `${value.toFixed(1)}%`
+      ),
+      React.createElement(
+        'button',
+        {
+          className: 'mt-4 w-full bg-blue-500 text-white py-1 rounded',
+          onClick: onClose,
+        },
+        '閉じる'
+      )
+    )
+  );
+}
+
 function GameScreen() {
   // 経済指標を状態として管理
   // 10種類の経済指数をまとめて stats というオブジェクトで保持
@@ -25,6 +62,8 @@ function GameScreen() {
   const [history, setHistory] = useState([100]);
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // 財政赤字カードの表示状態
+  const [showDeficitCard, setShowDeficitCard] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
   // 指数の前回値を保持するための参照
@@ -215,12 +254,27 @@ function GameScreen() {
         ),
         React.createElement(
           'li',
-          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          {
+            className:
+              'flex justify-between p-2 bg-gray-50 rounded cursor-pointer hover:bg-gray-100',
+            // 項目をクリックするとカードを表示してドロワーを閉じる
+            onClick: () => {
+              setShowDeficitCard(true);
+              setDrawerOpen(false);
+            },
+          },
           '財政赤字/GDP比',
           React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
         )
       )
     ),
+    // 財政赤字カードを必要に応じて表示
+    showDeficitCard
+      ? React.createElement(DeficitCard, {
+          value: stats.debtGDP,
+          onClose: () => setShowDeficitCard(false),
+        })
+      : null,
     // トースト
     toast
       ? React.createElement(
