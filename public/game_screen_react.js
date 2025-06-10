@@ -5,6 +5,51 @@
 // ReactからuseRefも取り出しておく
 const { useState, useEffect, useRef } = React;
 
+// ----------------------
+// 政策金利カードコンポーネント
+// ----------------------
+// props.rate : 表示する政策金利
+// props.onClose : 閉じるボタンを押したときの処理
+function PolicyRateCard(props) {
+  return React.createElement(
+    'div',
+    { className: 'fixed inset-0 flex items-center justify-center z-40' },
+    // カード背後の半透明背景
+    React.createElement('div', {
+      className: 'absolute inset-0 bg-black/40',
+      onClick: props.onClose,
+    }),
+    // 実際のカード本体
+    React.createElement(
+      'div',
+      {
+        className:
+          'relative bg-white rounded-xl shadow-lg w-11/12 max-w-sm p-4 space-y-3 z-10',
+      },
+      React.createElement(
+        'h2',
+        { className: 'text-lg font-bold' },
+        '政策金利'
+      ),
+      React.createElement(
+        'p',
+        { className: 'text-3xl font-mono text-center' },
+        `${props.rate.toFixed(1)}%`
+      ),
+      React.createElement(
+        'p',
+        { className: 'text-sm text-gray-600' },
+        '中央銀行が短期金利を調整するときの基準値です。'
+      ),
+      React.createElement(
+        'button',
+        {
+          onClick: props.onClose,
+          className: 'w-full bg-gray-100 rounded py-1',
+        },
+        '閉じる'
+      )
+    )
 // GDP成長率を表示するカードコンポーネント
 // props.gdp で現在のGDP成長率を受け取ります
 function GdpCard({ gdp }) {
@@ -43,6 +88,8 @@ function GameScreen() {
   const [showGdpCard, setShowGdpCard] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
+  // 政策金利カードの表示状態
+  const [showPolicyRateCard, setShowPolicyRateCard] = useState(false);
   // 指数の前回値を保持するための参照
   const prevStatsRef = useRef(stats);
   // 各指数の変化量を状態として保持
@@ -233,7 +280,10 @@ function GameScreen() {
         ),
         React.createElement(
           'li',
-          { className: 'flex justify-between p-2 bg-gray-50 rounded' },
+          {
+            className: 'flex justify-between p-2 bg-gray-50 rounded cursor-pointer',
+            onClick: () => setShowPolicyRateCard(o => !o),
+          },
           '政策金利',
           React.createElement('span', null, `${stats.rate.toFixed(1)}%`)
         ),
@@ -241,10 +291,17 @@ function GameScreen() {
           'li',
           { className: 'flex justify-between p-2 bg-gray-50 rounded' },
           '財政赤字/GDP比',
-          React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
+      React.createElement('span', null, `${stats.debtGDP.toFixed(1)}%`)
         )
       )
     ),
+    // 政策金利カードの表示
+    showPolicyRateCard
+      ? React.createElement(PolicyRateCard, {
+          rate: stats.rate,
+          onClose: () => setShowPolicyRateCard(false),
+        })
+      : null,
     // トースト
     toast
       ? React.createElement(
