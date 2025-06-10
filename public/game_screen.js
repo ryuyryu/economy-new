@@ -3,6 +3,7 @@
 
 // DOMContentLoaded イベントは DOM の構築が終わったときに発火します
 // ページが準備できたら各要素を取得してイベントを設定します
+// capture を true にしてイベントのキャプチャ段階でも受け取ります
 window.addEventListener('DOMContentLoaded', () => {
   // --- 要素の取得 ----------------------------------
   const drawer = document.getElementById('drawer');
