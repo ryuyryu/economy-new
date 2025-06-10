@@ -29,3 +29,9 @@ body {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
+/* ドロワーを開いた状態を表すクラス */
+.drawer-open {
+  /* 左右どちらからでも0位置へ移動 */
+  transform: translateX(0) !important;
+  transition: transform 0.3s;
+}

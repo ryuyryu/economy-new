@@ -14,17 +14,15 @@ window.addEventListener('DOMContentLoaded', function () {
   const closeBtn = document.getElementById('closeModal');
 
   // --- ドロワー開閉処理 ----------------------------
-  // ボタンを押すと、translate-x のクラスを切り替えて表示/非表示を制御
+  // ボタンを押すと、drawer-open クラスの付け外しで表示を切り替える
   drawerBtn.addEventListener('click', () => {
-    drawer.classList.toggle('-translate-x-full');
-    drawer.classList.toggle('translate-x-0');
+    drawer.classList.toggle('drawer-open');
   });
 
   // ドロワー内の「戻る」ボタンでも閉じられるようにする
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', () => {
-      drawer.classList.add('-translate-x-full');
-      drawer.classList.remove('translate-x-0');
+      drawer.classList.remove('drawer-open');
     });
   }
 
