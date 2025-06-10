@@ -49,7 +49,10 @@ function PolicyRateCard(props) {
         },
         '閉じる'
       )
-    )
+    ) // inner div の終了
+  ); // PolicyRateCard の戻り値を閉じる
+} // PolicyRateCard 関数の終了
+
 // GDP成長率を表示するカードコンポーネント
 // props.gdp で現在のGDP成長率を受け取ります
 function GdpCard({ gdp }) {
@@ -84,6 +87,8 @@ function GameScreen() {
   const [history, setHistory] = useState([100]);
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // インジケーター一覧表示用の状態
+  const [showIndicators, setShowIndicators] = useState(false);
   // GDPカード表示のON/OFF
   const [showGdpCard, setShowGdpCard] = useState(false);
   // 画面右上のトースト用メッセージ
@@ -147,7 +152,11 @@ function GameScreen() {
 
   // ドロワーの開閉
   const toggleDrawer = () => setDrawerOpen(o => !o);
-  const closeDrawer = () => setDrawerOpen(false);
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+    // ドロワーを閉じる際は一覧も閉じておく
+    setShowIndicators(false);
+  };
 
   // ドロワーのclassを状態に応じて生成
   const drawerClasses = [
@@ -251,9 +260,20 @@ function GameScreen() {
         id: 'drawer',
         className: `${drawerClasses} flex flex-col`,
       },
+      // インジケーターボタン
       React.createElement(
-        'ul',
-        { className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
+        'button',
+        {
+          id: 'statsBtn',
+          className: 'text-left p-3 bg-gray-100 border-b',
+          onClick: () => setShowIndicators(o => !o),
+        },
+        '📊 経済指標'
+      ),
+      showIndicators &&
+        React.createElement(
+          'ul',
+          { className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
         React.createElement(
           'li',
           { className: 'flex justify-between p-2 bg-gray-50 rounded' },
