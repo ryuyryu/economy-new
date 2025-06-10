@@ -2,7 +2,8 @@
 // 既存の game_screen.js と同等の機能を React コンポーネントで実装します
 
 // React から必要なフックを取り出しておく
-const { useState, useEffect } = React;
+// ReactからuseRefも取り出しておく
+const { useState, useEffect, useRef } = React;
 
 function GameScreen() {
   // ターン数と経済指標を状態として管理
@@ -27,6 +28,28 @@ function GameScreen() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   // 画面右上のトースト用メッセージ
   const [toast, setToast] = useState(null);
+  // 指数の前回値を保持するための参照
+  const prevStatsRef = useRef(stats);
+  // 各指数の変化量を状態として保持
+  const [diffStats, setDiffStats] = useState({
+    cpi: 0,
+    unemp: 0,
+    gdp: 0,
+    rate: 0
+  });
+
+  // statsが更新されるたびに変化量を計算
+  useEffect(() => {
+    const prev = prevStatsRef.current;
+    setDiffStats({
+      cpi: stats.cpi - prev.cpi,
+      unemp: stats.unemp - prev.unemp,
+      gdp: stats.gdp - prev.gdp,
+      rate: stats.rate - prev.rate,
+    });
+    // 現在値を次回の比較用に保存
+    prevStatsRef.current = stats;
+  }, [stats]);
 
   // ターン進行の処理を useEffect で1秒ごとに実行
   useEffect(() => {
@@ -73,6 +96,17 @@ function GameScreen() {
     drawerOpen ? 'translate-x-0' : 'translate-x-full'
   ].join(' ');
 
+  // 変化量を表示するためのヘルパー
+  const diffElement = diff => {
+    const sign = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
+    const color = diff > 0 ? 'text-lime-400' : diff < 0 ? 'text-red-400' : 'text-gray-400';
+    return React.createElement(
+      'span',
+      { className: `ml-1 ${color} animate-pulse diff-change` },
+      sign
+    );
+  };
+
   return React.createElement(
     'div',
     { className: 'bg-gray-100 select-none' },
@@ -108,7 +142,8 @@ function GameScreen() {
             className:
               'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
           },
-          `CPI: ${stats.cpi.toFixed(1)}`
+          `CPI: ${stats.cpi.toFixed(1)}`,
+          diffElement(diffStats.cpi)
         ),
         React.createElement(
           'div',
@@ -116,7 +151,8 @@ function GameScreen() {
             className:
               'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
           },
-          `失業率: ${stats.unemp.toFixed(1)}%`
+          `失業率: ${stats.unemp.toFixed(1)}%`,
+          diffElement(diffStats.unemp)
         ),
         React.createElement(
           'div',
@@ -124,7 +160,8 @@ function GameScreen() {
             className:
               'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
           },
-          `金利: ${stats.rate.toFixed(1)}%`
+          `金利: ${stats.rate.toFixed(1)}%`,
+          diffElement(diffStats.rate)
         ),
         React.createElement(
           'div',
@@ -132,7 +169,8 @@ function GameScreen() {
             className:
               'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
           },
-          `GDP: ${stats.gdp.toFixed(1)}%`
+          `GDP: ${stats.gdp.toFixed(1)}%`,
+          diffElement(diffStats.gdp)
         )
       )
     ),
