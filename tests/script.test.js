@@ -7,11 +7,11 @@ describe('public/start_screen.js', () => {
     document.body.innerHTML = '<button id="startButton"></button>';
     // alertをモック
     global.alert = jest.fn();
-    // start_screen.jsを読み込み、window.onload を実行
+    // start_screen.js を読み込み、DOMContentLoaded を発火させる
     jest.isolateModules(() => {
       require('../public/start_screen.js');
     });
-    window.onload();
+    document.dispatchEvent(new Event('DOMContentLoaded'));
   });
 
   test('ボタンをクリックするとメッセージが表示される', () => {
