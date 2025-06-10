@@ -6,8 +6,7 @@
 const { useState, useEffect, useRef } = React;
 
 function GameScreen() {
-  // ターン数と経済指標を状態として管理
-  const [turn, setTurn] = useState(1);
+  // 経済指標を状態として管理
   // 10種類の経済指数をまとめて stats というオブジェクトで保持
   const [stats, setStats] = useState({
     money: 0,       // 所持金（ゲーム用）
@@ -51,11 +50,9 @@ function GameScreen() {
     prevStatsRef.current = stats;
   }, [stats]);
 
-  // ターン進行の処理を useEffect で1秒ごとに実行
+  // 経済指標を定期的に更新
   useEffect(() => {
     const timer = setInterval(() => {
-      // ターンを更新
-      setTurn(t => t + 1);
       // 経済指標をランダムに変化させる
       setStats(prev => {
         const demand = Math.random() * 10;
@@ -111,18 +108,12 @@ function GameScreen() {
   return React.createElement(
     'div',
     { className: 'bg-gray-100 select-none' },
-    // ターン表示
-    React.createElement(
-      'div',
-      { id: 'turn', className: 'text-center py-1 bg-gray-800 text-white text-sm' },
-      `🕒 ターン:${turn}`
-    ),
     // ヘッダー（タイトルとメニュー）
     React.createElement(
       'header',
       {
         className:
-          'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white px-4 py-2',
+          'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white px-4 py-1',
       },
       React.createElement(
         'div',
