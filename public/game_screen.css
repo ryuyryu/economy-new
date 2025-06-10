@@ -17,7 +17,7 @@ body {
 
 /* ドロワーの重なり順を明示 */
 #drawer {
-  z-index: 10;
+  z-index: 40;
 }
 
 /* 経済指数の変化を示すアニメーション */
@@ -34,4 +34,17 @@ body {
   /* 左右どちらからでも0位置へ移動 */
   transform: translateX(0) !important;
   transition: transform 0.3s;
+}
+
+/* ドロワー表示中に重ねるオーバーレイ */
+#drawerOverlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 30;
+}
+
+#drawerOverlay.overlay-show {
+  opacity: 1;
+  pointer-events: auto;
 }
