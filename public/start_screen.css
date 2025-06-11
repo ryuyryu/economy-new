@@ -35,29 +35,34 @@ h1 {
 /* ===============================================
    タイトルテキスト用のカラー設定
    - 落ち着いた紺色を基調とする
-   - 擬似要素で右から光が当たる演出を追加
+   - 右から左へ光が走る演出を追加
 ================================================ */
 .painted-text {
     /* 黒に近い紺色を基調としたタイトルカラー */
     color: #0a1f40;
 }
 
-/* タイトルを右から照らす光のアニメーション */
-.painted-text::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to left, rgba(255,255,255,0.7), rgba(255,255,255,0));
-    transform: skewX(-20deg);
-    animation: shine 3s infinite;
-    pointer-events: none; /* クリック判定を邪魔しない */
+/* ===============================================
+   文字に光が走るスポットライト演出
+   - グラデーションで文字色が右から左へ変化
+================================================ */
+.spotlight-text {
+    /* 背景グラデーションをテキストに適用して明るさを表現 */
+    background-image: linear-gradient(to left,
+        #0a1f40 0%,   /* 左側は暗い紺色 */
+        #93c5fd 50%,  /* 中央付近で明るい水色 */
+        #0a1f40 100% /* 右端も暗く戻る */
+    );
+    background-size: 200% 100%;     /* グラデーション幅を広げる */
+    background-position: 100% 0;     /* 右端からスタート */
+    -webkit-background-clip: text;   /* テキストの形で切り抜く */
+    background-clip: text;
+    color: transparent;              /* 背景を文字色として見せる */
+    animation: grad-light 6s linear infinite; /* 右→左へ6秒で流れる */
 }
 
-@keyframes shine {
-    from { left: 100%; }
-    to   { left: -50%; }
+@keyframes grad-light {
+    from { background-position: 100% 0; }
+    to   { background-position: 0 0; }
 }
 
