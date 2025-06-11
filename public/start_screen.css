@@ -71,3 +71,27 @@ h1 {
     to   { background-position: -200% 0; }
 }
 
+/* ========================================================
+   タイトルの文字色をグラデーションで変化させる演出
+   - 青 → 紺 → 黒 の配色を時間経過で循環させる
+   - 文字自体を背景グラデーションで描画
+======================================================== */
+.gradient-cycle-text {
+    /* 3色のグラデーションを用意し背景として設定 */
+    background-image: linear-gradient(90deg, #3b82f6, #0a1f40, #000, #3b82f6);
+    /* グラデーションを大きめにして動きを強調 */
+    background-size: 300% 100%;
+    /* 文字の形で背景を切り抜き、色を透明にする */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* 時間とともにグラデーションを左右に移動させる */
+    animation: gradient-cycle 6s linear infinite;
+}
+
+@keyframes gradient-cycle {
+    0%   { background-position:   0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position:   0% 50%; }
+}
+
