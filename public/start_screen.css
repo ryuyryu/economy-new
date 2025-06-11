@@ -26,24 +26,38 @@ h1 {
 /* 立体的な文字を表すクラス */
 
 .three-d-text {
-    /* 白い文字に段差のような影を重ねる */
-    color: #fff;
+    /* 立体感を出すために影を付ける */
     text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+    position: relative;             /* 擬似要素を重ねるために必要 */
+    overflow: hidden;               /* 光の演出がはみ出ないようにする */
 }
 
 /* ===============================================
-   キャッチコピー用のグラデーション設定
-   - 文字上部をやや暗めの色 (#255c83)
-   - 下部を明るい色 (#1da689) にして立体感を出す
-   - 背景のグラデーションで文字を塗りつぶす
-   - ブラウザによってははみ出さないよう
-     background-clip を指定する
+   タイトルテキスト用のカラー設定
+   - 落ち着いた紺色を基調とする
+   - 擬似要素で右から光が当たる演出を追加
 ================================================ */
 .painted-text {
-    /* 文字上部を #255c83、下部を #1da689 にしたグラデーション */
-    background-image: linear-gradient(to bottom, #255c83, #1da689);
-    -webkit-background-clip: text;  /* 背景のグラデーションで文字を塗る */
-    background-clip: text;
-    color: transparent; /* グラデーションを表示するため文字色は透明 */
+    /* 黒に近い紺色を基調としたタイトルカラー */
+    color: #0a1f40;
+}
+
+/* タイトルを右から照らす光のアニメーション */
+.painted-text::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255,255,255,0.7), rgba(255,255,255,0));
+    transform: skewX(-20deg);
+    animation: shine 3s infinite;
+    pointer-events: none; /* クリック判定を邪魔しない */
+}
+
+@keyframes shine {
+    from { left: 100%; }
+    to   { left: -50%; }
 }
 
