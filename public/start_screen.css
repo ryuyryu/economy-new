@@ -49,21 +49,22 @@ h1 {
    - 右から左へハイライトが移動する
 ================================================ */
 .spotlight-text {
-    /* 文字色は黒 */
-    color: #000;
-    /* 背景グラデーションでハイライトを作る */
-    background-image: linear-gradient(
-        to left,
-        transparent 45%,
-        rgba(255,255,255,0.8) 50%,
-        transparent 55%
-    );
-    /* ハイライト部分だけ文字として表示 */
+    /* 鮮やかなブルーのグラデーションを基本色とする */
+    background-image:
+        linear-gradient(to right, #33ccff, #3366ff),
+        linear-gradient(
+            to left,
+            transparent 45%,
+            rgba(255,255,255,0.8) 50%,
+            transparent 55%
+        );
+    /* 文字としてグラデーションを表示 */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    background-size: 200% 100%;
-    background-position: 200% 0;
+    /* 1つ目のグラデーションは固定、2つ目をアニメーション */
+    background-size: 100% 100%, 200% 100%;
+    background-position: 0 0, 200% 0;
     /* スポットライトの速さを6秒に変更 */
     animation: spotlight 6s linear infinite;
 }
