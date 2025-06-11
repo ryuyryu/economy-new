@@ -48,3 +48,9 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* 立体的な文字を表現するクラス */
+.three-d-text {
+  color: #fff;
+  text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+}

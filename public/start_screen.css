@@ -23,3 +23,10 @@ h1 {
     color: #3b82f6; /* 青色 */
 }
 
+/* 立体的な文字を表すクラス */
+.three-d-text {
+    /* 白い文字に段差のような影を重ねる */
+    color: #fff;
+    text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+}
+
