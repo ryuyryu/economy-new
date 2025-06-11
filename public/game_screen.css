@@ -54,15 +54,3 @@ body {
   color: #fff;
   text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
 }
-
-/* 文字にグラデーションを適用するクラス */
-.gradient-text {
-  /* スタート画面と同じく、複数の半透明グラデーションを重ねて筆塗り感を演出 */
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(12, 164, 178, 0.8) 0%, rgba(12, 164, 178, 0.2) 40%, transparent 70%),
-    radial-gradient(circle at 80% 70%, rgba(12, 61, 95, 0.8) 0%, rgba(12, 61, 95, 0.2) 40%, transparent 70%),
-    linear-gradient(60deg, #0ca4b2 0%, #b9eee9 50%, #0c3d5f 100%);
-  background-blend-mode: overlay;
-  -webkit-background-clip: text;
-  color: transparent;
-}
