@@ -32,11 +32,11 @@ function StartScreen() {
         onClick: handleClick,
       },
       React.createElement(
-        'div',
-        {
-          className: 'absolute top-0 left-0 w-full text-center font-bold three-d-text',
-          style: { fontSize: '25vh' }
-        },
+      'div',
+      {
+        className: 'absolute top-0 left-0 w-full text-center font-bold three-d-text painted-text',
+        style: { fontSize: '25vh' }
+      },
         '戦略で導け'
       )
     )
