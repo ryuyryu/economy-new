@@ -1,7 +1,7 @@
 /* スタート画面の背景画像設定 */
 body {
     /* 背景画像として game_screen.webp を使用 */
-    background-image: url("images/game_screen.webp");
+    background-image: url("images/title.webp");
     background-position: center center; /* 画面中央に配置 */
     background-repeat: no-repeat;       /* 画像の繰り返しをしない */
     background-size: cover;             /* PCでは画面いっぱいに表示 */
