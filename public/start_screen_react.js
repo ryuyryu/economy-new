@@ -34,8 +34,8 @@ function StartScreen() {
       React.createElement(
         'div',
         {
-          className:
-            'absolute top-0 left-0 w-full text-center py-4 bg-black/50 text-white text-xl md:text-2xl font-bold',
+          className: 'absolute top-0 left-0 w-full text-center font-bold three-d-text',
+          style: { fontSize: '25vh' }
         },
         '戦略で導け！'
       )
