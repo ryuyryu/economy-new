@@ -197,7 +197,7 @@ function GameScreen() {
       React.createElement(
         'div',
         { className: 'flex justify-between items-center' },
-        React.createElement('h1', { className: 'text-2xl font-bold' }, 'ECON'),
+        React.createElement('h1', { className: 'text-2xl font-bold three-d-text' }, 'ECON'),
         React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')
       ),
       // 主要4指数を大きめに表示
@@ -211,7 +211,7 @@ function GameScreen() {
           'div',
           {
             className:
-              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 text-sky-200 font-bold',
           },
           `CPI: ${stats.cpi.toFixed(1)}`,
           diffElement(diffStats.cpi)
@@ -220,7 +220,7 @@ function GameScreen() {
           'div',
           {
             className:
-              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 text-sky-200 font-bold',
           },
           `失業率: ${stats.unemp.toFixed(1)}%`,
           diffElement(diffStats.unemp)
@@ -229,7 +229,7 @@ function GameScreen() {
           'div',
           {
             className:
-              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 text-sky-200 font-bold',
           },
           `金利: ${stats.rate.toFixed(1)}%`,
           diffElement(diffStats.rate)
@@ -238,7 +238,7 @@ function GameScreen() {
           'div',
           {
             className:
-              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 shadow-inner text-sky-200 font-bold',
+              'bg-sky-700/30 border border-sky-500 rounded-xl px-4 py-2 text-sky-200 font-bold',
           },
           `GDP: ${stats.gdp.toFixed(1)}%`,
           diffElement(diffStats.gdp)

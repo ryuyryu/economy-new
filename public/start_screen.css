@@ -23,3 +23,23 @@ h1 {
     color: #3b82f6; /* 青色 */
 }
 
+/* 立体的な文字を表すクラス */
+.three-d-text {
+    /* 白い文字に段差のような影を重ねる */
+    color: #fff; /* デフォルトは白文字 */
+    text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+}
+
+/* 文字にグラデーションを適用するクラス */
+/* 文字に有機的なグラデーションを適用するクラス */
+.gradient-text {
+    /* 半透明の色を何層も重ね、絵の具を重ね塗りしたような質感に */
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(12, 164, 178, 0.8) 0%, rgba(12, 164, 178, 0.2) 40%, transparent 70%),
+        radial-gradient(circle at 80% 70%, rgba(12, 61, 95, 0.8) 0%, rgba(12, 61, 95, 0.2) 40%, transparent 70%),
+        linear-gradient(60deg, #0ca4b2 0%, #b9eee9 50%, #0c3d5f 100%);
+    background-blend-mode: overlay;
+    -webkit-background-clip: text; /* 文字の輪郭で切り抜く */
+    color: transparent;             /* 塗りつぶしを透明にして背景を表示 */
+}
+
