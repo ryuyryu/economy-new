@@ -24,20 +24,20 @@ function StartScreen() {
 
   // JSX で画面の見た目を記述します
   return (
-    // divを画面いっぱいに広げ、中央にタイトルを表示します
+    // divを画面いっぱいに広げ、画面上部にキャッチコピーを表示します
     React.createElement(
       'div',
       {
-        className: 'h-screen w-screen flex items-center justify-center select-none',
+        className: 'h-screen w-screen flex items-center justify-center select-none relative',
         onClick: handleClick,
       },
       React.createElement(
-        'h1',
+        'div',
         {
           className:
-            'text-6xl font-extrabold tracking-wider text-blue-500 drop-shadow-lg animate-pulse',
+            'absolute top-0 left-0 w-full text-center py-4 bg-black/50 text-white text-xl md:text-2xl font-bold',
         },
-        'ECON'
+        '戦略で導け！'
       )
     )
   );
