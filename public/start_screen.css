@@ -42,21 +42,32 @@ h1 {
     color: #0a1f40;
 }
 
-/* タイトルを右から照らす光のアニメーション */
-.painted-text::after {
+/* ===============================================
+   テキストと周囲を照らすスポットライト演出
+   - 擬似要素を使って右から左へ光が流れる
+================================================ */
+.spotlight-text {
+    /* タイトル文字の基本色 */
+    color: #0a1f40;
+    position: relative;
+    overflow: hidden; /* 光の演出がはみ出さないように */
+}
+
+/* 右から左へ流れるスポットライト */
+.spotlight-text::after {
     content: '';
     position: absolute;
     top: 0;
     left: 100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to left, rgba(255,255,255,0.7), rgba(255,255,255,0));
+    background: linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0));
     transform: skewX(-20deg);
-    animation: shine 3s infinite;
+    animation: spotlight 6s infinite; /* 速度を 50% 遅くする */
     pointer-events: none; /* クリック判定を邪魔しない */
 }
 
-@keyframes shine {
+@keyframes spotlight {
     from { left: 100%; }
     to   { left: -50%; }
 }

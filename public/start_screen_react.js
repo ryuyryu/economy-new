@@ -34,7 +34,7 @@ function StartScreen() {
       React.createElement(
       'div',
       {
-        className: 'absolute left-0 w-full text-center font-bold three-d-text painted-text',
+        className: 'absolute left-0 w-full text-center font-bold three-d-text painted-text spotlight-text',
         style: { fontSize: '25vh', top: '-8px' }
       },
         'econ'
