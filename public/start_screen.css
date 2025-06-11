@@ -64,8 +64,8 @@ h1 {
     color: transparent;
     background-size: 200% 100%;
     background-position: 200% 0;
-    /* スポットライトの速さを9秒に変更 */
-    animation: spotlight 9s infinite;
+    /* スポットライトの速さを2秒に変更 */
+    animation: spotlight 2s linear infinite;
 }
 
 @keyframes spotlight {
