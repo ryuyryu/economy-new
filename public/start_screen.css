@@ -7,6 +7,8 @@ body {
     background-size: cover;             /* PCでは画面いっぱいに表示 */
     margin: 0;
     padding: 0;
+    /* フォントをGoogleフォントで統一 */
+    font-family: 'Noto Sans JP', 'Zen Maru Gothic', sans-serif;
 }
 
 /* スマホでは画像全体が収まるように調整 */
