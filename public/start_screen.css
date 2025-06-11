@@ -24,9 +24,39 @@ h1 {
 }
 
 /* 立体的な文字を表すクラス */
+
 .three-d-text {
     /* 白い文字に段差のような影を重ねる */
     color: #fff;
     text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+}
+
+/* ===============================================
+   キャッチコピー用のカラフルな塗り重ね表現
+   - 半透明の色をいくつも重ねたような効果を狙う
+   - ブラウザによっては背景色がはみ出さないよう
+     background-clip を指定する
+================================================ */
+.painted-text {
+    /* 色を透明度付きで複数重ねる */
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 60, 60, 0.7), transparent 60%),
+        radial-gradient(circle at 80% 40%, rgba(255, 200, 70, 0.6), transparent 60%),
+        radial-gradient(circle at 40% 70%, rgba(40, 150, 255, 0.6), transparent 60%),
+        radial-gradient(circle at 60% 20%, rgba(50, 220, 160, 0.6), transparent 60%);
+    background-blend-mode: multiply;
+    background-size: 200% 200%;
+    background-position: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;       /* 塗りを背景で表現するため文字色は透明 */
+    animation: flowColors 15s linear infinite;
+}
+
+/* 背景の色がゆっくり流れるように動かす */
+@keyframes flowColors {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
