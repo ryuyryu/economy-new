@@ -249,7 +249,11 @@ function GameScreen() {
 
   // 経済指標を定期的に更新
   useEffect(() => {
-    const timer = setInterval(() => {
+    // タイマーIDを保持する変数
+    let timer;
+
+    // 経済指標を更新する関数
+    const updateStats = () => {
       // 経済指標をランダムに変化させる
       setStats(prev => {
         const demand = Math.random() * 10;
@@ -282,9 +286,15 @@ function GameScreen() {
 
         return next;
       });
-    }, 1000);
+      // 次回の更新を5〜7秒後に設定
+      timer = setTimeout(updateStats, 5000 + Math.random() * 2000);
+    };
+
+    // 初回の更新スケジュール
+    timer = setTimeout(updateStats, 5000);
+
     // コンポーネントが消えるときタイマーを解除
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, []);
 
   // ドロワーの開閉
