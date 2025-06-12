@@ -10,6 +10,49 @@ const { useState, useEffect, useRef } = React;
 const MAX_HISTORY = 30;
 
 // ----------------------
+// 経済変動計算用の関数
+// ----------------------
+// 前回の指標値(prevStats)と要因値(factors)から次の指標を計算します
+// factors には demand, supply, policyRate などを含めます
+function updateEconomy(prevStats, factors) {
+  const next = { ...prevStats };
+  const { demand, supply, policyRate } = factors;
+  const gap = demand - supply; // 需要と供給の差分
+
+  // 政策金利は外部から決定された値をそのまま反映
+  next.rate = policyRate;
+
+  // 物価は需要超過で上昇、供給超過で下落させる
+  next.cpi += gap * 0.2;
+  // 失業率は供給が需要を上回ると増加させる
+  next.unemp += -gap * 0.05;
+  if (next.unemp < 0) next.unemp = 0;
+
+  // GDP 成長率は需要が高いほど押し上げられる
+  next.gdp += gap * 0.05;
+
+  // 為替レートは金利差と需給ギャップで簡易計算
+  next.fx += -gap * 0.1 + (policyRate - prevStats.rate) * 0.5;
+
+  // 国債利回りも政策金利の変化に連動させる
+  next.yield += (policyRate - prevStats.rate) * 0.05;
+
+  // 消費者信頼感は需要の強さと失業率で調整
+  next.cci += gap * 0.1 - next.unemp * 0.02;
+
+  // PMI は需要の強弱をそのまま反映
+  next.pmi += gap * 0.1;
+
+  // 財政赤字/GDP比は景気が良いと改善、悪いと悪化
+  next.debtGDP += -gap * 0.02;
+
+  // 貿易収支は供給過剰だと増加、需要過剰だと減少
+  next.trade += -gap * 50;
+
+  return next;
+}
+
+// ----------------------
 // スパークライン描画用コンポーネント
 // ----------------------
 // props.history : 数値の履歴配列
@@ -263,6 +306,11 @@ function GameScreen() {
     gdp: 0,
     rate: 0
   });
+  // 経済変動に影響する要因値を状態で管理
+  // 0〜10の範囲で推移する需要と供給、政策金利を保持する
+  const [demand, setDemand] = useState(5);
+  const [supply, setSupply] = useState(5);
+  const [policyRate, setPolicyRate] = useState(0.0);
 
   // 各指標の情報をまとめたオブジェクト
   const indicatorInfo = {
@@ -298,22 +346,24 @@ function GameScreen() {
 
     // 経済指標を更新する関数
     const updateStats = () => {
-      // 経済指標をランダムに変化させる
+      // 要因値を少しランダムに変動させる
+      const newDemand = Math.max(0, Math.min(10, demand + (Math.random() - 0.5) * 2));
+      const newSupply = Math.max(0, Math.min(10, supply + (Math.random() - 0.5) * 2));
+      const newPolicy = Math.max(-1, Math.min(5, policyRate + (Math.random() - 0.5) * 0.25));
+
+      setDemand(newDemand);
+      setSupply(newSupply);
+      setPolicyRate(newPolicy);
+
       setStats(prev => {
-        const demand = Math.random() * 10;
-        const supply = Math.random() * 10;
-        const next = { ...prev };
-        // シンプルな経済モデルでランダムに指標を変化させる
-        next.cpi += (demand - supply) * 0.2;
-        next.unemp += (supply - demand) * 0.05;
-        next.rate += (demand - supply) * 0.01;
-        next.gdp += (demand - supply) * 0.05;
-        next.fx += (supply - demand) * 0.1;
-        next.yield += (demand - supply) * 0.01;
-        next.cci += (demand - supply) * 0.1;
-        next.pmi += (demand - supply) * 0.1;
-        next.debtGDP += (Math.random() - 0.5) * 0.05;
-        next.trade += (Math.random() - 0.5) * 100;
+        // updateEconomy を使って次の数値を計算
+        const next = updateEconomy(prev, {
+          demand: newDemand,
+          supply: newSupply,
+          policyRate: newPolicy
+        });
+
+        // ゲーム内マネーはランダムで増加させる
         next.money += Math.floor(Math.random() * 500);
 
         // 各指標の履歴を更新
@@ -514,6 +564,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(
 
 // Jest から関数を参照できるようにエクスポート
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { IndicatorCard, Sparkline };
+  module.exports = { IndicatorCard, Sparkline, updateEconomy };
 }
 
