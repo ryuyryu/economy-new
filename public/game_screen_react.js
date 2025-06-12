@@ -21,6 +21,8 @@ function Sparkline({ history }) {
   const containerRef = useRef(null);
   // SVG の幅と高さを状態として管理
   const [size, setSize] = useState({ w: 300, h: 150 });
+  // ホバー位置と値表示用の状態
+  const [hoverInfo, setHoverInfo] = useState(null);
 
   useEffect(() => {
     // 描画後に親要素の幅を取得してサイズを更新
@@ -56,9 +58,24 @@ function Sparkline({ history }) {
     .join(' ');
 
   // 折れ線グラフと目盛り軸を描画
+  const handleMove = e => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left + containerRef.current.scrollLeft;
+    const step = size.w / (history.length - 1);
+    const idx = Math.round(x / step);
+    if (idx >= 0 && idx < history.length) {
+      setHoverInfo({ index: idx, x });
+    } else {
+      setHoverInfo(null);
+    }
+  };
+
+  const handleLeave = () => setHoverInfo(null);
+
   return React.createElement(
     'div',
-    { ref: containerRef, className: 'sparkline-container' },
+    { ref: containerRef, className: 'sparkline-container', onPointerMove: handleMove, onPointerLeave: handleLeave },
     React.createElement(
       'svg',
       {
@@ -113,6 +130,14 @@ function Sparkline({ history }) {
       fontSize: '10',
       fill: '#555'
     }, '時間')
+    ),
+    hoverInfo && React.createElement(
+      'div',
+      {
+        className: 'sparkline-tooltip',
+        style: { left: `${hoverInfo.x}px` }
+      },
+      history[hoverInfo.index].toFixed(1)
     )
   );
 }

@@ -75,6 +75,19 @@ body {
   display: block;
 }
 
+/* ホバーした位置の値を表示するツールチップ */
+.sparkline-tooltip {
+  position: absolute;
+  transform: translate(-50%, -4px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem; /* text-xs */
+  padding: 2px 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 /* カードを閉じるためのバツボタン */
 .close-btn {
   position: absolute;
