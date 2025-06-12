@@ -32,12 +32,13 @@ function StartScreen() {
         onClick: handleClick,
       },
       React.createElement(
-      'div',
-      {
-        className: 'absolute left-0 w-full text-center font-bold three-d-text painted-text spotlight-text',
-        style: { fontSize: '25vh', top: '-8px' }
-      },
-        'econ'
+        'h1',
+        {
+          className:
+            'text-6xl font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
+          style: { top: '-8px' }
+        },
+        'ECON'
       )
     )
   );
