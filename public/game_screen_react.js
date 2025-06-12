@@ -17,7 +17,7 @@ function Sparkline({ history }) {
   if (!history || history.length === 0) return null;
 
   // SVG のサイズ
-  // ビューBox用の仮想サイズ（実際の表示幅はCSSで制御）
+  // 表示領域を少し大きめにして見やす
   const width = 120;
   const height = 60;
 
@@ -40,12 +40,7 @@ function Sparkline({ history }) {
   // 折れ線グラフと目盛り軸を描画
   return React.createElement(
     'svg',
-    {
-      width: '100%',
-      height: '100%',
-      viewBox: `0 0 ${width} ${height}`,
-      className: 'sparkline'
-    },
+    { width, height, className: 'sparkline' };
     // 横軸
     React.createElement('line', {
       x1: 0,
