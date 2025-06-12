@@ -20,6 +20,7 @@ function Sparkline({ history }) {
   // 親要素のサイズを取得するための参照
   const containerRef = useRef(null);
   // SVG の幅と高さを状態として管理
+  // 初期サイズを適当に設定
   const [size, setSize] = useState({ w: 300, h: 150 });
 
   useEffect(() => {
@@ -27,10 +28,10 @@ function Sparkline({ history }) {
     const update = () => {
       if (containerRef.current) {
         // カード幅からパディングを除いた値を基準にする
-        const base = containerRef.current.clientWidth - 16;
-        // 幅はカード幅の 5/6、高さはカード幅の 1/2 に設定
-        const w = base * 5 / 6;
-        const h = base / 2;
+        const base = containerRef.current.clientWidth - 16; // パディングを除いた値
+        // グラフをカード幅いっぱいに広げる
+        const w = base;
+        const h = base / 2; // 高さは幅に対して 1/2 程度
         setSize({ w, h });
       }
     };
@@ -58,7 +59,8 @@ function Sparkline({ history }) {
   // 折れ線グラフと目盛り軸を描画
   return React.createElement(
     'div',
-    { ref: containerRef, className: 'sparkline-container' },
+    // 高さはTailwindのh-32を参考に設定
+    { ref: containerRef, className: 'sparkline-container h-32 w-full' },
     React.createElement(
       'svg',
       {
