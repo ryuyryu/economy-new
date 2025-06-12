@@ -2,8 +2,51 @@
 // 既存の game_screen.js と同等の機能を React コンポーネントで実装します
 
 // React から必要なフックを取り出しておく
-// ReactからuseRefも取り出しておく
+// React から useRef も取り出しておく
 const { useState, useEffect, useRef } = React;
+
+// 履歴の長さを一定に保つための定数
+const MAX_HISTORY = 20;
+
+// ----------------------
+// スパークライン描画用コンポーネント
+// ----------------------
+// props.history : 数値の履歴配列
+function Sparkline({ history }) {
+  // 履歴がなければ描画しない
+  if (!history || history.length === 0) return null;
+
+  // SVG のサイズ
+  const width = 80;
+  const height = 24;
+
+  // 最小値と最大値を求めてY座標を正規化
+  const min = Math.min(...history);
+  const max = Math.max(...history);
+  const range = max - min || 1;
+
+  const step = width / (history.length - 1);
+  // 各点を"x,y"形式で並べる
+  const points = history
+    .map((v, i) => {
+      const x = i * step;
+      const y = height - ((v - min) / range) * height;
+      return `${x},${y}`;
+    })
+    .join(' ');
+
+  // 折れ線グラフを描画
+  return React.createElement(
+    'svg',
+    { width, height, className: 'sparkline' },
+    React.createElement('polyline', {
+      points,
+      fill: 'none',
+      stroke: '#3b82f6',
+      strokeWidth: 2,
+    })
+  );
+}
 
 // ----------------------
 // 汎用的な指標カードコンポーネント
@@ -13,6 +56,7 @@ const { useState, useEffect, useRef } = React;
 // props.unit   : 単位（%や円など）
 // props.desc   : 指標の説明文
 // props.onClose: 閉じる処理
+// props.history: スパークライン用の履歴データ
 function IndicatorCard(props) {
   return React.createElement(
     'div',
@@ -39,6 +83,8 @@ function IndicatorCard(props) {
         { className: 'text-3xl font-mono text-center' },
         `${props.value.toFixed(1)}${props.unit}`
       ),
+      // 過去の推移を折れ線グラフで表示
+      React.createElement(Sparkline, { history: props.history }),
       React.createElement(
         'p',
         { className: 'text-sm text-gray-600' },
@@ -72,8 +118,19 @@ function GameScreen() {
     debtGDP: -3.0,  // 財政赤字対GDP比
     trade: 1200     // 貿易収支
   });
-  // CPIの履歴を簡易グラフ用に保持
-  const [history, setHistory] = useState([100]);
+  // 各指標ごとの履歴を保持するオブジェクト
+  const [historyMap, setHistoryMap] = useState({
+    cpi: [100],
+    unemp: [4.2],
+    gdp: [1.8],
+    rate: [0.0],
+    fx: [150.0],
+    yield: [0.9],
+    cci: [100],
+    pmi: [50],
+    debtGDP: [-3.0],
+    trade: [1200],
+  });
   // ドロワー表示のON/OFF
   const [drawerOpen, setDrawerOpen] = useState(false);
   // インジケーター一覧表示用の状態
@@ -139,11 +196,19 @@ function GameScreen() {
         next.debtGDP += (Math.random() - 0.5) * 0.05;
         next.trade += (Math.random() - 0.5) * 100;
         next.money += Math.floor(Math.random() * 500);
-        // CPIの履歴を更新（最大20件）
-        setHistory(h => {
-          const data = h.length >= 20 ? h.slice(1) : h;
-          return [...data, next.cpi];
+
+        // 各指標の履歴を更新
+        setHistoryMap(hist => {
+          const updated = { ...hist };
+          Object.keys(indicatorInfo).forEach(key => {
+            const arr = updated[key] ? [...updated[key]] : [];
+            if (arr.length >= MAX_HISTORY) arr.shift();
+            arr.push(next[key]);
+            updated[key] = arr;
+          });
+          return updated;
         });
+
         return next;
       });
     }, 1000);
@@ -253,6 +318,7 @@ function GameScreen() {
           value: stats[activeIndicator],
           unit: indicatorInfo[activeIndicator].unit,
           desc: indicatorInfo[activeIndicator].desc,
+          history: historyMap[activeIndicator],
           onClose: () => setActiveIndicator(null),
         })
       : null,
@@ -320,4 +386,9 @@ function GameScreen() {
 
 // ReactDOM で画面に描画
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(GameScreen));
+
+// Jest から関数を参照できるようにエクスポート
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { IndicatorCard, Sparkline };
+}
 

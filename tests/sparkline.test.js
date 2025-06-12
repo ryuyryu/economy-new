@@ -1,0 +1,33 @@
+const React = require('react');
+const ReactDOM = require('react-dom/client');
+const { act } = require('react-dom/test-utils');
+
+// jsdom 環境でIndicatorCardを描画し、スパークライン要素が存在するか確認
+
+describe('IndicatorCard Sparkline', () => {
+  test('スパークラインが描画される', () => {
+    document.body.innerHTML = '<div id="root"></div>';
+    global.React = React;
+    global.ReactDOM = ReactDOM;
+    const { IndicatorCard } = require('../public/game_screen_react.js');
+
+    const container = document.createElement('div');
+    act(() => {
+      ReactDOM.createRoot(container).render(
+        React.createElement(IndicatorCard, {
+          title: 'test',
+          value: 1,
+          unit: '',
+          desc: 'desc',
+          history: [1, 2, 3],
+          onClose: () => {}
+        })
+      );
+    });
+
+    const svg = container.querySelector('.sparkline');
+    expect(svg).not.toBeNull();
+    const poly = svg.querySelector('polyline');
+    expect(poly).not.toBeNull();
+  });
+});
