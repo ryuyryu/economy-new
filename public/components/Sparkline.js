@@ -75,8 +75,6 @@
       React.createElement('line', { x1: 0, y1: size.h, x2: size.w, y2: size.h, stroke: '#ccc', strokeWidth: 1 }),
       React.createElement('line', { x1: 0, y1: 0, x2: 0, y2: size.h, stroke: '#ccc', strokeWidth: 1 }),
       React.createElement('polyline', { points, fill: 'none', stroke: '#3b82f6', strokeWidth: 2 }),
-      React.createElement('text', { x: 2, y: 10, fontSize: '10', fill: '#555' }, max.toFixed(1)),
-      React.createElement('text', { x: 2, y: size.h - 2, fontSize: '10', fill: '#555' }, min.toFixed(1)),
       React.createElement('text', { x: size.w - 24, y: size.h - 2, fontSize: '10', fill: '#555' }, '時間'),
       hoverInfo && React.createElement('circle', { r: 4, className: 'sparkline-dot', style: { transform: `translate(${hoverInfo.x}px, ${hoverInfo.y}px)` } })
     ),
@@ -84,6 +82,12 @@
       'div',
       { className: 'sparkline-tooltip', style: { left: `${hoverInfo.x}px` } },
       history[hoverInfo.index].toFixed(1)
+    ),
+    React.createElement(
+      'div',
+      { className: 'sparkline-stats flex justify-between text-xs text-gray-500 mt-1' },
+      React.createElement('span', { className: 'max-value' }, `最高: ${max.toFixed(1)}`),
+      React.createElement('span', { className: 'min-value' }, `最低: ${min.toFixed(1)}`)
     )
   );
   }

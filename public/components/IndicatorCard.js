@@ -21,6 +21,8 @@
       ? props.history[props.history.length - 1] -
         props.history[props.history.length - 2]
       : 0;
+  const diffSign = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
+  const diffColor = diff > 0 ? 'text-lime-500' : diff < 0 ? 'text-red-500' : 'text-gray-500';
 
   return React.createElement(
     'div',
@@ -45,7 +47,8 @@
       React.createElement(
         'p',
         { className: 'text-3xl font-mono text-center' },
-        `${props.value.toFixed(1)}${props.unit}`
+        `${props.value.toFixed(1)}${props.unit}`,
+        React.createElement('span', { className: `ml-2 text-xl ${diffColor}` }, diffSign)
       ),
       React.createElement(
         'div',
@@ -77,10 +80,8 @@
         ),
         React.createElement(
           'p',
-          { className: 'diff-value' },
-          diff > 0
-            ? `前回比: +${diff.toFixed(1)}`
-            : `前回比: ${diff.toFixed(1)}`
+          { className: `diff-value ${diffColor}` },
+          `前回比: ${diffSign}`
         )
       )
     )
