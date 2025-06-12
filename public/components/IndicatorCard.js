@@ -11,6 +11,17 @@
   }
 
   function IndicatorCard(props) {
+  // -----------------------------
+  // history から統計値を計算する
+  // -----------------------------
+  const max = Math.max(...props.history);
+  const min = Math.min(...props.history);
+  const diff =
+    props.history.length >= 2
+      ? props.history[props.history.length - 1] -
+        props.history[props.history.length - 2]
+      : 0;
+
   return React.createElement(
     'div',
     { className: 'fixed inset-0 flex items-center justify-center z-40' },
@@ -48,6 +59,28 @@
           'p',
           { className: 'usage-note flex-1 text-sm text-gray-600 ml-2' },
           props.desc
+        )
+      ),
+      // スパークライン下部に統計値を表示
+      React.createElement(
+        'div',
+        { className: 'text-xs ml-2 mt-1 space-y-1' },
+        React.createElement(
+          'p',
+          { className: 'max-value' },
+          `最高値: ${max.toFixed(1)}`
+        ),
+        React.createElement(
+          'p',
+          { className: 'min-value' },
+          `最低値: ${min.toFixed(1)}`
+        ),
+        React.createElement(
+          'p',
+          { className: 'diff-value' },
+          diff > 0
+            ? `前回比: +${diff.toFixed(1)}`
+            : `前回比: ${diff.toFixed(1)}`
         )
       )
     )

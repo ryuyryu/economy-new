@@ -33,5 +33,13 @@ describe('IndicatorCard Sparkline', () => {
     // 新たに追加された使い方メモの要素が存在するか確認
     const note = container.querySelector('.usage-note');
     expect(note).not.toBeNull();
+
+    // 追加された統計値要素が存在するか確認
+    const maxEl = container.querySelector('.max-value');
+    const minEl = container.querySelector('.min-value');
+    const diffEl = container.querySelector('.diff-value');
+    expect(maxEl).not.toBeNull();
+    expect(minEl).not.toBeNull();
+    expect(diffEl).not.toBeNull();
   });
 });
