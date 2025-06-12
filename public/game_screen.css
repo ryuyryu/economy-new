@@ -59,6 +59,8 @@ body {
 .sparkline-container {
   /* カード内で 8px の余白をとる */
   padding: 8px;
+  /* ツールチップ配置の基準とするため相対位置に */
+  position: relative;
   /* 親要素の幅に合わせつつ padding を含めた幅計算にする */
   width: 100%;
   box-sizing: border-box;
@@ -86,6 +88,13 @@ body {
   padding: 2px 4px;
   pointer-events: none;
   white-space: nowrap;
+}
+
+/* ホバー位置を示す点 */
+.sparkline-dot {
+  fill: #f87171; /* 赤系の色 */
+  stroke: #fff;
+  stroke-width: 1px;
 }
 
 /* カードを閉じるためのバツボタン */
