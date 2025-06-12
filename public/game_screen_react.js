@@ -17,14 +17,16 @@ function Sparkline({ history }) {
   if (!history || history.length === 0) return null;
 
   // SVG のサイズ
-  const width = 80;
-  const height = 24;
+  // ビューBox用の仮想サイズ（実際の表示幅はCSSで制御）
+  const width = 120;
+  const height = 60;
 
   // 最小値と最大値を求めてY座標を正規化
   const min = Math.min(...history);
   const max = Math.max(...history);
   const range = max - min || 1;
 
+  // データ数からX軸の間隔を求める
   const step = width / (history.length - 1);
   // 各点を"x,y"形式で並べる
   const points = history
@@ -35,16 +37,61 @@ function Sparkline({ history }) {
     })
     .join(' ');
 
-  // 折れ線グラフを描画
+  // 折れ線グラフと目盛り軸を描画
   return React.createElement(
     'svg',
-    { width, height, className: 'sparkline' },
+    {
+      width: '100%',
+      height: '100%',
+      viewBox: `0 0 ${width} ${height}`,
+      className: 'sparkline'
+    },
+    // 横軸
+    React.createElement('line', {
+      x1: 0,
+      y1: height,
+      x2: width,
+      y2: height,
+      stroke: '#ccc',
+      strokeWidth: 1,
+    }),
+    // 縦軸
+    React.createElement('line', {
+      x1: 0,
+      y1: 0,
+      x2: 0,
+      y2: height,
+      stroke: '#ccc',
+      strokeWidth: 1,
+    }),
+    // 折れ線
     React.createElement('polyline', {
       points,
       fill: 'none',
       stroke: '#3b82f6',
       strokeWidth: 2,
-    })
+    }),
+    // 最大値ラベル
+    React.createElement('text', {
+      x: 2,
+      y: 10,
+      fontSize: '10',
+      fill: '#555'
+    }, max.toFixed(1)),
+    // 最小値ラベル
+    React.createElement('text', {
+      x: 2,
+      y: height - 2,
+      fontSize: '10',
+      fill: '#555'
+    }, min.toFixed(1)),
+    // 横軸ラベル（時間）
+    React.createElement('text', {
+      x: width - 24,
+      y: height - 2,
+      fontSize: '10',
+      fill: '#555'
+    }, '時間')
   );
 }
 
@@ -71,8 +118,18 @@ function IndicatorCard(props) {
       'div',
       {
         className:
-          'relative bg-white rounded-xl shadow-lg w-11/12 max-w-sm p-4 space-y-3 z-10',
+          // 画面いっぱいより少し小さめに表示する
+          'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10',
       },
+      // 右上に閉じるボタン
+      React.createElement(
+        'button',
+        {
+          onClick: props.onClose,
+          className: 'absolute top-2 right-2 text-xl',
+        },
+        '✕'
+      ),
       React.createElement(
         'h2',
         { className: 'text-lg font-bold' },
@@ -90,14 +147,6 @@ function IndicatorCard(props) {
         { className: 'text-sm text-gray-600' },
         props.desc
       ),
-      React.createElement(
-        'button',
-        {
-          onClick: props.onClose,
-          className: 'w-full bg-gray-100 rounded py-1',
-        },
-        '閉じる'
-      )
     ) // inner div の終了
   ); // IndicatorCard の戻り値を閉じる
 } // IndicatorCard 関数の終了
