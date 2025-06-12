@@ -28,11 +28,11 @@ function Sparkline({ history }) {
     // 描画後に親要素の幅を取得してサイズを更新
     const update = () => {
       if (containerRef.current) {
-        // 親要素の幅を基準に拡大率を計算
+        // 親要素（カード内のスパークライン用エリア）の幅をそのまま横幅とする
+        // 横:縦 = 3:1 にしたいので高さは横幅の1/3とする
         const base = containerRef.current.clientWidth;
-        // 幅は親要素の1.5倍、縦はさらに2倍（比率 2.25:1 程度）
-        const w = base * 1.5;
-        const h = (base / 3) * 2;
+        const w = base;
+        const h = base / 3;
         setSize({ w, h });
       }
     };
