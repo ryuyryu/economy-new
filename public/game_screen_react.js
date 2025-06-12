@@ -6,7 +6,8 @@
 const { useState, useEffect, useRef } = React;
 
 // 履歴の長さを一定に保つための定数
-const MAX_HISTORY = 20;
+// カード内で30ターン分の推移を確認できるよう拡張
+const MAX_HISTORY = 30;
 
 // ----------------------
 // スパークライン描画用コンポーネント
@@ -17,9 +18,9 @@ function Sparkline({ history }) {
   if (!history || history.length === 0) return null;
 
   // SVG のサイズ
-  // 表示領域を少し大きめにして見やすくする
-  const width = 120;
-  const height = 60;
+  // カード幅いっぱいに広げて高さも大きめに
+  const svgWidth = 300; // 表示用の横幅
+  const svgHeight = 120; // 表示用の縦幅
 
   // 最小値と最大値を求めてY座標を正規化
   const min = Math.min(...history);
@@ -27,12 +28,12 @@ function Sparkline({ history }) {
   const range = max - min || 1;
 
   // データ数からX軸の間隔を求める
-  const step = width / (history.length - 1);
+  const step = svgWidth / (history.length - 1);
   // 各点を"x,y"形式で並べる
   const points = history
     .map((v, i) => {
       const x = i * step;
-      const y = height - ((v - min) / range) * height;
+      const y = svgHeight - ((v - min) / range) * svgHeight;
       return `${x},${y}`;
     })
     .join(' ');
@@ -40,13 +41,16 @@ function Sparkline({ history }) {
   // 折れ線グラフと目盛り軸を描画
   return React.createElement(
     'svg',
-    { width, height, className: 'sparkline' },
+    {
+      viewBox: `0 0 ${svgWidth} ${svgHeight}`,
+      className: 'sparkline',
+    },
     // 横軸
     React.createElement('line', {
       x1: 0,
-      y1: height,
-      x2: width,
-      y2: height,
+      y1: svgHeight,
+      x2: svgWidth,
+      y2: svgHeight,
       stroke: '#ccc',
       strokeWidth: 1,
     }),
@@ -55,7 +59,7 @@ function Sparkline({ history }) {
       x1: 0,
       y1: 0,
       x2: 0,
-      y2: height,
+      y2: svgHeight,
       stroke: '#ccc',
       strokeWidth: 1,
     }),
@@ -76,14 +80,14 @@ function Sparkline({ history }) {
     // 最小値ラベル
     React.createElement('text', {
       x: 2,
-      y: height - 2,
+      y: svgHeight - 2,
       fontSize: '10',
       fill: '#555'
     }, min.toFixed(1)),
     // 横軸ラベル（時間）
     React.createElement('text', {
-      x: width - 24,
-      y: height - 2,
+      x: svgWidth - 24,
+      y: svgHeight - 2,
       fontSize: '10',
       fill: '#555'
     }, '時間')
