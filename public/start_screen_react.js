@@ -32,13 +32,35 @@ function StartScreen() {
         onClick: handleClick,
       },
       React.createElement(
-        'h1',
-        {
-          className:
-            'text-6xl font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
-          style: { top: '-8px' }
-        },
-        'ECON'
+        'div',
+        { className: 'text-center' },
+        // タイトル文字
+        React.createElement(
+          'h1',
+          {
+            className:
+              'text-6xl font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
+            style: { top: '-8px' }
+          },
+          "Let's Go"
+        ),
+        // 画面タップを促す説明文
+        React.createElement(
+          'p',
+          {
+            className: 'relative mt-16 text-white text-lg'
+          },
+          '画面をタップしてスタート'
+        ),
+        // 明確な開始ボタン
+        React.createElement(
+          'button',
+          {
+            onClick: handleClick,
+            className: 'mt-4 px-6 py-2 bg-[#00fb00] text-black font-bold rounded shadow'
+          },
+          '開始'
+        )
       )
     )
   );
