@@ -17,10 +17,23 @@ function Sparkline({ history }) {
   // 履歴がなければ描画しない
   if (!history || history.length === 0) return null;
 
-  // SVG のサイズ
-  // カード幅いっぱいに広げて高さも大きめに
-  const svgWidth = 300; // 表示用の横幅
-  const svgHeight = 120; // 表示用の縦幅
+  // 親要素のサイズを取得するための参照
+  const containerRef = useRef(null);
+  // SVG の幅と高さを状態として管理
+  const [size, setSize] = useState({ w: 300, h: 300 });
+
+  useEffect(() => {
+    // 描画後に親要素の幅を取得してサイズを更新
+    const update = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth - 16; // padding分を差し引く
+        setSize({ w: width, h: width }); // 高さは幅と同じにする
+      }
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // 最小値と最大値を求めてY座標を正規化
   const min = Math.min(...history);
@@ -28,29 +41,34 @@ function Sparkline({ history }) {
   const range = max - min || 1;
 
   // データ数からX軸の間隔を求める
-  const step = svgWidth / (history.length - 1);
+  const step = size.w / (history.length - 1);
   // 各点を"x,y"形式で並べる
   const points = history
     .map((v, i) => {
       const x = i * step;
-      const y = svgHeight - ((v - min) / range) * svgHeight;
+      const y = size.h - ((v - min) / range) * size.h;
       return `${x},${y}`;
     })
     .join(' ');
 
   // 折れ線グラフと目盛り軸を描画
   return React.createElement(
-    'svg',
-    {
-      viewBox: `0 0 ${svgWidth} ${svgHeight}`,
-      className: 'sparkline',
-    },
+    'div',
+    { ref: containerRef, className: 'sparkline-container' },
+    React.createElement(
+      'svg',
+      {
+        viewBox: `0 0 ${size.w} ${size.h}`,
+        width: size.w,
+        height: size.h,
+        className: 'sparkline',
+      },
     // 横軸
     React.createElement('line', {
       x1: 0,
-      y1: svgHeight,
-      x2: svgWidth,
-      y2: svgHeight,
+      y1: size.h,
+      x2: size.w,
+      y2: size.h,
       stroke: '#ccc',
       strokeWidth: 1,
     }),
@@ -59,7 +77,7 @@ function Sparkline({ history }) {
       x1: 0,
       y1: 0,
       x2: 0,
-      y2: svgHeight,
+      y2: size.h,
       stroke: '#ccc',
       strokeWidth: 1,
     }),
@@ -80,17 +98,18 @@ function Sparkline({ history }) {
     // 最小値ラベル
     React.createElement('text', {
       x: 2,
-      y: svgHeight - 2,
+      y: size.h - 2,
       fontSize: '10',
       fill: '#555'
     }, min.toFixed(1)),
     // 横軸ラベル（時間）
     React.createElement('text', {
-      x: svgWidth - 24,
-      y: svgHeight - 2,
+      x: size.w - 24,
+      y: size.h - 2,
       fontSize: '10',
       fill: '#555'
     }, '時間')
+    )
   );
 }
 
