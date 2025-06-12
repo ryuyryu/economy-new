@@ -29,5 +29,9 @@ describe('IndicatorCard Sparkline', () => {
     expect(svg).not.toBeNull();
     const poly = svg.querySelector('polyline');
     expect(poly).not.toBeNull();
+
+    // 新たに追加された使い方メモの要素が存在するか確認
+    const note = container.querySelector('.usage-note');
+    expect(note).not.toBeNull();
   });
 });

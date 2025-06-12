@@ -21,17 +21,18 @@ function Sparkline({ history }) {
   const containerRef = useRef(null);
   // SVG の幅と高さを状態として管理
   const [size, setSize] = useState({ w: 300, h: 150 });
+  // ホバー位置と値表示用の状態
+  const [hoverInfo, setHoverInfo] = useState(null);
 
   useEffect(() => {
     // 描画後に親要素の幅を取得してサイズを更新
     const update = () => {
       if (containerRef.current) {
-        // カード幅からパディングを除いた値を基準にする
-        const base = containerRef.current.clientWidth - 16;
-        // 幅を従来の2倍にし、高さはカード幅の 1/2 のまま
-        // base * 5 / 6 が元の計算なので *2 している
-        const w = (base * 5 / 6) * 2;
-        const h = base / 2;
+        // 親要素の幅を基準に拡大率を計算
+        const base = containerRef.current.clientWidth;
+        // 幅は親要素の1.5倍、縦はさらに2倍（比率 2.25:1 程度）
+        const w = base * 1.5;
+        const h = (base / 3) * 2;
         setSize({ w, h });
       }
     };
@@ -57,9 +58,24 @@ function Sparkline({ history }) {
     .join(' ');
 
   // 折れ線グラフと目盛り軸を描画
+  const handleMove = e => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left + containerRef.current.scrollLeft;
+    const step = size.w / (history.length - 1);
+    const idx = Math.round(x / step);
+    if (idx >= 0 && idx < history.length) {
+      setHoverInfo({ index: idx, x });
+    } else {
+      setHoverInfo(null);
+    }
+  };
+
+  const handleLeave = () => setHoverInfo(null);
+
   return React.createElement(
     'div',
-    { ref: containerRef, className: 'sparkline-container' },
+    { ref: containerRef, className: 'sparkline-container', onPointerMove: handleMove, onPointerLeave: handleLeave },
     React.createElement(
       'svg',
       {
@@ -114,6 +130,14 @@ function Sparkline({ history }) {
       fontSize: '10',
       fill: '#555'
     }, '時間')
+    ),
+    hoverInfo && React.createElement(
+      'div',
+      {
+        className: 'sparkline-tooltip',
+        style: { left: `${hoverInfo.x}px` }
+      },
+      history[hoverInfo.index].toFixed(1)
     )
   );
 }
@@ -142,7 +166,7 @@ function IndicatorCard(props) {
       {
         className:
           // 画面いっぱいより少し小さめに表示する
-          'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10',
+          'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10 flex flex-col',
       },
       // 右上に閉じるボタン
       // 閉じるためのバツボタン
@@ -159,17 +183,25 @@ function IndicatorCard(props) {
         { className: 'text-lg font-bold' },
         props.title
       ),
-      // カード上部にスパークラインを表示
-      React.createElement(Sparkline, { history: props.history }),
       React.createElement(
         'p',
         { className: 'text-3xl font-mono text-center' },
         `${props.value.toFixed(1)}${props.unit}`
       ),
       React.createElement(
-        'p',
-        { className: 'text-sm text-gray-600' },
-        props.desc
+        'div',
+        { className: 'flex items-center mt-2' },
+        React.createElement(
+          'div',
+        // グラフ部分はカード幅の1/3だけ使用する
+        { className: 'flex-shrink-0 w-1/3 pr-2' },
+          React.createElement(Sparkline, { history: props.history })
+        ),
+        React.createElement(
+          'p',
+          { className: 'usage-note flex-1 text-sm text-gray-600 ml-2' },
+          props.desc
+        )
       ),
     ) // inner div の終了
   ); // IndicatorCard の戻り値を閉じる

@@ -62,9 +62,11 @@ body {
   /* 親要素の幅に合わせつつ padding を含めた幅計算にする */
   width: 100%;
   box-sizing: border-box;
-  /* グラフを中央寄せにする */
+  /* スパークラインを左寄せで表示し、縦方向は中央に揃える */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative; /* ツールチップを絶対配置するため */
   /* 横幅を広げた際にスクロールできるようにする */
   overflow-x: auto;
 }
@@ -72,6 +74,19 @@ body {
 .sparkline {
   /* サイズは React 側で指定するのでここでは自動 */
   display: block;
+}
+
+/* ホバーした位置の値を表示するツールチップ */
+.sparkline-tooltip {
+  position: absolute;
+  transform: translate(-50%, -4px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem; /* text-xs */
+  padding: 2px 4px;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 /* カードを閉じるためのバツボタン */
