@@ -48,7 +48,7 @@ function StartScreen() {
           className: 'font-extrabold text-[#00fb00] drop-shadow-[0_0_5px_#00fb00] animate-pulse absolute left-0 w-full text-center transition-opacity duration-700',
           style: { fontSize: '25vh', top: '-8px', opacity: showTitle ? 1 : 0 }
         },
-        "Let's Go",
+        "ecoNova",
       ),
       // 下部に「タップで開始」テキストを表示
       React.createElement(
