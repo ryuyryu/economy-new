@@ -28,8 +28,9 @@ function Sparkline({ history }) {
       if (containerRef.current) {
         // カード幅からパディングを除いた値を基準にする
         const base = containerRef.current.clientWidth - 16;
-        // 幅はカード幅の 5/6、高さはカード幅の 1/2 に設定
-        const w = base * 5 / 6;
+        // 幅を従来の2倍にし、高さはカード幅の 1/2 のまま
+        // base * 5 / 6 が元の計算なので *2 している
+        const w = (base * 5 / 6) * 2;
         const h = base / 2;
         setSize({ w, h });
       }
@@ -144,11 +145,12 @@ function IndicatorCard(props) {
           'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10',
       },
       // 右上に閉じるボタン
+      // 閉じるためのバツボタン
       React.createElement(
         'button',
         {
           onClick: props.onClose,
-          className: 'absolute top-2 right-2 text-xl',
+          className: 'close-btn',
         },
         '✕'
       ),
