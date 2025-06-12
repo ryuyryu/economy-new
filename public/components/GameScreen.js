@@ -1,17 +1,18 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
-let Sparkline, IndicatorCard;
-if (typeof require !== 'undefined') {
-  ({ Sparkline } = require('./Sparkline.js'));
-  ({ IndicatorCard } = require('./IndicatorCard.js'));
-} else if (typeof window !== 'undefined') {
-  Sparkline = window.Sparkline;
-  IndicatorCard = window.IndicatorCard;
-}
+(function () {
+  let Sparkline, IndicatorCard;
+  if (typeof require !== 'undefined') {
+    ({ Sparkline } = require('./Sparkline.js'));
+    ({ IndicatorCard } = require('./IndicatorCard.js'));
+  } else if (typeof window !== 'undefined') {
+    Sparkline = window.Sparkline;
+    IndicatorCard = window.IndicatorCard;
+  }
 
-const { useState, useEffect, useRef } = React;
+  const { useState, useEffect, useRef } = React;
 
-function GameScreen() {
+  function GameScreen() {
   // ゲーム内で扱う各種指標を状態としてまとめて保持
   const [stats, setStats] = useState({
     money: 0,
@@ -220,11 +221,12 @@ function GameScreen() {
     ),
     toast ? React.createElement('div', { id: 'toast', className: 'fixed top-16 right-4 bg-red-600 text-white px-4 py-2 rounded shadow' }, toast) : null
   );
-}
+  }
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { GameScreen };
-}
-if (typeof window !== 'undefined') {
-  window.GameScreen = GameScreen;
-}
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { GameScreen };
+  }
+  if (typeof window !== 'undefined') {
+    window.GameScreen = GameScreen;
+  }
+})();

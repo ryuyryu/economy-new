@@ -1,8 +1,9 @@
 // Sparkline コンポーネント
 // 数値の履歴データを小さな折れ線グラフで表示する
-const { useState, useEffect, useRef } = React;
+(function () {
+  const { useState, useEffect, useRef } = React;
 
-function Sparkline({ history }) {
+  function Sparkline({ history }) {
   // 履歴が無ければ何も描画しない
   if (!history || history.length === 0) return null;
 
@@ -85,12 +86,13 @@ function Sparkline({ history }) {
       history[hoverInfo.index].toFixed(1)
     )
   );
-}
+  }
 
-// Node からもブラウザからも使えるようにエクスポート
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { Sparkline };
-}
-if (typeof window !== 'undefined') {
-  window.Sparkline = Sparkline;
-}
+  // Node からもブラウザからも使えるようにエクスポート
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { Sparkline };
+  }
+  if (typeof window !== 'undefined') {
+    window.Sparkline = Sparkline;
+  }
+})();

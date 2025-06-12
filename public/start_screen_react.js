@@ -1,11 +1,11 @@
 // Reactを使ったスタート画面のスクリプト
 // 画面のどこをクリックしても React版のゲーム画面へ遷移します
+(function () {
+  // ① React のフックを使うために取り出します
+  const { useEffect, useState } = React;
 
-// ① React のフックを使うために取り出します
-const { useEffect, useState } = React;
-
-// ② スタート画面を表すコンポーネントを定義します
-function StartScreen() {
+  // ② スタート画面を表すコンポーネントを定義します
+  function StartScreen() {
   // タイトルと「タップで開始」を表示するタイミングを制御するステート
   const [showTitle, setShowTitle] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -61,7 +61,8 @@ function StartScreen() {
       )
     )
   );
-}
+  }
 
-// ③ ここで ReactDOM を使って画面に描画します
-ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(StartScreen));
+  // ③ ここで ReactDOM を使って画面に描画します
+  ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(StartScreen));
+})();
