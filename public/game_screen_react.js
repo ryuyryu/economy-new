@@ -135,10 +135,10 @@ function Sparkline({ history }) {
     }, '時間'),
     // ホバー中の位置に点を表示
     hoverInfo && React.createElement('circle', {
-      cx: hoverInfo.x,
-      cy: hoverInfo.y,
+      // cx,cy の代わりに transform を利用して位置を調整
       r: 4,
-      className: 'sparkline-dot'
+      className: 'sparkline-dot',
+      style: { transform: `translate(${hoverInfo.x}px, ${hoverInfo.y}px)` }
     })
     ),
     hoverInfo && React.createElement(

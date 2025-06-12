@@ -95,6 +95,8 @@ body {
   fill: #f87171; /* 赤系の色 */
   stroke: #fff;
   stroke-width: 1px;
+  /* ドットの移動を滑らかにする */
+  transition: transform 0.1s linear;
 }
 
 /* カードを閉じるためのバツボタン */
