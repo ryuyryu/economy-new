@@ -65,9 +65,21 @@ body {
   /* グラフを中央寄せにする */
   display: flex;
   justify-content: center;
+  /* 横幅を広げた際にスクロールできるようにする */
+  overflow-x: auto;
 }
 
 .sparkline {
   /* サイズは React 側で指定するのでここでは自動 */
   display: block;
+}
+
+/* カードを閉じるためのバツボタン */
+.close-btn {
+  position: absolute;
+  top: 0.5rem; /* Tailwindでいうtop-2*/
+  right: 0.5rem; /* Tailwindでいうright-2*/
+  font-size: 1.25rem; /* text-xl */
+  font-weight: bold;
+  cursor: pointer;
 }
