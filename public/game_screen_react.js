@@ -61,11 +61,14 @@ function Sparkline({ history }) {
   const handleMove = e => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
+    // マウス位置からコンテナ左端を引いた値をX座標とする
     const x = e.clientX - rect.left + containerRef.current.scrollLeft;
     const step = size.w / (history.length - 1);
     const idx = Math.round(x / step);
     if (idx >= 0 && idx < history.length) {
-      setHoverInfo({ index: idx, x });
+      const value = history[idx];
+      const y = size.h - ((value - min) / range) * size.h;
+      setHoverInfo({ index: idx, x, y });
     } else {
       setHoverInfo(null);
     }
@@ -129,7 +132,14 @@ function Sparkline({ history }) {
       y: size.h - 2,
       fontSize: '10',
       fill: '#555'
-    }, '時間')
+    }, '時間'),
+    // ホバー中の位置に点を表示
+    hoverInfo && React.createElement('circle', {
+      cx: hoverInfo.x,
+      cy: hoverInfo.y,
+      r: 4,
+      className: 'sparkline-dot'
+    })
     ),
     hoverInfo && React.createElement(
       'div',
