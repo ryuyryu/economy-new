@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const React = require('react');
 const ReactDOM = require('react-dom/client');
-const { act } = require('react-dom/test-utils');
+// React の act 関数を直接インポートする
+const { act } = require('react');
 
 describe('StartScreen React', () => {
   test('画面クリックで game_screen_react.html に遷移しようとする', () => {

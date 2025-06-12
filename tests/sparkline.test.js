@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom/client');
-const { act } = require('react-dom/test-utils');
+// React の act 関数を直接インポートする
+const { act } = require('react');
 
 // jsdom 環境でIndicatorCardを描画し、スパークライン要素が存在するか確認
 
