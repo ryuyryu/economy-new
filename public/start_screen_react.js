@@ -31,14 +31,23 @@ function StartScreen() {
         className: 'h-screen w-screen flex items-center justify-center select-none relative',
         onClick: handleClick,
       },
+      // タイトル文字
       React.createElement(
         'h1',
         {
           className:
-            'text-6xl font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
-          style: { top: '-8px' }
+            'font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
+          style: { fontSize: '25vh', top: '-8px' }
         },
-        'ECON'
+        "Let's Go"
+      ),
+      // 画面右下に「画面をタップ」テキストを表示
+      React.createElement(
+        'p',
+        {
+          className: 'absolute bottom-4 right-4 text-white text-lg'
+        },
+        '画面をタップ'
       )
     )
   );
