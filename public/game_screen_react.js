@@ -116,6 +116,15 @@ function IndicatorCard(props) {
           // 画面いっぱいより少し小さめに表示する
           'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10',
       },
+      // 右上に閉じるボタン
+      React.createElement(
+        'button',
+        {
+          onClick: props.onClose,
+          className: 'absolute top-2 right-2 text-xl',
+        },
+        '✕'
+      ),
       React.createElement(
         'h2',
         { className: 'text-lg font-bold' },
@@ -133,14 +142,6 @@ function IndicatorCard(props) {
         { className: 'text-sm text-gray-600' },
         props.desc
       ),
-      React.createElement(
-        'button',
-        {
-          onClick: props.onClose,
-          className: 'w-full bg-gray-100 rounded py-1',
-        },
-        '閉じる'
-      )
     ) // inner div の終了
   ); // IndicatorCard の戻り値を閉じる
 } // IndicatorCard 関数の終了
