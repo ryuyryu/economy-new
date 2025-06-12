@@ -1,18 +1,28 @@
 // Reactを使ったスタート画面のスクリプト
 // 画面のどこをクリックしても React版のゲーム画面へ遷移します
 
-// ① Reactの機能を使うために変数に取り出します
-const { useEffect } = React;
+// ① React のフックを使うために取り出します
+const { useEffect, useState } = React;
 
 // ② スタート画面を表すコンポーネントを定義します
 function StartScreen() {
+  // タイトルと「タップで開始」を表示するタイミングを制御するステート
+  const [showTitle, setShowTitle] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+
   // コンポーネントが初めて表示されたときに実行したい処理を useEffect に書きます
   useEffect(() => {
     // body 全体にカーソルを指の形にするクラスを追加
     document.body.classList.add('cursor-pointer');
+    // すぐにタイトルを表示
+    setShowTitle(true);
+    // 少し遅らせて「タップで開始」を表示
+    const timer = setTimeout(() => setShowPrompt(true), 1000);
+
     // クリーンアップ関数でコンポーネントが消えたときに元に戻す
     return () => {
       document.body.classList.remove('cursor-pointer');
+      clearTimeout(timer);
     };
   }, []); // 空配列なので最初の1回だけ実行されます
 
@@ -24,7 +34,7 @@ function StartScreen() {
 
   // JSX で画面の見た目を記述します
   return (
-    // divを画面いっぱいに広げ、画面上部にキャッチコピーを表示します
+    // div を画面いっぱいに広げ、中央にタイトルを表示します
     React.createElement(
       'div',
       {
@@ -35,19 +45,19 @@ function StartScreen() {
       React.createElement(
         'h1',
         {
-          className:
-            'font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
-          style: { fontSize: '25vh', top: '-8px' }
+          className: 'font-extrabold text-[#00fb00] drop-shadow-[0_0_5px_#00fb00] animate-pulse absolute left-0 w-full text-center transition-opacity duration-700',
+          style: { fontSize: '25vh', top: '-8px', opacity: showTitle ? 1 : 0 }
         },
-        "Let's Go"
+        "Let's Go",
       ),
-      // 画面右下に「画面をタップ」テキストを表示
+      // 下部に「タップで開始」テキストを表示
       React.createElement(
         'p',
         {
-          className: 'absolute bottom-4 right-4 text-white text-lg'
+          className: 'absolute bottom-8 left-0 w-full text-center text-white font-bold transition-opacity duration-700',
+          style: { fontSize: '4vh', opacity: showPrompt ? 1 : 0 }
         },
-        '画面をタップ'
+        'タップで開始'
       )
     )
   );
