@@ -56,8 +56,18 @@ body {
 }
 
 /* スパークライン用のスタイル */
-.sparkline {
+.sparkline-container {
+  /* カード内で 8px の余白をとる */
+  padding: 8px;
+  /* 親要素の幅に合わせつつ padding を含めた幅計算にする */
   width: 100%;
-  height: 120px; /* 30ターン分でも見やすい高さに調整 */
+  box-sizing: border-box;
+  /* グラフを中央寄せにする */
+  display: flex;
+  justify-content: center;
+}
+
+.sparkline {
+  /* サイズは React 側で指定するのでここでは自動 */
   display: block;
 }
