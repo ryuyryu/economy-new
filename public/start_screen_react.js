@@ -35,8 +35,8 @@ function StartScreen() {
         'h1',
         {
           className:
-            'font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
-          style: { fontSize: '25vh', top: '-8px' }
+            'text-6xl font-extrabold text-[#00fb00] animate-pulse drop-shadow-[0_0_5px_#00fb00] absolute left-0 w-full text-center',
+          style: { top: '-8px' }
         },
         'ECON'
       )
