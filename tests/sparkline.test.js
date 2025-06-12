@@ -9,7 +9,7 @@ describe('IndicatorCard Sparkline', () => {
     document.body.innerHTML = '<div id="root"></div>';
     global.React = React;
     global.ReactDOM = ReactDOM;
-    const { IndicatorCard } = require('../public/game_screen_react.js');
+    const { IndicatorCard } = require('../public/components/IndicatorCard.js');
 
     const container = document.createElement('div');
     act(() => {
