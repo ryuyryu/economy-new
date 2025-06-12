@@ -1,15 +1,16 @@
 // IndicatorCard コンポーネント
 // 指標の詳細をモーダルカードとして表示する
-let Sparkline;
-if (typeof require !== 'undefined') {
-  // テスト環境では require で読み込む
-  ({ Sparkline } = require('./Sparkline.js'));
-} else if (typeof window !== 'undefined') {
-  // ブラウザではグローバル変数から取得
-  Sparkline = window.Sparkline;
-}
+(function () {
+  let Sparkline;
+  if (typeof require !== 'undefined') {
+    // テスト環境では require で読み込む
+    ({ Sparkline } = require('./Sparkline.js'));
+  } else if (typeof window !== 'undefined') {
+    // ブラウザではグローバル変数から取得
+    Sparkline = window.Sparkline;
+  }
 
-function IndicatorCard(props) {
+  function IndicatorCard(props) {
   return React.createElement(
     'div',
     { className: 'fixed inset-0 flex items-center justify-center z-40' },
@@ -51,12 +52,13 @@ function IndicatorCard(props) {
       )
     )
   );
-}
+  }
 
-// エクスポート設定
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { IndicatorCard };
-}
-if (typeof window !== 'undefined') {
-  window.IndicatorCard = IndicatorCard;
-}
+  // エクスポート設定
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { IndicatorCard };
+  }
+  if (typeof window !== 'undefined') {
+    window.IndicatorCard = IndicatorCard;
+  }
+})();

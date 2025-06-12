@@ -1,29 +1,29 @@
 // Reactを利用したゲーム画面のスクリプト
 // 既存の game_screen.js と同等の機能を React コンポーネントで実装します
+(function () {
+  // React から必要なフックを取り出しておく
+  // React から useRef も取り出しておく
+  const { useState, useEffect, useRef } = React;
 
-// React から必要なフックを取り出しておく
-// React から useRef も取り出しておく
-const { useState, useEffect, useRef } = React;
-
-// コンポーネントを読み込み（ブラウザ環境ではグローバル変数から取得）
-let Sparkline, IndicatorCard, GameScreen;
-if (typeof require !== 'undefined') {
-  ({ Sparkline } = require('./components/Sparkline.js'));
-  ({ IndicatorCard } = require('./components/IndicatorCard.js'));
-  ({ GameScreen } = require('./components/GameScreen.js'));
-} else if (typeof window !== 'undefined') {
-  Sparkline = window.Sparkline;
-  IndicatorCard = window.IndicatorCard;
-  GameScreen = window.GameScreen;
-}
+  // コンポーネントを読み込み（ブラウザ環境ではグローバル変数から取得）
+  let Sparkline, IndicatorCard, GameScreen;
+  if (typeof require !== 'undefined') {
+    ({ Sparkline } = require('./components/Sparkline.js'));
+    ({ IndicatorCard } = require('./components/IndicatorCard.js'));
+    ({ GameScreen } = require('./components/GameScreen.js'));
+  } else if (typeof window !== 'undefined') {
+    Sparkline = window.Sparkline;
+    IndicatorCard = window.IndicatorCard;
+    GameScreen = window.GameScreen;
+  }
 
 
-// ----------------------
-// 経済変動計算用の関数
-// ----------------------
-// 前回の指標値(prevStats)と要因値(factors)から次の指標を計算します
-// factors には demand, supply, policyRate などを含めます
-function updateEconomy(prevStats, factors) {
+  // ----------------------
+  // 経済変動計算用の関数
+  // ----------------------
+  // 前回の指標値(prevStats)と要因値(factors)から次の指標を計算します
+  // factors には demand, supply, policyRate などを含めます
+  function updateEconomy(prevStats, factors) {
   const next = { ...prevStats };
   const { demand, supply, policyRate } = factors;
   const gap = demand - supply; // 需要と供給の差分
@@ -59,23 +59,24 @@ function updateEconomy(prevStats, factors) {
   next.trade += -gap * 50;
 
   return next;
-}
+  }
 
 
-// DOM が準備できてから描画処理を実行
-window.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    React.createElement(GameScreen)
-  );
-});
+  // DOM が準備できてから描画処理を実行
+  window.addEventListener('DOMContentLoaded', () => {
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      React.createElement(GameScreen)
+    );
+  });
 
-// ブラウザからも参照できるようグローバルに登録
-if (typeof window !== 'undefined') {
-  window.updateEconomy = updateEconomy;
-}
+  // ブラウザからも参照できるようグローバルに登録
+  if (typeof window !== 'undefined') {
+    window.updateEconomy = updateEconomy;
+  }
 
-// Jest から関数を参照できるようにエクスポート
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { updateEconomy };
-}
+  // Jest から関数を参照できるようにエクスポート
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { updateEconomy };
+  }
+})();
 
