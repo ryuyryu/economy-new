@@ -26,12 +26,11 @@ function Sparkline({ history }) {
     // 描画後に親要素の幅を取得してサイズを更新
     const update = () => {
       if (containerRef.current) {
-        // カード幅からパディングを除いた値を基準にする
-        const base = containerRef.current.clientWidth - 16;
-        // 幅を従来の2倍にし、高さはカード幅の 1/2 のまま
-        // base * 5 / 6 が元の計算なので *2 している
-        const w = (base * 5 / 6) * 2;
-        const h = base / 2;
+        // 親要素（カード内のスパークライン用エリア）の幅をそのまま横幅とする
+        // 横:縦 = 3:1 にしたいので高さは横幅の1/3とする
+        const base = containerRef.current.clientWidth;
+        const w = base;
+        const h = base / 3;
         setSize({ w, h });
       }
     };
@@ -142,7 +141,7 @@ function IndicatorCard(props) {
       {
         className:
           // 画面いっぱいより少し小さめに表示する
-          'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10',
+          'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10 flex flex-col',
       },
       // 右上に閉じるボタン
       // 閉じるためのバツボタン
@@ -159,17 +158,25 @@ function IndicatorCard(props) {
         { className: 'text-lg font-bold' },
         props.title
       ),
-      // カード上部にスパークラインを表示
-      React.createElement(Sparkline, { history: props.history }),
       React.createElement(
         'p',
         { className: 'text-3xl font-mono text-center' },
         `${props.value.toFixed(1)}${props.unit}`
       ),
       React.createElement(
-        'p',
-        { className: 'text-sm text-gray-600' },
-        props.desc
+        'div',
+        { className: 'flex items-center mt-2' },
+        React.createElement(
+          'div',
+        // グラフ部分はカード幅の1/3だけ使用する
+        { className: 'flex-shrink-0 w-1/3 pr-2' },
+          React.createElement(Sparkline, { history: props.history })
+        ),
+        React.createElement(
+          'p',
+          { className: 'usage-note flex-1 text-sm text-gray-600 ml-2' },
+          props.desc
+        )
       ),
     ) // inner div の終了
   ); // IndicatorCard の戻り値を閉じる

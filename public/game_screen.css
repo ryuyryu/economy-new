@@ -62,9 +62,10 @@ body {
   /* 親要素の幅に合わせつつ padding を含めた幅計算にする */
   width: 100%;
   box-sizing: border-box;
-  /* グラフを中央寄せにする */
+  /* スパークラインを左寄せで表示し、縦方向は中央に揃える */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   /* 横幅を広げた際にスクロールできるようにする */
   overflow-x: auto;
 }
