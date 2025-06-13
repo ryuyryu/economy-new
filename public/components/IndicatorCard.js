@@ -55,13 +55,16 @@
         { className: 'flex items-center mt-2' },
         React.createElement(
           'div',
-          { className: 'flex-shrink-0 w-1/3 pr-2' },
+          { className: 'flex-shrink-0 w-1/3 pr-2 border-r border-gray-300' },
           React.createElement(Sparkline, { history: props.history })
         ),
         React.createElement(
-          'p',
-          { className: 'usage-note flex-1 text-sm text-gray-600 ml-2' },
-          props.desc
+          'div',
+          {
+            className:
+              'usage-note flex-1 text-sm text-gray-600 ml-2 p-2 rounded-lg shadow-inner border border-gray-300 bg-gray-50',
+            dangerouslySetInnerHTML: { __html: props.desc },
+          }
         )
       ),
       // スパークライン下部に統計値を表示
