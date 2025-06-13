@@ -93,6 +93,22 @@
               { className: 'next-value text-blue-600' },
               `次回予想: ${props.nextValue.toFixed(1)}${props.unit}`
             )
+          : null,
+        // 相関係数表示
+        props.correlation !== null && props.correlWithLabel
+          ? React.createElement(
+              'p',
+              { className: 'correlation text-orange-600' },
+              `${props.correlWithLabel}との相関: ${props.correlation.toFixed(2)}`
+            )
+          : null,
+        // 政策・イベント影響説明
+        props.impactDesc
+          ? React.createElement(
+              'p',
+              { className: 'impact-desc mt-1' },
+              props.impactDesc
+            )
           : null
       )
     )
