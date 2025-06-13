@@ -12,6 +12,32 @@
 
   const { useState, useEffect, useRef } = React;
 
+  // -----------------------------
+  // 2つの数列から相関係数を求めるヘルパー関数
+  // -----------------------------
+  const calcCorrelation = (seriesA, seriesB) => {
+    // 長さの短い方に合わせて計算する
+    const n = Math.min(seriesA.length, seriesB.length);
+    if (n === 0) return 0;
+
+    const sliceA = seriesA.slice(-n);
+    const sliceB = seriesB.slice(-n);
+    const meanA = sliceA.reduce((s, v) => s + v, 0) / n;
+    const meanB = sliceB.reduce((s, v) => s + v, 0) / n;
+    let cov = 0,
+      varA = 0,
+      varB = 0;
+    for (let i = 0; i < n; i++) {
+      const da = sliceA[i] - meanA;
+      const db = sliceB[i] - meanB;
+      cov += da * db;
+      varA += da * da;
+      varB += db * db;
+    }
+    if (varA === 0 || varB === 0) return 0;
+    return cov / Math.sqrt(varA * varB);
+  };
+
   function GameScreen() {
   // ゲーム内で扱う各種指標を状態としてまとめて保持
   const [stats, setStats] = useState({
@@ -75,7 +101,9 @@
         '<p>' +
         '物価の動きを示す指標です。<br>' +
         '上昇すると購買力が低下し景気を冷やします。' +
-        '</p>'
+        '</p>',
+      correlWith: 'rate',
+      impactDesc: '金利を上げると物価上昇が抑えられる傾向があります。'
     },
     unemp: {
       label: '失業率',
@@ -84,7 +112,9 @@
         '<p>' +
         '働きたい人のうち職に就けない割合。<br>' +
         '増加は所得減少を通じ消費を抑えます。' +
-        '</p>'
+        '</p>',
+      correlWith: 'gdp',
+      impactDesc: 'GDPが拡大すると失業率は低下しやすくなります。'
     },
     gdp: {
       label: 'GDP成長率',
@@ -93,7 +123,9 @@
         '<p>' +
         '国内総生産の伸び率。<br>' +
         '高い成長は雇用や投資を刺激します。' +
-        '</p>'
+        '</p>',
+      correlWith: 'rate',
+      impactDesc: '低金利政策はGDP成長を促進する効果があります。'
     },
     rate: {
       label: '政策金利',
@@ -102,7 +134,9 @@
         '<p>' +
         '中央銀行が誘導する短期金利。<br>' +
         '引き上げは景気を抑え、引き下げは刺激します。' +
-        '</p>'
+        '</p>',
+      correlWith: 'cpi',
+      impactDesc: '物価上昇に対抗して引き上げられることが多いです。'
     },
     fx: {
       label: '為替レート',
@@ -111,7 +145,9 @@
         '<p>' +
         '1ドルあたりの円相場。<br>' +
         '円高は輸出に不利、円安は輸入物価を押し上げます。' +
-        '</p>'
+        '</p>',
+      correlWith: 'rate',
+      impactDesc: '金利差が拡大すると為替相場が変動しやすくなります。'
     },
     yield: {
       label: '10年国債利回り',
@@ -120,7 +156,9 @@
         '<p>' +
         '長期金利の代表的指標。<br>' +
         '上昇すると住宅投資や設備投資が鈍ります。' +
-        '</p>'
+        '</p>',
+      correlWith: 'rate',
+      impactDesc: '政策金利の動きに連動して変化することが多いです。'
     },
     cci: {
       label: '消費者信頼感指数',
@@ -129,7 +167,9 @@
         '<p>' +
         '消費者の景況感を表します。<br>' +
         '悪化すると消費意欲が低下します。' +
-        '</p>'
+        '</p>',
+      correlWith: 'unemp',
+      impactDesc: '失業率の悪化は消費者マインドを冷やします。'
     },
     pmi: {
       label: '製造業PMI',
@@ -138,7 +178,9 @@
         '<p>' +
         '製造業の景気判断指標。<br>' +
         '50を下回ると先行きの減速を示します。' +
-        '</p>'
+        '</p>',
+      correlWith: 'gdp',
+      impactDesc: 'PMIの改善はGDP成長率の上昇につながりやすいです。'
     },
     debtGDP: {
       label: '財政赤字/GDP比',
@@ -147,7 +189,9 @@
         '<p>' +
         '財政健全性を示す値。<br>' +
         '拡大すれば将来増税への懸念が強まります。' +
-        '</p>'
+        '</p>',
+      correlWith: 'gdp',
+      impactDesc: '景気拡大期は税収増で比率が改善しやすいです。'
     },
     trade: {
       label: '貿易収支',
@@ -156,7 +200,9 @@
         '<p>' +
         '輸出から輸入を引いた額。<br>' +
         '赤字が続くと通貨安要因となります。' +
-        '</p>'
+        '</p>',
+      correlWith: 'fx',
+      impactDesc: '円安が進むと輸出が増え、貿易収支が改善します。'
     }
   };
 
@@ -282,6 +328,16 @@
           history: historyMap[activeIndicator],
           // calcNextStats() で求めた次ターンの値を渡す
           nextValue: calcNextStats()[activeIndicator],
+          correlation:
+            indicatorInfo[activeIndicator].correlWith
+              ? calcCorrelation(
+                  historyMap[activeIndicator],
+                  historyMap[indicatorInfo[activeIndicator].correlWith]
+                )
+              : null,
+          correlWithLabel:
+            indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
+          impactDesc: indicatorInfo[activeIndicator].impactDesc,
           onClose: () => setActiveIndicator(null)
         })
       : null,
