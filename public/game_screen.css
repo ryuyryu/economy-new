@@ -21,6 +21,24 @@ body {
     transform: translateX(0);
 }
 
+/* ドロワー内の経済指数リスト */
+#indexList li {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+/* 詳細カードのスタイル */
+#indexDetailCard {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    text-align: left;
+}
+
 /* ステータスバーなど共通要素の余白調整 */
 #statusBar div {
     padding: 0 0.5rem;
