@@ -10,12 +10,14 @@ const EconomicCard = () => {
   const values = [100, 103, 101, 104, 107, 110, 108];
   const labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月'];
 
+  // 使い方メモに表示するHTML
+  // 箇条書きではなく文章として表示します
   const usageHTML = `
-    <ul class="list-disc list-inside">
-      <li>指数の動きを簡潔に確認できます。</li>
-      <li>グラフ上を指でなぞると値が表示されます。</li>
-      <li>上昇すると購買力が低下し景気を冷やします。</li>
-    </ul>`;
+    <p>
+      指数の動きを簡潔に確認できます。<br />
+      グラフ上を指でなぞると値が表示されます。<br />
+      上昇すると購買力が低下し景気を冷やします。
+    </p>`;
 
   return (
     <div className="p-4 bg-white rounded-xl shadow-md w-full max-w-md">
