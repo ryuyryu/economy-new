@@ -10,11 +10,15 @@ const EconomicCard = () => {
   const values = [100, 103, 101, 104, 107, 110, 108];
   const labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月'];
 
+  // 使い方メモに表示するHTML
+  // 指数そのものの説明に加え、相関やイベントの影響も解説します
   const usageHTML = `
     <ul class="list-disc list-inside">
       <li>指数の動きを簡潔に確認できます。</li>
       <li>グラフ上を指でなぞると値が表示されます。</li>
       <li>上昇すると購買力が低下し景気を冷やします。</li>
+      <li>他指標との相関を小さな図や矢印で示します（例: CPI と政策金利）。</li>
+      <li>政策変更や景気ショックの影響を <code>updateEconomy()</code> の結果から解説します。</li>
     </ul>`;
 
   return (

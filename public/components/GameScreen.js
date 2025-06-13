@@ -65,6 +65,12 @@
 
   // カード表示用のラベルと説明。
   // desc には HTML 文字列を渡し、指標の概要と経済への影響を箇条書きで示す
+  // さらに相関・傾向の表示や政策イベントの影響も盛り込みます
+
+  // 各指標に共通する追加説明
+  const commonDesc =
+    '<li>他指標との相関を小さな図や矢印で確認できます。</li>' +
+    '<li>政策変更や景気ショックの影響を <code>updateEconomy()</code> の結果から解説します。</li>';
   const indicatorInfo = {
     cpi: {
       label: '消費者物価指数',
@@ -73,6 +79,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>物価の動きを示す指標です。</li>' +
         '<li>上昇すると購買力が低下し景気を冷やします。</li>' +
+        commonDesc +
         '</ul>'
     },
     unemp: {
@@ -82,6 +89,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>働きたい人のうち職に就けない割合。</li>' +
         '<li>増加は所得減少を通じ消費を抑えます。</li>' +
+        commonDesc +
         '</ul>'
     },
     gdp: {
@@ -91,6 +99,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>国内総生産の伸び率。</li>' +
         '<li>高い成長は雇用や投資を刺激します。</li>' +
+        commonDesc +
         '</ul>'
     },
     rate: {
@@ -100,6 +109,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>中央銀行が誘導する短期金利。</li>' +
         '<li>引き上げは景気を抑え、引き下げは刺激します。</li>' +
+        commonDesc +
         '</ul>'
     },
     fx: {
@@ -109,6 +119,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>1ドルあたりの円相場。</li>' +
         '<li>円高は輸出に不利、円安は輸入物価を押し上げます。</li>' +
+        commonDesc +
         '</ul>'
     },
     yield: {
@@ -118,6 +129,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>長期金利の代表的指標。</li>' +
         '<li>上昇すると住宅投資や設備投資が鈍ります。</li>' +
+        commonDesc +
         '</ul>'
     },
     cci: {
@@ -127,6 +139,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>消費者の景況感を表します。</li>' +
         '<li>悪化すると消費意欲が低下します。</li>' +
+        commonDesc +
         '</ul>'
     },
     pmi: {
@@ -136,6 +149,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>製造業の景気判断指標。</li>' +
         '<li>50を下回ると先行きの減速を示します。</li>' +
+        commonDesc +
         '</ul>'
     },
     debtGDP: {
@@ -145,6 +159,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>財政健全性を示す値。</li>' +
         '<li>拡大すれば将来増税への懸念が強まります。</li>' +
+        commonDesc +
         '</ul>'
     },
     trade: {
@@ -154,6 +169,7 @@
         '<ul class="list-disc list-inside">' +
         '<li>輸出から輸入を引いた額。</li>' +
         '<li>赤字が続くと通貨安要因となります。</li>' +
+        commonDesc +
         '</ul>'
     }
   };
