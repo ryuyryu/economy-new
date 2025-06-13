@@ -13,18 +13,71 @@ window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('statsModal');
   const modalBg = document.getElementById('modalBg');
   const closeBtn = document.getElementById('closeModal');
+  const listEl = document.getElementById('indexList');
+  const detailCard = document.getElementById('indexDetailCard');
+  const detailBg = document.getElementById('detailBg');
+  const closeDetail = document.getElementById('closeDetail');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailText = document.getElementById('detailText');
+
+  // --- 経済指数データ ------------------------------
+  // 各指数の名前と経済への影響をまとめる
+  const indexData = {
+    cpi: {
+      name: '消費者物価指数 (CPI)',
+      impact: '物価の動きを示す代表指標。上昇は購買力を下げ景気を冷やします。'
+    },
+    unemp: {
+      name: '失業率',
+      impact: '働く意欲があるのに職がない人の割合。上昇は所得減少を通じ消費を抑制します。'
+    },
+    gdp: {
+      name: 'GDP成長率',
+      impact: '国全体の生産活動の伸びを表します。高い成長は雇用や投資を後押しします。'
+    },
+    rate: {
+      name: '政策金利',
+      impact: '中央銀行が決める短期金利。引き上げは景気を抑え、引き下げは刺激します。'
+    }
+  };
+
+  // 詳細カードの表示処理
+  function showDetail(key) {
+    detailTitle.textContent = indexData[key].name;
+    detailText.textContent = indexData[key].impact;
+    detailCard.classList.remove('hidden');
+    closeDrawer();
+  }
+
+  function hideDetail() {
+    detailCard.classList.add('hidden');
+  }
+  [detailBg, closeDetail].forEach((el) => {
+    el.addEventListener('click', hideDetail);
+  });
+
+  // リストに項目を表示
+  Object.keys(indexData).forEach((key) => {
+    const li = document.createElement('li');
+    li.textContent = indexData[key].name;
+    li.className = 'p-2 bg-gray-50 rounded cursor-pointer hover:bg-gray-100';
+    li.addEventListener('click', () => {
+      showDetail(key);
+    });
+    listEl.appendChild(li);
+  });
 
   // --- ドロワー開閉処理 ----------------------------
   // ボタンを押すと、drawer-open クラスの付け外しで表示を切り替える
-  const openDrawer = () => {
+  function openDrawer() {
     drawer.classList.add('drawer-open');
     overlay.classList.add('overlay-show');
-  };
+  }
 
-  const closeDrawer = () => {
+  function closeDrawer() {
     drawer.classList.remove('drawer-open');
     overlay.classList.remove('overlay-show');
-  };
+  }
 
   // ボタンを押すとドロワーを開く
   drawerBtn.addEventListener('click', openDrawer);
