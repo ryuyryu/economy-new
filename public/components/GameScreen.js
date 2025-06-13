@@ -52,18 +52,99 @@
   const [supply, setSupply] = useState(5);
   const [policyRate, setPolicyRate] = useState(0.0);
 
-  // カード表示用のラベルなど
+  // カード表示用のラベルと説明。
+  // desc には HTML 文字列を渡し、指標の概要と経済への影響を箇条書きで示す
   const indicatorInfo = {
-    cpi: { label: '消費者物価指数', unit: '', desc: '物価の動きを示す指標です。' },
-    unemp: { label: '失業率', unit: '%', desc: '働きたい人のうち職に就けない割合。' },
-    gdp: { label: 'GDP成長率', unit: '%', desc: '国内総生産の伸び率。' },
-    rate: { label: '政策金利', unit: '%', desc: '中央銀行が誘導する短期金利。' },
-    fx: { label: '為替レート', unit: '円', desc: '1ドルあたりの円相場。' },
-    yield: { label: '10年国債利回り', unit: '%', desc: '長期金利の代表的指標。' },
-    cci: { label: '消費者信頼感指数', unit: '', desc: '消費者の景況感を表します。' },
-    pmi: { label: '製造業PMI', unit: '', desc: '製造業の景気判断指標。' },
-    debtGDP: { label: '財政赤字/GDP比', unit: '%', desc: '財政健全性を示す値。' },
-    trade: { label: '貿易収支', unit: '', desc: '輸出から輸入を引いた額。' }
+    cpi: {
+      label: '消費者物価指数',
+      unit: '',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>物価の動きを示す指標です。</li>' +
+        '<li>上昇すると購買力が低下し景気を冷やします。</li>' +
+        '</ul>'
+    },
+    unemp: {
+      label: '失業率',
+      unit: '%',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>働きたい人のうち職に就けない割合。</li>' +
+        '<li>増加は所得減少を通じ消費を抑えます。</li>' +
+        '</ul>'
+    },
+    gdp: {
+      label: 'GDP成長率',
+      unit: '%',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>国内総生産の伸び率。</li>' +
+        '<li>高い成長は雇用や投資を刺激します。</li>' +
+        '</ul>'
+    },
+    rate: {
+      label: '政策金利',
+      unit: '%',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>中央銀行が誘導する短期金利。</li>' +
+        '<li>引き上げは景気を抑え、引き下げは刺激します。</li>' +
+        '</ul>'
+    },
+    fx: {
+      label: '為替レート',
+      unit: '円',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>1ドルあたりの円相場。</li>' +
+        '<li>円高は輸出に不利、円安は輸入物価を押し上げます。</li>' +
+        '</ul>'
+    },
+    yield: {
+      label: '10年国債利回り',
+      unit: '%',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>長期金利の代表的指標。</li>' +
+        '<li>上昇すると住宅投資や設備投資が鈍ります。</li>' +
+        '</ul>'
+    },
+    cci: {
+      label: '消費者信頼感指数',
+      unit: '',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>消費者の景況感を表します。</li>' +
+        '<li>悪化すると消費意欲が低下します。</li>' +
+        '</ul>'
+    },
+    pmi: {
+      label: '製造業PMI',
+      unit: '',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>製造業の景気判断指標。</li>' +
+        '<li>50を下回ると先行きの減速を示します。</li>' +
+        '</ul>'
+    },
+    debtGDP: {
+      label: '財政赤字/GDP比',
+      unit: '%',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>財政健全性を示す値。</li>' +
+        '<li>拡大すれば将来増税への懸念が強まります。</li>' +
+        '</ul>'
+    },
+    trade: {
+      label: '貿易収支',
+      unit: '',
+      desc:
+        '<ul class="list-disc list-inside">' +
+        '<li>輸出から輸入を引いた額。</li>' +
+        '<li>赤字が続くと通貨安要因となります。</li>' +
+        '</ul>'
+    }
   };
 
   // 指標が変化した際の増減量を計算
