@@ -21,6 +21,8 @@ describe('IndicatorCard Sparkline', () => {
           unit: '',
           desc: 'desc',
           history: [1, 2, 3],
+          // 予測値を追加
+          nextValue: 2,
           onClose: () => {}
         })
       );
@@ -42,5 +44,9 @@ describe('IndicatorCard Sparkline', () => {
     expect(maxEl).not.toBeNull();
     expect(minEl).not.toBeNull();
     expect(diffEl).not.toBeNull();
+
+    // 予測値要素が存在するか確認
+    const nextEl = container.querySelector('.next-value');
+    expect(nextEl).not.toBeNull();
   });
 });
