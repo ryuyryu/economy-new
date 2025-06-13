@@ -1,0 +1,42 @@
+/* 経済指数カード用のスタイル */
+
+/* ページ全体のフォントを設定 */
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* カード外枠 */
+.card-container {
+    background-color: #ffffff;             /* 白背景 */
+    border-radius: 0.75rem;                /* 角を丸く */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ほんのり影をつける */
+    width: 18rem;                          /* 幅は約 18rem */
+    padding: 1rem;                         /* 内側余白 */
+}
+
+/* タイトル部分。コンサルを意識した落ち着いた緑色 */
+.card-title {
+    background-color: #0d9488;   /* teal-700 相当の色 */
+    color: #ffffff;              /* 文字色は白 */
+    padding: 0.25rem 0.5rem;     /* ちょっと余白をとる */
+    border-radius: 0.375rem;     /* 角丸 */
+    font-size: 0.875rem;         /* text-sm 程度 */
+    font-weight: bold;           /* 太字 */
+    margin-bottom: 0.5rem;       /* タイトル下の余白 */
+    text-align: center;          /* 中央寄せ */
+}
+
+/* 値を表示する部分。大きめのフォントで中央に配置 */
+.card-value {
+    font-size: 2rem;             /* text-3xl 程度 */
+    font-family: 'Zen Maru Gothic', sans-serif; /* 柔らかい日本語フォント */
+    text-align: center;          /* 中央寄せ */
+    color: #0d9488;              /* タイトルと同系色 */
+}
+
+/* 説明文用のスタイル */
+.card-desc {
+    font-size: 0.75rem;          /* text-xs 程度 */
+    color: #555555;              /* 少し薄い文字色 */
+    margin-top: 0.5rem;          /* 上側に余白 */
+}

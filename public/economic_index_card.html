@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>経済指数カード デザイン案</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React と ReactDOM を読み込み -->
+  <script src="libs/react.development.js"></script>
+  <script src="libs/react-dom.development.js"></script>
+  <!-- スパークラインコンポーネント -->
+  <script src="components/Sparkline.js"></script>
+  <!-- 経済カード用コンポーネント -->
+  <script src="economy_index_card.js"></script>
+  <!-- 専用のスタイルシート -->
+  <link rel="stylesheet" href="economic_index_card.css" />
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <!-- React でカードを表示するエリア -->
+  <div id="root"></div>
+  <script>
+    // サンプルデータを用意
+    const history = [100, 101, 102, 103, 105, 104, 106];
+    // 経済指数カードを描画
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      React.createElement(EconomyIndexCard, {
+        title: 'CPI（消費者物価指数）',
+        value: history[history.length - 1],
+        unit: '',
+        history,
+        desc: '物価の動向を示す代表的な指標です。'
+      })
+    );
+  </script>
+</body>
+</html>
