@@ -85,7 +85,15 @@
           'p',
           { className: `diff-value ${diffColor}` },
           `前回比: ${diffSign}`
-        )
+        ),
+        // 予測値が渡されていれば表示
+        props.nextValue !== undefined
+          ? React.createElement(
+              'p',
+              { className: 'next-value text-blue-600' },
+              `次回予想: ${props.nextValue.toFixed(1)}${props.unit}`
+            )
+          : null
       )
     )
   );

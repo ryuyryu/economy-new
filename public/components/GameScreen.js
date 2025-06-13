@@ -48,6 +48,17 @@
   const prevStatsRef = useRef(stats);
   const [diffStats, setDiffStats] = useState({ cpi: 0, unemp: 0, gdp: 0, rate: 0 });
 
+  // -----------------------------
+  // 現在の指標と需給・金利から次ターンの指標を計算する補助関数
+  // -----------------------------
+  const calcNextStats = () => {
+    // updateEconomy 関数が利用可能か確認し、無ければ現在値を返す
+    if (typeof updateEconomy === 'function') {
+      return updateEconomy(stats, { demand, supply, policyRate });
+    }
+    return stats;
+  };
+
   const [demand, setDemand] = useState(5);
   const [supply, setSupply] = useState(5);
   const [policyRate, setPolicyRate] = useState(0.0);
@@ -267,6 +278,8 @@
           unit: indicatorInfo[activeIndicator].unit,
           desc: indicatorInfo[activeIndicator].desc,
           history: historyMap[activeIndicator],
+          // calcNextStats() で求めた次ターンの値を渡す
+          nextValue: calcNextStats()[activeIndicator],
           onClose: () => setActiveIndicator(null)
         })
       : null,
