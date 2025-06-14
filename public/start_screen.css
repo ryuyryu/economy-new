@@ -8,7 +8,7 @@ body {
     margin: 0;
     padding: 0;
     /* フォントをGoogleフォントで統一 */
-    font-family: 'Noto Sans JP', 'Zen Maru Gothic', sans-serif;
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
 }
 
 /* スマホでは画像全体が収まるように調整 */
