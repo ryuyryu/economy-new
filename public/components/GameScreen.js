@@ -1,13 +1,13 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
 (function () {
-  let Sparkline, IndicatorCard;
+  let Sparkline, IndicatorDetailModal;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./Sparkline.js'));
-    ({ IndicatorCard } = require('./IndicatorCard.js'));
+    ({ IndicatorDetailModal } = require('./IndicatorDetailModal.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
-    IndicatorCard = window.IndicatorCard;
+    IndicatorDetailModal = window.IndicatorDetailModal;
   }
 
   const { useState, useEffect, useRef } = React;
@@ -320,11 +320,10 @@
       )
     ),
     activeIndicator
-      ? React.createElement(IndicatorCard, {
+      ? React.createElement(IndicatorDetailModal, {
           title: indicatorInfo[activeIndicator].label,
           value: stats[activeIndicator],
           unit: indicatorInfo[activeIndicator].unit,
-          desc: indicatorInfo[activeIndicator].desc,
           history: historyMap[activeIndicator],
           // calcNextStats() で求めた次ターンの値を渡す
           nextValue: calcNextStats()[activeIndicator],
@@ -337,7 +336,7 @@
               : null,
           correlWithLabel:
             indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
-          impactDesc: indicatorInfo[activeIndicator].impactDesc,
+          impact: indicatorInfo[activeIndicator].impact,
           onClose: () => setActiveIndicator(null)
         })
       : null,

@@ -3,30 +3,34 @@
 (function () {
   const { useState, useEffect, useRef } = React;
 
-  function Sparkline({ history }) {
+  // 高さを props.height で指定できるようにする
+  function Sparkline({ history, height }) {
   // 履歴が無ければ何も描画しない
   if (!history || history.length === 0) return null;
 
   // 親要素を参照してサイズを決定する
   const containerRef = useRef(null);
   // 描画サイズとマウスホバー位置を状態として保持
-  const [size, setSize] = useState({ w: 300, h: 150 });
+  // 初期サイズ。高さは引数から、なければ150にする
+  const [size, setSize] = useState({ w: 300, h: height || 150 });
   const [hoverInfo, setHoverInfo] = useState(null);
 
   useEffect(() => {
     // コンポーネント表示後に幅を取得して高さと合わせる
+    // 親要素の幅からサイズを計算
     const update = () => {
       if (containerRef.current) {
         const base = containerRef.current.clientWidth;
         const w = base;
-        const h = base / 3;
+        // 指定があればその高さを、なければ幅の1/3を使う
+        const h = height || base / 3;
         setSize({ w, h });
       }
     };
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
-  }, []);
+  }, [height]);
 
   // 表示範囲を決定するための最小値・最大値
   const min = Math.min(...history);
@@ -63,7 +67,13 @@
   // 実際の描画要素を返す
   return React.createElement(
     'div',
-    { ref: containerRef, className: 'sparkline-container', onPointerMove: handleMove, onPointerLeave: handleLeave },
+    {
+      ref: containerRef,
+      className: 'sparkline-container',
+      onPointerMove: handleMove,
+      onPointerLeave: handleLeave,
+      style: { height: `${size.h}px` }
+    },
     React.createElement(
       'svg',
       {
