@@ -6,17 +6,21 @@
   const { useState, useEffect, useRef } = React;
 
   // コンポーネントを読み込み（ブラウザ環境ではグローバル変数から取得）
-  let Sparkline, IndicatorDetailModal, GameImpactList, GameScreen;
+  let Sparkline, IndicatorDetailModal, GameImpactList, GameScreen, SurveyModal, GameTurnManager;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./components/Sparkline.js'));
     ({ IndicatorDetailModal } = require('./components/IndicatorDetailModal.js'));
     ({ GameImpactList } = require('./components/GameImpactList.js'));
     ({ GameScreen } = require('./components/GameScreen.js'));
+    ({ SurveyModal } = require('./components/SurveyModal.jsx'));
+    ({ GameTurnManager } = require('./components/GameTurnManager.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
     IndicatorDetailModal = window.IndicatorDetailModal;
     GameImpactList = window.GameImpactList;
     GameScreen = window.GameScreen;
+    SurveyModal = window.SurveyModal;
+    GameTurnManager = window.GameTurnManager;
   }
 
 
@@ -30,17 +34,20 @@
   const { demand, supply, policyRate } = factors;
   const gap = demand - supply; // 需要と供給の差分
 
+  // --- 消費者信頼感による景気連鎖 ---
+  const mood = (prevStats.cci - 100) / 25; // -4〜+4 の範囲に正規化
+
   // 政策金利は外部から決定された値をそのまま反映
   next.rate = policyRate;
 
-  // 物価は需要超過で上昇、供給超過で下落させる
-  next.cpi += gap * 0.2;
+  // 物価は需要ギャップと景気のムードで変動
+  next.cpi += gap * 0.2 + mood * 0.05;
   // 失業率は供給が需要を上回ると増加させる
   next.unemp += -gap * 0.05;
   if (next.unemp < 0) next.unemp = 0;
 
-  // GDP 成長率は需要が高いほど押し上げられる
-  next.gdp += gap * 0.05;
+  // GDP 成長率は需要とムードの両方で変化
+  next.gdp += gap * 0.05 + mood * 0.1;
 
   // 為替レートは金利差と需給ギャップで簡易計算
   next.fx += -gap * 0.1 + (policyRate - prevStats.rate) * 0.5;
@@ -67,18 +74,20 @@
   // DOM が準備できてから描画処理を実行
   window.addEventListener('DOMContentLoaded', () => {
     ReactDOM.createRoot(document.getElementById('root')).render(
-      React.createElement(GameScreen)
+      React.createElement(GameTurnManager)
     );
   });
 
   // ブラウザからも参照できるようグローバルに登録
   if (typeof window !== 'undefined') {
     window.updateEconomy = updateEconomy;
+    window.GameTurnManager = GameTurnManager;
+    window.SurveyModal = SurveyModal;
   }
 
   // Jest から関数を参照できるようにエクスポート
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { updateEconomy };
+    module.exports = { updateEconomy, GameTurnManager, SurveyModal };
   }
 })();
 
