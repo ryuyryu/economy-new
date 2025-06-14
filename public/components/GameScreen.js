@@ -1,13 +1,13 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
 (function () {
-  let Sparkline, IndicatorCard;
+  let Sparkline, IndicatorDetailModal;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./Sparkline.js'));
-    ({ IndicatorCard } = require('./IndicatorCard.js'));
+    ({ IndicatorDetailModal } = require('./IndicatorDetailModal.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
-    IndicatorCard = window.IndicatorCard;
+    IndicatorDetailModal = window.IndicatorDetailModal;
   }
 
   const { useState, useEffect, useRef } = React;
@@ -103,7 +103,11 @@
         '上昇すると購買力が低下し景気を冷やします。' +
         '</p>',
       correlWith: 'rate',
-      impactDesc: '金利を上げると物価上昇が抑えられる傾向があります。'
+      impactDesc: '金利を上げると物価上昇が抑えられる傾向があります。',
+      impact: [
+        { title: '購買力の低下', sign: 'negative' },
+        { title: '企業収益の圧迫', sign: 'negative' }
+      ]
     },
     unemp: {
       label: '失業率',
@@ -114,7 +118,11 @@
         '増加は所得減少を通じ消費を抑えます。' +
         '</p>',
       correlWith: 'gdp',
-      impactDesc: 'GDPが拡大すると失業率は低下しやすくなります。'
+      impactDesc: 'GDPが拡大すると失業率は低下しやすくなります。',
+      impact: [
+        { title: '消費減退', sign: 'negative' },
+        { title: '雇用喪失', sign: 'negative' }
+      ]
     },
     gdp: {
       label: 'GDP成長率',
@@ -125,7 +133,11 @@
         '高い成長は雇用や投資を刺激します。' +
         '</p>',
       correlWith: 'rate',
-      impactDesc: '低金利政策はGDP成長を促進する効果があります。'
+      impactDesc: '低金利政策はGDP成長を促進する効果があります。',
+      impact: [
+        { title: '雇用拡大', sign: 'positive' },
+        { title: '投資増加', sign: 'positive' }
+      ]
     },
     rate: {
       label: '政策金利',
@@ -136,7 +148,11 @@
         '引き上げは景気を抑え、引き下げは刺激します。' +
         '</p>',
       correlWith: 'cpi',
-      impactDesc: '物価上昇に対抗して引き上げられることが多いです。'
+      impactDesc: '物価上昇に対抗して引き上げられることが多いです。',
+      impact: [
+        { title: '景気抑制', sign: 'negative' },
+        { title: '通貨価値上昇', sign: 'positive' }
+      ]
     },
     fx: {
       label: '為替レート',
@@ -147,7 +163,11 @@
         '円高は輸出に不利、円安は輸入物価を押し上げます。' +
         '</p>',
       correlWith: 'rate',
-      impactDesc: '金利差が拡大すると為替相場が変動しやすくなります。'
+      impactDesc: '金利差が拡大すると為替相場が変動しやすくなります。',
+      impact: [
+        { title: '輸出企業の利益', sign: 'positive' },
+        { title: '輸入物価上昇', sign: 'negative' }
+      ]
     },
     yield: {
       label: '10年国債利回り',
@@ -158,7 +178,11 @@
         '上昇すると住宅投資や設備投資が鈍ります。' +
         '</p>',
       correlWith: 'rate',
-      impactDesc: '政策金利の動きに連動して変化することが多いです。'
+      impactDesc: '政策金利の動きに連動して変化することが多いです。',
+      impact: [
+        { title: '住宅投資抑制', sign: 'negative' },
+        { title: '安全資産需要', sign: 'positive' }
+      ]
     },
     cci: {
       label: '消費者信頼感指数',
@@ -169,7 +193,10 @@
         '悪化すると消費意欲が低下します。' +
         '</p>',
       correlWith: 'unemp',
-      impactDesc: '失業率の悪化は消費者マインドを冷やします。'
+      impactDesc: '失業率の悪化は消費者マインドを冷やします。',
+      impact: [
+        { title: '消費意欲低下', sign: 'negative' }
+      ]
     },
     pmi: {
       label: '製造業PMI',
@@ -180,7 +207,10 @@
         '50を下回ると先行きの減速を示します。' +
         '</p>',
       correlWith: 'gdp',
-      impactDesc: 'PMIの改善はGDP成長率の上昇につながりやすいです。'
+      impactDesc: 'PMIの改善はGDP成長率の上昇につながりやすいです。',
+      impact: [
+        { title: '景況感向上', sign: 'positive' }
+      ]
     },
     debtGDP: {
       label: '財政赤字/GDP比',
@@ -191,7 +221,10 @@
         '拡大すれば将来増税への懸念が強まります。' +
         '</p>',
       correlWith: 'gdp',
-      impactDesc: '景気拡大期は税収増で比率が改善しやすいです。'
+      impactDesc: '景気拡大期は税収増で比率が改善しやすいです。',
+      impact: [
+        { title: '将来増税懸念', sign: 'negative' }
+      ]
     },
     trade: {
       label: '貿易収支',
@@ -202,7 +235,11 @@
         '赤字が続くと通貨安要因となります。' +
         '</p>',
       correlWith: 'fx',
-      impactDesc: '円安が進むと輸出が増え、貿易収支が改善します。'
+      impactDesc: '円安が進むと輸出が増え、貿易収支が改善します。',
+      impact: [
+        { title: '通貨安要因', sign: 'negative' },
+        { title: '輸出増加', sign: 'positive' }
+      ]
     }
   };
 
@@ -320,14 +357,11 @@
       )
     ),
     activeIndicator
-      ? React.createElement(IndicatorCard, {
+      ? React.createElement(IndicatorDetailModal, {
           title: indicatorInfo[activeIndicator].label,
           value: stats[activeIndicator],
           unit: indicatorInfo[activeIndicator].unit,
-          desc: indicatorInfo[activeIndicator].desc,
           history: historyMap[activeIndicator],
-          // calcNextStats() で求めた次ターンの値を渡す
-          nextValue: calcNextStats()[activeIndicator],
           correlation:
             indicatorInfo[activeIndicator].correlWith
               ? calcCorrelation(
@@ -335,9 +369,9 @@
                   historyMap[indicatorInfo[activeIndicator].correlWith]
                 )
               : null,
-          correlWithLabel:
+          correlLabel:
             indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
-          impactDesc: indicatorInfo[activeIndicator].impactDesc,
+          impact: indicatorInfo[activeIndicator].impact,
           onClose: () => setActiveIndicator(null)
         })
       : null,
