@@ -108,3 +108,9 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* 指数詳細カードのボックスは縦スクロール可能にしてスマホでも見やすく */
+.detail-box {
+  max-height: 80vh;
+  overflow-y: auto;
+}

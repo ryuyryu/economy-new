@@ -29,8 +29,10 @@
   <div id="drawerOverlay" class="fixed inset-0 bg-black/30"></div>
   <!-- サイドドロワー -->
   <aside id="drawer" class="fixed top-0 left-0 h-full w-64 -translate-x-full transform transition-transform duration-300 bg-white shadow-lg z-40 flex flex-col relative">
-    <nav class="p-4 space-y-4 flex-1">
+    <nav class="p-4 space-y-4 flex-1 overflow-y-auto">
       <button id="statsBtn" class="w-full text-left py-2 px-3 bg-gray-100 rounded">📊 経済指標</button>
+      <!-- 指数のリスト。スクリプトから項目が追加される -->
+      <ul id="indexList" class="mt-2 space-y-1 text-sm"></ul>
       <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">🗂 クライアント情報</button>
       <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">📜 履歴</button>
     </nav>
@@ -39,7 +41,7 @@
   <!-- モーダル -->
   <div id="statsModal" class="fixed inset-0 hidden items-center justify-center z-50">
     <div id="modalBg" class="absolute inset-0 bg-black/60"></div>
-    <div class="relative bg-white rounded shadow-lg w-11/12 max-w-md p-6 space-y-4 z-10">
+    <div class="detail-box relative bg-white rounded shadow-lg w-11/12 max-w-md p-6 space-y-4 z-10">
       <button id="closeModal" class="absolute top-2 right-3 text-xl">×</button>
       <h2 class="text-xl font-bold mb-2">経済指標</h2>
       <ul class="space-y-1 font-mono list-none">
@@ -48,6 +50,16 @@
         <li>GDP成長率: <span id="gdp">1.8</span>%</li>
         <li>政策金利: <span id="rate">1.2</span>%</li>
       </ul>
+    </div>
+  </div>
+
+  <!-- 指数の説明カード -->
+  <div id="indexDetailCard" class="fixed inset-0 hidden items-center justify-center z-50">
+    <div id="detailBg" class="absolute inset-0 bg-black/60"></div>
+    <div class="relative bg-white rounded shadow-lg w-11/12 max-w-md p-6 space-y-4 z-10">
+      <button id="closeDetail" class="absolute top-2 right-3 text-xl">×</button>
+      <h3 id="detailTitle" class="text-lg font-bold"></h3>
+      <p id="detailText" class="text-sm whitespace-pre-line"></p>
     </div>
   </div>
   <!-- ゲーム用スクリプトを読み込み -->
