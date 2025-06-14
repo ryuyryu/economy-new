@@ -14,7 +14,10 @@
 
   <!-- ヘッダー: 収入と評価を表示 -->
   <header class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white flex justify-between items-center px-4 py-2">
-    <button id="drawerBtn" class="text-2xl">☰</button>
+    <div class="flex items-center gap-2">
+      <button id="messageBtn" class="text-xl">🔔</button>
+      <button id="drawerBtn" class="text-2xl">☰</button>
+    </div>
     <div class="flex gap-2 text-lg font-mono">
       <span class="flex items-center gap-1 p-1 rounded bg-green-100 text-green-600">
         <span class="w-2 h-2 bg-current rounded"></span>
@@ -38,6 +41,24 @@
       <button class="w-full text-left py-2 px-3 bg-gray-100 rounded">📜 履歴</button>
     </nav>
   </aside>
+
+  <!-- お知らせパネル -->
+  <div id="messagePanel" class="fixed top-16 right-4 w-80 bg-white border border-gray-300 rounded shadow-lg p-4 text-sm z-50 hidden">
+    <button id="closeMessage" class="absolute top-1 right-2 text-lg">×</button>
+    <h2 class="font-bold mb-2">お知らせ</h2>
+    <p class="font-semibold">消費者信頼感指数調査のお知らせ</p>
+    <p class="whitespace-pre-line mt-1">
+調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています
+具体的には以下の項目を調査：
+
+暮らし向き
+収入の増え方
+雇用環境
+耐久消費財の買い時判断
+
+これら4項目の平均値が「消費者態度指数」として発表されます。
+    </p>
+  </div>
 
   <!-- モーダル -->
   <div id="statsModal" class="fixed inset-0 hidden items-center justify-center z-50">

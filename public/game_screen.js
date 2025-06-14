@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // --- 要素の取得 ----------------------------------
   const drawer = document.getElementById('drawer');
   const drawerBtn = document.getElementById('drawerBtn');
+  const messageBtn = document.getElementById('messageBtn');
+  const messagePanel = document.getElementById('messagePanel');
+  const closeMessage = document.getElementById('closeMessage');
   const overlay = document.getElementById('drawerOverlay');
   const statsBtn = document.getElementById('statsBtn');
   const modal = document.getElementById('statsModal');
@@ -85,6 +88,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // オーバーレイをクリックした場合も閉じる
   overlay.addEventListener('click', closeDrawer);
+
+  // --- お知らせパネル表示処理 ----------------------
+  function toggleMessage() {
+    messagePanel.classList.toggle('hidden');
+  }
+  messageBtn.addEventListener('click', toggleMessage);
+  closeMessage.addEventListener('click', toggleMessage);
 
   // --- モーダル表示処理 ----------------------------
   statsBtn.addEventListener('click', () => {

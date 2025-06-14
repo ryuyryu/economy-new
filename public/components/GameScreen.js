@@ -71,6 +71,8 @@
   const [showIndicators, setShowIndicators] = useState(false);
   const [activeIndicator, setActiveIndicator] = useState(null);
   const [toast, setToast] = useState(null);
+  // お知らせパネル表示状態
+  const [showMessages, setShowMessages] = useState(false);
   const prevStatsRef = useRef(stats);
   const [diffStats, setDiffStats] = useState({ cpi: 0, unemp: 0, gdp: 0, rate: 0 });
 
@@ -88,6 +90,18 @@
   const [demand, setDemand] = useState(5);
   const [supply, setSupply] = useState(5);
   const [policyRate, setPolicyRate] = useState(0.0);
+
+  // 表示するお知らせの内容
+  const messages = [
+    {
+      title: '消費者信頼感指数調査のお知らせ',
+      body:
+        '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
+        '具体的には以下の項目を調査：\n\n' +
+        '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
+        'これら4項目の平均値が「消費者態度指数」として発表されます。'
+    }
+  ];
 
   // カード表示用のラベルと説明。
   // desc には HTML 文字列を渡し、指標の概要と簡単な影響を文章で示します
@@ -335,7 +349,16 @@
         'div',
         { className: 'flex justify-between items-center' },
         React.createElement('h1', { className: 'text-2xl font-bold three-d-text' }, 'ECON'),
-        React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')
+        React.createElement(
+          'div',
+          { className: 'flex items-center' },
+          React.createElement(
+            'button',
+            { onClick: () => setShowMessages(o => !o), className: 'text-xl mr-2' },
+            '🔔'
+          ),
+          React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')
+        )
       ),
       React.createElement(
         'div',
@@ -416,6 +439,37 @@
           )
         )
     ),
+    showMessages &&
+      React.createElement(
+        'div',
+        {
+          id: 'messagePanel',
+          className:
+            'fixed top-16 right-4 w-80 bg-white border border-gray-300 rounded shadow-lg p-4 text-sm z-40'
+        },
+        React.createElement(
+          'div',
+          { className: 'flex justify-between items-center mb-2' },
+          React.createElement('h2', { className: 'font-bold' }, 'お知らせ'),
+          React.createElement(
+            'button',
+            { onClick: () => setShowMessages(false), className: 'text-lg' },
+            '×'
+          )
+        ),
+        React.createElement(
+          'ul',
+          { className: 'space-y-4 list-none' },
+          messages.map((msg, idx) =>
+            React.createElement(
+              'li',
+              { key: idx },
+              React.createElement('p', { className: 'font-semibold' }, msg.title),
+              React.createElement('p', { className: 'whitespace-pre-wrap mt-1' }, msg.body)
+            )
+          )
+        )
+      ),
     toast ? React.createElement('div', { id: 'toast', className: 'fixed top-16 right-4 bg-red-600 text-white px-4 py-2 rounded shadow' }, toast) : null
   );
   }
