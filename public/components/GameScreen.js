@@ -104,7 +104,8 @@
         '</p>',
       correlWith: 'rate',
       impactDesc: '金利を上げると物価上昇が抑えられる傾向があります。',
-      impact: [
+      comment: '金利を上げると物価上昇が抑えられる傾向があります。',
+      impacts: [
         { title: '購買力の低下', sign: 'negative' },
         { title: '企業収益の圧迫', sign: 'negative' }
       ]
@@ -119,7 +120,8 @@
         '</p>',
       correlWith: 'gdp',
       impactDesc: 'GDPが拡大すると失業率は低下しやすくなります。',
-      impact: [
+      comment: 'GDPが拡大すると失業率は低下しやすい傾向',
+      impacts: [
         { title: '消費減退', sign: 'negative' },
         { title: '雇用喪失', sign: 'negative' }
       ]
@@ -134,7 +136,8 @@
         '</p>',
       correlWith: 'rate',
       impactDesc: '低金利政策はGDP成長を促進する効果があります。',
-      impact: [
+      comment: '低金利政策はGDP成長を促進する効果があります。',
+      impacts: [
         { title: '雇用拡大', sign: 'positive' },
         { title: '投資増加', sign: 'positive' }
       ]
@@ -149,7 +152,8 @@
         '</p>',
       correlWith: 'cpi',
       impactDesc: '物価上昇に対抗して引き上げられることが多いです。',
-      impact: [
+      comment: '物価上昇に対抗して引き上げられることが多いです。',
+      impacts: [
         { title: '景気抑制', sign: 'negative' },
         { title: '通貨価値上昇', sign: 'positive' }
       ]
@@ -164,7 +168,8 @@
         '</p>',
       correlWith: 'rate',
       impactDesc: '金利差が拡大すると為替相場が変動しやすくなります。',
-      impact: [
+      comment: '金利差が拡大すると為替相場が変動しやすくなります。',
+      impacts: [
         { title: '輸出企業の利益', sign: 'positive' },
         { title: '輸入物価上昇', sign: 'negative' }
       ]
@@ -179,7 +184,8 @@
         '</p>',
       correlWith: 'rate',
       impactDesc: '政策金利の動きに連動して変化することが多いです。',
-      impact: [
+      comment: '政策金利の動きに連動して変化することが多いです。',
+      impacts: [
         { title: '住宅投資抑制', sign: 'negative' },
         { title: '安全資産需要', sign: 'positive' }
       ]
@@ -194,7 +200,8 @@
         '</p>',
       correlWith: 'unemp',
       impactDesc: '失業率の悪化は消費者マインドを冷やします。',
-      impact: [
+      comment: '失業率の悪化は消費者マインドを冷やします。',
+      impacts: [
         { title: '消費意欲低下', sign: 'negative' }
       ]
     },
@@ -208,7 +215,8 @@
         '</p>',
       correlWith: 'gdp',
       impactDesc: 'PMIの改善はGDP成長率の上昇につながりやすいです。',
-      impact: [
+      comment: 'PMIの改善はGDP成長率の上昇につながりやすいです。',
+      impacts: [
         { title: '景況感向上', sign: 'positive' }
       ]
     },
@@ -222,7 +230,8 @@
         '</p>',
       correlWith: 'gdp',
       impactDesc: '景気拡大期は税収増で比率が改善しやすいです。',
-      impact: [
+      comment: '景気拡大期は税収増で比率が改善しやすいです。',
+      impacts: [
         { title: '将来増税懸念', sign: 'negative' }
       ]
     },
@@ -236,7 +245,8 @@
         '</p>',
       correlWith: 'fx',
       impactDesc: '円安が進むと輸出が増え、貿易収支が改善します。',
-      impact: [
+      comment: '円安が進むと輸出が増え、貿易収支が改善します。',
+      impacts: [
         { title: '通貨安要因', sign: 'negative' },
         { title: '輸出増加', sign: 'positive' }
       ]
@@ -371,7 +381,8 @@
               : null,
           correlLabel:
             indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
-          impact: indicatorInfo[activeIndicator].impact,
+          impacts: indicatorInfo[activeIndicator].impacts,
+          comment: indicatorInfo[activeIndicator].comment,
           onClose: () => setActiveIndicator(null)
         })
       : null,
