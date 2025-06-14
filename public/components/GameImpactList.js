@@ -2,9 +2,10 @@
   const { createElement } = React;
 
   // GameImpactList コンポーネント
-  // props.impact は {title, sign}[] の配列を想定
-  function GameImpactList({ impact }) {
-    if (!impact || impact.length === 0) return null;
+  // props.impacts は {title, sign}[] の配列を想定
+  function GameImpactList({ impacts }) {
+    const list = impacts || [];
+    if (list.length === 0) return null;
 
     // icon の色を sign に応じて変えるユーティリティ関数
     const icon = sign => {
@@ -16,10 +17,10 @@
     return createElement(
       'ul',
       { className: 'space-y-1 text-sm list-none' },
-      impact.map((item, idx) =>
+      list.map((item, idx) =>
         createElement(
           'li',
-          { key: idx, className: 'flex items-center' },
+          { key: idx, className: 'flex items-center transition-transform hover:scale-105' },
           icon(item.sign),
           createElement('span', null, item.title)
         )
