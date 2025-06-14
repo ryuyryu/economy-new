@@ -3,14 +3,15 @@
 (function () {
   const { useState, useEffect, useRef } = React;
 
-  function Sparkline({ history }) {
+  // height プロパティを渡すとグラフの高さを固定できます
+  function Sparkline({ history, height }) {
   // 履歴が無ければ何も描画しない
   if (!history || history.length === 0) return null;
 
   // 親要素を参照してサイズを決定する
   const containerRef = useRef(null);
   // 描画サイズとマウスホバー位置を状態として保持
-  const [size, setSize] = useState({ w: 300, h: 150 });
+  const [size, setSize] = useState({ w: 300, h: height || 150 });
   const [hoverInfo, setHoverInfo] = useState(null);
 
   useEffect(() => {
@@ -19,14 +20,14 @@
       if (containerRef.current) {
         const base = containerRef.current.clientWidth;
         const w = base;
-        const h = base / 3;
+        const h = height || base / 3;
         setSize({ w, h });
       }
     };
     update();
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
-  }, []);
+  }, [height]);
 
   // 表示範囲を決定するための最小値・最大値
   const min = Math.min(...history);

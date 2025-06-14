@@ -6,14 +6,16 @@
   const { useState, useEffect, useRef } = React;
 
   // コンポーネントを読み込み（ブラウザ環境ではグローバル変数から取得）
-  let Sparkline, IndicatorCard, GameScreen;
+  let Sparkline, IndicatorDetailModal, GameImpactList, GameScreen;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./components/Sparkline.js'));
-    ({ IndicatorCard } = require('./components/IndicatorCard.js'));
+    ({ IndicatorDetailModal } = require('./components/IndicatorDetailModal.js'));
+    ({ GameImpactList } = require('./components/GameImpactList.js'));
     ({ GameScreen } = require('./components/GameScreen.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
-    IndicatorCard = window.IndicatorCard;
+    IndicatorDetailModal = window.IndicatorDetailModal;
+    GameImpactList = window.GameImpactList;
     GameScreen = window.GameScreen;
   }
 
