@@ -383,6 +383,7 @@
             indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
           impacts: indicatorInfo[activeIndicator].impacts,
           comment: indicatorInfo[activeIndicator].comment,
+          trend: diffStats[activeIndicator],
           onClose: () => setActiveIndicator(null)
         })
       : null,

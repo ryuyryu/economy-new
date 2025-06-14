@@ -24,7 +24,8 @@
       correlation,
       correlLabel,
       impacts,
-      comment
+      comment,
+      trend
     } = props;
     const diff = history && history.length >= 2 ? value - history[history.length - 2] : 0;
     const diffStr = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
@@ -45,14 +46,14 @@
         h('div', {
           className: 'absolute left-0 top-0 bottom-0 w-1 bg-[#0cb195] rounded-l-xl'
         }),
-        // 右上のタブ
+        // 左上に配置するタブ
 
         h(
           'div',
           {
             className:
 
-              'absolute -top-4 right-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
+              'absolute -top-4 left-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
           },
           'INDEX'
 
@@ -85,7 +86,7 @@
                   `${correlLabel}との相関: ${correlation.toFixed(2)}`
                 )
               : null,
-            h(GameImpactList, { impacts })
+            h(GameImpactList, { impacts, trend })
           )
         ),
         comment
