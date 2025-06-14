@@ -19,7 +19,10 @@
       impact.map((item, idx) =>
         createElement(
           'li',
-          { key: idx, className: 'flex items-center' },
+          {
+            key: idx,
+            className: 'flex items-center hover:scale-105 transition-transform'
+          },
           icon(item.sign),
           createElement('span', null, item.title)
         )

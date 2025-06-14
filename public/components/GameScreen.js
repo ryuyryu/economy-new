@@ -372,6 +372,7 @@
           correlLabel:
             indicatorInfo[indicatorInfo[activeIndicator].correlWith]?.label,
           impact: indicatorInfo[activeIndicator].impact,
+          comment: indicatorInfo[activeIndicator].impactDesc,
           onClose: () => setActiveIndicator(null)
         })
       : null,
