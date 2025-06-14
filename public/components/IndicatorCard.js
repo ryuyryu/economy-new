@@ -1,13 +1,61 @@
 // IndicatorCard コンポーネント
 // 指標の詳細をモーダルカードとして表示する
 (function () {
-  let Sparkline;
+  const { useState } = React;
+  let ResponsiveSparkline;
   if (typeof require !== 'undefined') {
     // テスト環境では require で読み込む
-    ({ Sparkline } = require('./Sparkline.js'));
+    ({ ResponsiveSparkline } = require('./ResponsiveSparkline.js'));
   } else if (typeof window !== 'undefined') {
     // ブラウザではグローバル変数から取得
-    Sparkline = window.Sparkline;
+    ResponsiveSparkline = window.ResponsiveSparkline;
+  }
+
+  // 右上に表示する予測バッジ
+  function ForecastBadge({ value, trend, onClick }) {
+    const color = trend > 0 ? 'text-red-500' : trend < 0 ? 'text-blue-500' : 'text-gray-500';
+    const arrow = trend > 0 ? '↑' : trend < 0 ? '↓' : '→';
+    return React.createElement(
+      'button',
+      {
+        onClick,
+        className:
+          'absolute top-2 right-2 text-xs bg-white border rounded px-2 py-1 shadow flex items-center space-x-1',
+      },
+      React.createElement('span', { className: color }, arrow),
+      React.createElement('span', null, `次ターン予測 ${value.toFixed(1)}%`)
+    );
+  }
+
+  // 推奨ポリシー選択用モーダル
+  function ActionModal({ policies, onSelect, onClose }) {
+    return React.createElement(
+      'div',
+      { className: 'fixed inset-0 flex items-center justify-center z-50' },
+      React.createElement('div', {
+        className: 'absolute inset-0 bg-black/40',
+        onClick: onClose,
+      }),
+      React.createElement(
+        'div',
+        { className: 'relative bg-white rounded shadow-lg p-4 space-y-2 z-10' },
+        React.createElement('h3', { className: 'font-bold mb-2' }, '推奨ポリシー'),
+        policies.map(p =>
+          React.createElement(
+            'button',
+            {
+              key: p.id,
+              onClick: () => {
+                onSelect(p.id);
+                onClose();
+              },
+              className: 'block w-full bg-blue-500 text-white rounded px-3 py-1',
+            },
+            p.label
+          )
+        )
+      )
+    );
   }
 
   function IndicatorCard(props) {
@@ -23,6 +71,8 @@
       : 0;
   const diffSign = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
   const diffColor = diff > 0 ? 'text-lime-500' : diff < 0 ? 'text-red-500' : 'text-gray-500';
+  const [actionOpen, setActionOpen] = useState(false);
+  const forecastTrend = props.nextValue !== undefined ? props.nextValue - props.value : 0;
 
   return React.createElement(
     'div',
@@ -43,6 +93,12 @@
         { onClick: props.onClose, className: 'close-btn' },
         '✕'
       ),
+      props.nextValue !== undefined &&
+        React.createElement(ForecastBadge, {
+          value: props.nextValue,
+          trend: forecastTrend,
+          onClick: () => setActionOpen(true),
+        }),
       React.createElement('h2', { className: 'text-lg font-bold' }, props.title),
       React.createElement(
         'p',
@@ -56,7 +112,10 @@
         React.createElement(
           'div',
           { className: 'flex-shrink-0 w-1/3 pr-2 border-r border-gray-300' },
-          React.createElement(Sparkline, { history: props.history })
+          React.createElement(ResponsiveSparkline, {
+            data: props.history,
+            height: 120,
+          })
         ),
         React.createElement(
           'div',
@@ -110,7 +169,13 @@
               props.impactDesc
             )
           : null
-      )
+      ),
+      actionOpen &&
+        React.createElement(ActionModal, {
+          policies: props.policies || [],
+          onSelect: id => props.onPolicySelect && props.onPolicySelect(id),
+          onClose: () => setActionOpen(false),
+        })
     )
   );
   }
