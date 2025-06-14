@@ -51,6 +51,16 @@
   // 消費者信頼感は需要の強さと失業率で調整
   next.cci += gap * 0.1 - next.unemp * 0.02;
 
+  // -------- CCI が他の指標へ与える連鎖効果 --------
+  // mood は消費者信頼感の偏差を -4〜+4 の範囲に正規化した値
+  const mood = (next.cci - 100) / 25;
+  // 消費支出への影響
+  next.consumption = (next.consumption || 0) + mood * 0.2;
+  // GDP 成長率にもわずかに反映
+  next.gdp += mood * 0.1;
+  // 物価は消費マインドの改善で若干上昇させる
+  next.cpi += mood * 0.05;
+
   // PMI は需要の強弱をそのまま反映
   next.pmi += gap * 0.1;
 

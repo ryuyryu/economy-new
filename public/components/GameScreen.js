@@ -1,13 +1,15 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
 (function () {
-  let Sparkline, IndicatorDetailModal;
+  let Sparkline, IndicatorDetailModal, SurveyModal;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./Sparkline.js'));
     ({ IndicatorDetailModal } = require('./IndicatorDetailModal.js'));
+    ({ SurveyModal } = require('./SurveyModal.jsx'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
     IndicatorDetailModal = window.IndicatorDetailModal;
+    SurveyModal = window.SurveyModal;
   }
 
   const { useState, useEffect, useRef } = React;
@@ -49,6 +51,7 @@
     fx: 150.0,
     yield: 0.9,
     cci: 100,
+    consumption: 0,
     pmi: 50,
     debtGDP: -3.0,
     trade: 1200
@@ -62,6 +65,7 @@
     fx: [150.0],
     yield: [0.9],
     cci: [100],
+    consumption: [0],
     pmi: [50],
     debtGDP: [-3.0],
     trade: [1200]
@@ -73,6 +77,9 @@
   const [toast, setToast] = useState(null);
   const prevStatsRef = useRef(stats);
   const [diffStats, setDiffStats] = useState({ cpi: 0, unemp: 0, gdp: 0, rate: 0 });
+  // ターン数とアンケート表示フラグを追加
+  const [turn, setTurn] = useState(0);
+  const [isSurveyOpen, setSurveyOpen] = useState(false);
 
   // -----------------------------
   // 現在の指標と需給・金利から次ターンの指標を計算する補助関数
@@ -205,6 +212,21 @@
         { title: '消費意欲低下', sign: 'negative' }
       ]
     },
+    consumption: {
+      label: '消費支出',
+      unit: '',
+      desc:
+        '<p>' +
+        '家計が実際に使ったお金の量。<br>' +
+        '消費者信頼感が高いほど増える傾向があります。' +
+        '</p>',
+      correlWith: 'cci',
+      impactDesc: 'CCIの改善は消費拡大につながります。',
+      comment: 'CCIの改善は消費拡大につながります。',
+      impacts: [
+        { title: '需要増加', sign: 'positive' }
+      ]
+    },
     pmi: {
       label: '製造業PMI',
       unit: '',
@@ -293,6 +315,12 @@
         });
         return next;
       });
+      // ターンを進め、3ターンごとにアンケートを表示
+      setTurn(t => {
+        const nt = t + 1;
+        if (nt % 3 === 0) setSurveyOpen(true);
+        return nt;
+      });
       timer = setTimeout(updateStats, 5000 + Math.random() * 2000);
     };
     timer = setTimeout(updateStats, 5000);
@@ -303,6 +331,11 @@
   const closeDrawer = () => {
     setDrawerOpen(false);
     setShowIndicators(false);
+  };
+
+  // アンケート回答で CCI を調整
+  const handleSurveyAnswer = effect => {
+    setStats(prev => ({ ...prev, cci: prev.cci + effect }));
   };
 
   const drawerClasses = [
@@ -416,7 +449,12 @@
           )
         )
     ),
-    toast ? React.createElement('div', { id: 'toast', className: 'fixed top-16 right-4 bg-red-600 text-white px-4 py-2 rounded shadow' }, toast) : null
+    toast ? React.createElement('div', { id: 'toast', className: 'fixed top-16 right-4 bg-red-600 text-white px-4 py-2 rounded shadow' }, toast) : null,
+    React.createElement(SurveyModal, {
+      isOpen: isSurveyOpen,
+      onClose: () => setSurveyOpen(false),
+      onAnswer: handleSurveyAnswer
+    })
   );
   }
 
