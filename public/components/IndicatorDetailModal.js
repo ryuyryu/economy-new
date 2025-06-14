@@ -45,14 +45,15 @@
         h('div', {
           className: 'absolute left-0 top-0 bottom-0 w-1 bg-[#0cb195] rounded-l-xl'
         }),
-        // 左上に表示する指標名タブ
+        // 右上のタブ
         h(
           'div',
           {
             className:
-              'absolute -top-4 left-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
+
+              'absolute -top-4 right-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
           },
-          title
+          'INDEX'
         ),
         h(
           'button',
