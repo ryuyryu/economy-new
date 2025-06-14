@@ -50,6 +50,7 @@
           'div',
           {
             className:
+
               'absolute -top-4 right-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
           },
           'INDEX'
