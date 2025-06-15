@@ -29,6 +29,7 @@
     const diff = history && history.length >= 2 ? value - history[history.length - 2] : 0;
     const diffStr = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
     const diffColor = diff > 0 ? 'text-green-500' : diff < 0 ? 'text-red-500' : 'text-gray-500';
+    const direction = diff >= 0 ? 1 : -1;
 
     return h(
       'div',
@@ -51,11 +52,9 @@
           'div',
           {
             className:
-
-              'absolute -top-4 right-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
+              'absolute -top-4 left-4 bg-[#00fb00]/90 text-xs px-2 py-1 rounded-b-md shadow'
           },
           'INDEX'
-
         ),
         h(
           'button',
@@ -85,7 +84,7 @@
                   `${correlLabel}との相関: ${correlation.toFixed(2)}`
                 )
               : null,
-            h(GameImpactList, { impacts })
+            h(GameImpactList, { impacts, direction })
           )
         ),
         comment
