@@ -120,8 +120,8 @@
       impactDesc: '金利を上げると物価上昇が抑えられる傾向があります。',
       comment: '金利を上げると物価上昇が抑えられる傾向があります。',
       impacts: [
-        { title: '購買力の低下', sign: 'negative' },
-        { title: '企業収益の圧迫', sign: 'negative' }
+        { title: '購買力の低下', desc: '物価が上がると同じお金で買える量が減ります' },
+        { title: '企業収益の圧迫', desc: 'コスト増で儲けが少なくなります' }
       ]
     },
     unemp: {
@@ -136,8 +136,8 @@
       impactDesc: 'GDPが拡大すると失業率は低下しやすくなります。',
       comment: 'GDPが拡大すると失業率は低下しやすい傾向',
       impacts: [
-        { title: '消費減退', sign: 'negative' },
-        { title: '雇用喪失', sign: 'negative' }
+        { title: '消費減退', desc: '仕事が少ないとお金を使う人が減ります' },
+        { title: '雇用喪失', desc: '働く場所がなくなることです' }
       ]
     },
     gdp: {
@@ -152,8 +152,8 @@
       impactDesc: '低金利政策はGDP成長を促進する効果があります。',
       comment: '低金利政策はGDP成長を促進する効果があります。',
       impacts: [
-        { title: '雇用拡大', sign: 'positive' },
-        { title: '投資増加', sign: 'positive' }
+        { title: '雇用拡大', desc: '生産が増えると働く人が増えます' },
+        { title: '投資増加', desc: '景気が良いと企業はお金を使って拡大します' }
       ]
     },
     rate: {
@@ -168,8 +168,8 @@
       impactDesc: '物価上昇に対抗して引き上げられることが多いです。',
       comment: '物価上昇に対抗して引き上げられることが多いです。',
       impacts: [
-        { title: '景気抑制', sign: 'negative' },
-        { title: '通貨価値上昇', sign: 'positive' }
+        { title: '景気抑制', desc: '金利が上がると借金が増えづらくなります' },
+        { title: '通貨価値上昇', desc: '金利が高い国の通貨は価値が上がりやすいです' }
       ]
     },
     fx: {
@@ -184,8 +184,8 @@
       impactDesc: '金利差が拡大すると為替相場が変動しやすくなります。',
       comment: '金利差が拡大すると為替相場が変動しやすくなります。',
       impacts: [
-        { title: '輸出企業の利益', sign: 'positive' },
-        { title: '輸入物価上昇', sign: 'negative' }
+        { title: '輸出企業の利益', desc: '円安になると海外で売りやすくなります' },
+        { title: '輸入物価上昇', desc: '円安で外国からの買い物が高くなります' }
       ]
     },
     yield: {
@@ -200,8 +200,8 @@
       impactDesc: '政策金利の動きに連動して変化することが多いです。',
       comment: '政策金利の動きに連動して変化することが多いです。',
       impacts: [
-        { title: '住宅投資抑制', sign: 'negative' },
-        { title: '安全資産需要', sign: 'positive' }
+        { title: '住宅投資抑制', desc: '長期金利が高いと家を建てにくくなります' },
+        { title: '安全資産需要', desc: '国債は安定した投資先とされます' }
       ]
     },
     cci: {
@@ -216,7 +216,7 @@
       impactDesc: '失業率の悪化は消費者マインドを冷やします。',
       comment: '失業率の悪化は消費者マインドを冷やします。',
       impacts: [
-        { title: '消費意欲低下', sign: 'negative' }
+        { title: '消費意欲低下', desc: '将来が不安だと買い物を控えます' }
       ]
     },
     pmi: {
@@ -231,7 +231,7 @@
       impactDesc: 'PMIの改善はGDP成長率の上昇につながりやすいです。',
       comment: 'PMIの改善はGDP成長率の上昇につながりやすいです。',
       impacts: [
-        { title: '景況感向上', sign: 'positive' }
+        { title: '景況感向上', desc: '製造業が元気だと景気も明るくなります' }
       ]
     },
     debtGDP: {
@@ -246,7 +246,7 @@
       impactDesc: '景気拡大期は税収増で比率が改善しやすいです。',
       comment: '景気拡大期は税収増で比率が改善しやすいです。',
       impacts: [
-        { title: '将来増税懸念', sign: 'negative' }
+        { title: '将来増税懸念', desc: '国の借金が多いと税金が上がるかもしれません' }
       ]
     },
     trade: {
@@ -261,8 +261,8 @@
       impactDesc: '円安が進むと輸出が増え、貿易収支が改善します。',
       comment: '円安が進むと輸出が増え、貿易収支が改善します。',
       impacts: [
-        { title: '通貨安要因', sign: 'negative' },
-        { title: '輸出増加', sign: 'positive' }
+        { title: '通貨安要因', desc: '赤字が続くと円の価値が下がることがあります' },
+        { title: '輸出増加', desc: '円安なら海外へ多く売れます' }
       ]
     }
   };
