@@ -53,3 +53,8 @@ button {
     font-size: 1.2rem;
     padding: 0.5em 2em;
 }
+
+/* お知らせパネルのスタイル */
+#noticePanel {
+    z-index: 50; /* ドロワーより上に表示されないよう調整 */
+}

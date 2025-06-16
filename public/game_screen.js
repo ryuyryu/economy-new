@@ -8,6 +8,9 @@ function initializeGameScreen() {
     var drawer = document.getElementById('drawer');
     var openButton = document.getElementById('drawerButton');
     var closeButton = document.getElementById('closeDrawer');
+    // お知らせ関連の要素を取得
+    var noticeButton = document.getElementById('noticeButton');
+    var noticePanel = document.getElementById('noticePanel');
 
     // 経済指数のリストと詳細表示用カードを取得
     var indexList = document.getElementById('indexList');
@@ -52,9 +55,32 @@ function initializeGameScreen() {
         drawer.classList.toggle('open');
     }
 
+    // お知らせを閉じる関数
+    function closeNotice() {
+        if (noticePanel && !noticePanel.classList.contains('hidden')) {
+            noticePanel.classList.add('hidden');
+        }
+    }
+
+    // お知らせを開閉する関数
+    function toggleNotice() {
+        if (noticePanel) {
+            noticePanel.classList.toggle('hidden');
+        }
+    }
+
     // メニューボタンでドロワーを開閉
     if (openButton) {
-        openButton.addEventListener('click', toggleDrawer);
+        openButton.addEventListener('click', function() {
+            // ドロワーを開く際にお知らせを閉じる
+            closeNotice();
+            toggleDrawer();
+        });
+    }
+
+    // お知らせボタンでパネルを開閉
+    if (noticeButton) {
+        noticeButton.addEventListener('click', toggleNotice);
     }
 
     // 閉じるボタンでドロワーを閉じる

@@ -18,6 +18,9 @@
         <h1 class="text-lg font-bold">ECON ゲーム</h1>
         <div class="flex items-center">
             <span id="rating" class="mr-4 text-sm">評価: ★0</span>
+            <!-- お知らせ表示ボタン -->
+            <button id="noticeButton" class="bg-green-500 px-3 py-1 rounded mr-2">お知らせ</button>
+            <!-- メニューボタン -->
             <button id="drawerButton" class="bg-blue-500 px-3 py-1 rounded">メニュー</button>
         </div>
     </header>
@@ -43,6 +46,11 @@
         <ul id="indexList" class="p-2 border-t"></ul>
         <!-- 選択した指数の説明を表示するカード -->
         <div id="indexDetailCard" class="p-2"></div>
+    </div>
+
+    <!-- お知らせパネル -->
+    <div id="noticePanel" class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 p-4 shadow hidden">
+        <p>ここに最新のお知らせが表示されます。</p>
     </div>
 </body>
 </html>

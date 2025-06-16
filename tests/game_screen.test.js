@@ -12,6 +12,8 @@ describe('public/game_screen.js', () => {
         <ul id="indexList"></ul>
         <div id="indexDetailCard"></div>
       </div>
+      <button id="noticeButton"></button>
+      <div id="noticePanel" class="hidden"></div>
     `;
 
     // モジュールを読み込む
@@ -34,5 +36,17 @@ describe('public/game_screen.js', () => {
     firstItem.click();
     const detail = document.getElementById('indexDetailCard');
     expect(detail.textContent).toContain(window.economicIndices[0].impact);
+  });
+
+  test('ドロワーを開くとお知らせが閉じる', () => {
+    const noticeBtn = document.getElementById('noticeButton');
+    const noticePanel = document.getElementById('noticePanel');
+    const drawerBtn = document.getElementById('drawerButton');
+    // 先にお知らせを開く
+    noticeBtn.click();
+    expect(noticePanel.classList.contains('hidden')).toBe(false);
+    // メニューボタンをクリックしてドロワーを開く
+    drawerBtn.click();
+    expect(noticePanel.classList.contains('hidden')).toBe(true);
   });
 });
