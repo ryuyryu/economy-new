@@ -313,7 +313,14 @@
     return () => clearTimeout(timer);
   }, []);
 
-  const toggleDrawer = () => setDrawerOpen(o => !o);
+  // ドロワーを開く/閉じる関数
+  const toggleDrawer = () =>
+    setDrawerOpen(o => {
+      const next = !o;
+      // ドロワーを開くときはお知らせパネルを閉じる
+      if (next) setShowMessages(false);
+      return next;
+    });
   const closeDrawer = () => {
     setDrawerOpen(false);
     setShowIndicators(false);
