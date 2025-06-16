@@ -75,6 +75,8 @@ window.addEventListener('DOMContentLoaded', () => {
   function openDrawer() {
     drawer.classList.add('drawer-open');
     overlay.classList.add('overlay-show');
+    // ドロワーを開くときはお知らせパネルを閉じる
+    messagePanel.classList.add('hidden');
   }
 
   function closeDrawer() {
