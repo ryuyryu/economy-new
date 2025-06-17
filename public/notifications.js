@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 各メッセージをリストに追加
   saved.forEach((msg, idx) => {
     const li = document.createElement('li');
-    li.className = 'bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
+    li.className = 'bg-gray-800 text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
     li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
     li.addEventListener('click', () => {
       // 詳細画面へ遷移するときはインデックスをクエリパラメータで渡す
