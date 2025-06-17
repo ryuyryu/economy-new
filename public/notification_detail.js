@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // JSON 解析に失敗した場合はエラーを出力しますが、空配列のまま処理を続けます
     console.error(e);
   }
-  const msg = saved.find((n) => n.id === id) || { title: '不明', body: '', color: '#49796b' };
+  const msg =
+    saved.find((n) => n.id === id) ||
+    { title: '不明', body: '', color: '#49796b' };
 
   // タイトルと本文を表示
   document.getElementById('detailTitle').textContent = msg.title;
@@ -25,8 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
     header.style.setProperty('--header-bg', msg.color);
   }
 
-  // 送信ボタンは簡易的にアラートを表示
-  document.getElementById('sendBtn').addEventListener('click', () => {
-    alert('回答を送信しました');
-  });
+  // アンケートフォームを表示
+  const root = document.getElementById('surveyRoot');
+  if (root && window.SurveyForm && window.ReactDOM && window.React) {
+    const question = 'このお知らせは役に立ちましたか？';
+    const options = ['はい', 'いいえ', 'どちらとも言えない'];
+    ReactDOM.createRoot(root).render(
+      React.createElement(SurveyForm, {
+        question,
+        options,
+        storageKey: `survey_${id}`,
+      })
+    );
+  }
 });
