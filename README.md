@@ -118,11 +118,12 @@ npm test     # Jest でテストを実行
 
 ## 🔔 お知らせ一覧機能
 
+
 `notifications.html` を開くと、ゲーム内で受け取ったお知らせを一覧できます。
-カード部分は次の Tailwind クラスを使用したシンプルなデザインです。
+カード部分は #49796b 色の以下の Tailwind クラスを使ったシンプルなデザインです。
 
 ```
-bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
+bg-[#49796b] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
 ```
 
 項目をクリックすると `notification_detail.html` に遷移し、
