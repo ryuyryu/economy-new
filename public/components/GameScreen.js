@@ -91,17 +91,27 @@
   const [supply, setSupply] = useState(5);
   const [policyRate, setPolicyRate] = useState(0.0);
 
-  // 表示するお知らせの内容
-  const messages = [
-    {
-      title: '消費者信頼感指数調査のお知らせ',
-      body:
-        '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
-        '具体的には以下の項目を調査：\n\n' +
-        '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
-        'これら4項目の平均値が「消費者態度指数」として発表されます。'
+  // お知らせメッセージ一覧を保持
+  const [messages, setMessages] = useState(() => {
+    const saved = JSON.parse(localStorage.getItem('notifications') || '[]');
+    if (saved.length === 0) {
+      saved.push({
+        title: '消費者信頼感指数調査のお知らせ',
+        body:
+          '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
+          '具体的には以下の項目を調査：\n\n' +
+          '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
+          'これら4項目の平均値が「消費者態度指数」として発表されます。'
+      });
+      localStorage.setItem('notifications', JSON.stringify(saved));
     }
-  ];
+    return saved;
+  });
+
+  // messages が変わるたびローカルストレージへ保存
+  useEffect(() => {
+    localStorage.setItem('notifications', JSON.stringify(messages));
+  }, [messages]);
 
   // カード表示用のラベルと説明。
   // desc には HTML 文字列を渡し、指標の概要と簡単な影響を文章で示します
@@ -362,6 +372,7 @@
           React.createElement(
             'button',
             {
+
               // 一覧ページへ遷移
               onClick: () => {
                 window.location.href = 'notifications.html';
@@ -472,13 +483,19 @@
         ),
         React.createElement(
           'ul',
-          { className: 'space-y-4 list-none' },
+          { className: 'space-y-4 list-none', id: 'notificationListReact' },
           messages.map((msg, idx) =>
             React.createElement(
               'li',
-              { key: idx },
-              React.createElement('p', { className: 'font-semibold' }, msg.title),
-              React.createElement('p', { className: 'whitespace-pre-wrap mt-1' }, msg.body)
+              {
+                key: idx,
+                className:
+                  'bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer',
+                onClick: () => {
+                  window.location.href = `notification_detail.html?index=${idx}`;
+                }
+              },
+              React.createElement('p', { className: 'font-semibold' }, msg.title)
             )
           )
         )

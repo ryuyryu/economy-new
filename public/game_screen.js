@@ -90,7 +90,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // オーバーレイをクリックした場合も閉じる
   overlay.addEventListener('click', closeDrawer);
-
   // --- お知らせ一覧ページへの遷移 --------------------
   function openNotifications() {
     // 別ページに移動して一覧を表示
