@@ -116,6 +116,20 @@ npm install  # 依存パッケージのインストール
 npm test     # Jest でテストを実行
 ```
 
+## 🔔 お知らせ一覧機能
+
+ゲーム画面右上の🔔ボタンを押すと、お知らせパネルが開きます。
+過去に受け取ったメッセージはローカルストレージに保存され、
+一覧として表示されます。各カードには以下の Tailwind クラスを
+適用しています。
+
+```
+bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
+```
+
+項目をクリックすると `notification_detail.html` に遷移し、
+内容確認と返信が行えます。
+
 ---
 
 ## 🙋‍♂️ Contributors
