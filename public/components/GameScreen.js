@@ -93,19 +93,12 @@
 
   // お知らせメッセージ一覧を保持
   const [messages, setMessages] = useState(() => {
-    const saved = JSON.parse(localStorage.getItem('notifications') || '[]');
-    if (saved.length === 0) {
-      saved.push({
-        title: '消費者信頼感指数調査のお知らせ',
-        body:
-          '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
-          '具体的には以下の項目を調査：\n\n' +
-          '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
-          'これら4項目の平均値が「消費者態度指数」として発表されます。',
-        color: '#49796b'
-      });
-      localStorage.setItem('notifications', JSON.stringify(saved));
+    // ユーティリティが利用可能ならそこから取得
+    if (typeof loadNotifications === 'function') {
+      return loadNotifications();
     }
+    // Fallback: 直接ローカルストレージから取得
+    const saved = JSON.parse(localStorage.getItem('notifications') || '[]');
     return saved;
   });
 
