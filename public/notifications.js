@@ -22,9 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 各メッセージをリストに追加
   saved.forEach((msg, idx) => {
     const li = document.createElement('li');
-    // 背景色を明るめの #cfe4de に変更し、通知をより見やすくする
-    // 明るい色のため文字色は黒に設定する
-    li.className = 'bg-[#cfe4de] text-black shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
+    // 背景色を#49796bに設定し、影を付けて立体感を出す
+    li.className = 'bg-[#49796b] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
     li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
     li.addEventListener('click', () => {
       // 詳細画面へ遷移するときはインデックスをクエリパラメータで渡す
