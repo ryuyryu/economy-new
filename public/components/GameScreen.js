@@ -372,8 +372,11 @@
           React.createElement(
             'button',
             {
-              // お知らせパネルの開閉
-              onClick: () => setShowMessages((o) => !o),
+
+              // 一覧ページへ遷移
+              onClick: () => {
+                window.location.href = 'notifications.html';
+              },
               className: 'text-xl mr-2'
             },
             '🔔'

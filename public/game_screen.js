@@ -90,51 +90,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // オーバーレイをクリックした場合も閉じる
   overlay.addEventListener('click', closeDrawer);
-
-  // --- お知らせパネル表示処理 ----------------------
-  // ローカルストレージからメッセージを読み込み
-  function loadNotifications() {
-    const saved = JSON.parse(localStorage.getItem('notifications') || '[]');
-    if (saved.length === 0) {
-      // 初回のみサンプルメッセージを登録
-      saved.push({
-        title: '消費者信頼感指数調査のお知らせ',
-        body:
-          '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
-          '具体的には以下の項目を調査：\n\n' +
-          '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
-          'これら4項目の平均値が「消費者態度指数」として発表されます。'
-      });
-      localStorage.setItem('notifications', JSON.stringify(saved));
-    }
-    return saved;
+  // --- お知らせ一覧ページへの遷移 --------------------
+  function openNotifications() {
+    // 別ページに移動して一覧を表示
+    window.location.href = 'notifications.html';
   }
-
-  // パネル内にメッセージを描画
-  function renderNotifications() {
-    const list = document.getElementById('notificationList');
-    list.innerHTML = '';
-    const saved = loadNotifications();
-    saved.forEach((msg, idx) => {
-      const li = document.createElement('li');
-      li.className =
-        'bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
-      li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
-      li.addEventListener('click', () => {
-        window.location.href = `notification_detail.html?index=${idx}`;
-      });
-      list.appendChild(li);
-    });
-  }
-
-  function toggleMessage() {
-    messagePanel.classList.toggle('hidden');
-    if (!messagePanel.classList.contains('hidden')) {
-      renderNotifications();
-    }
-  }
-  messageBtn.addEventListener('click', toggleMessage);
-  closeMessage.addEventListener('click', toggleMessage);
+  messageBtn.addEventListener('click', openNotifications);
 
   // --- モーダル表示処理 ----------------------------
   statsBtn.addEventListener('click', () => {
