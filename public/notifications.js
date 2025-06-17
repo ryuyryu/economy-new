@@ -2,23 +2,11 @@
 // ローカルストレージからメッセージを読み込み、一覧を表示します
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 保存済みメッセージを取得（無ければ空配列）
-  const saved = JSON.parse(localStorage.getItem('notifications') || '[]');
-
-  // 初回表示時のみデフォルトメッセージを登録
-  if (saved.length === 0) {
-    saved.push({
-      title: '消費者信頼感指数調査のお知らせ',
-      body:
-        '調査対象：全国から8,400世帯を選定し、調査への協力をお願いしています\n' +
-        '具体的には以下の項目を調査：\n\n' +
-        '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
-        'これら4項目の平均値が「消費者態度指数」として発表されます。',
-      // 一覧で使う色を登録
-      color: '#49796b'
-    });
-    localStorage.setItem('notifications', JSON.stringify(saved));
-  }
+  // 共通ユーティリティがあればそれを利用して通知を取得
+  const saved =
+    typeof loadNotifications === 'function'
+      ? loadNotifications()
+      : JSON.parse(localStorage.getItem('notifications') || '[]');
 
   const list = document.getElementById('notificationList');
   // 各メッセージをリストに追加
