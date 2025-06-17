@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '具体的には以下の項目を調査：\n\n' +
         '暮らし向き\n収入の増え方\n雇用環境\n耐久消費財の買い時判断\n\n' +
         'これら4項目の平均値が「消費者態度指数」として発表されます。',
-      // 一覧で使う色を登録
-      color: '#49796b'
+      // 一覧で使うグラデーションを登録
+      color: 'linear-gradient(135deg, #a7ddb8 0%, #d3f5e8 100%)'
     });
     localStorage.setItem('notifications', JSON.stringify(saved));
   }
@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     // デザイン用クラスを付与
     li.className = 'notification-item cursor-pointer';
-    // 内容に応じた色を設定
+    // 内容に応じた背景を設定
     if (msg.color) {
-      li.style.setProperty('--item-color', msg.color);
+      li.style.setProperty('--item-bg', msg.color);
     }
     li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
     li.addEventListener('click', () => {

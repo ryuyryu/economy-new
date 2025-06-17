@@ -6,14 +6,22 @@ body {
 /* グラデーションのヘッダーバー */
 .gradient-bar {
   /* ヘッダーの背景色は変数で上書き可能にする */
-  background: var(--header-bg, linear-gradient(135deg, #2c3e50 0%, #34495e 100%));
+  background: var(
+    --header-bg,
+    /* デフォルトは明るめのグラデーション */
+    linear-gradient(135deg, #a0e5ff 0%, #c4f1ff 100%)
+  );
   color: #fff;
 }
 
 /* 一覧のバー(リスト項目)に適用するスタイル */
 .notification-item {
   /* カードの色は CSS 変数から取得し、内容に応じて変更できるようにする */
-  background-color: var(--item-color, #49796b);
+  background: var(
+    --item-bg,
+    /* デフォルトはヘッダーに合わせた淡いグラデーション */
+    linear-gradient(135deg, #a7ddb8 0%, #d3f5e8 100%)
+  );
   color: #fff;
   padding: 1rem;
   border-radius: 0.75rem;

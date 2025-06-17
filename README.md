@@ -120,10 +120,10 @@ npm test     # Jest でテストを実行
 
 
 `notifications.html` を開くと、ゲーム内で受け取ったお知らせを一覧できます。
-カード部分は #49796b 色の以下の Tailwind クラスを使ったシンプルなデザインです。
+カード部分は淡いグラデーションを背景にしたシンプルなデザインです。
 
 ```
-bg-[#49796b] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
+bg-gradient-to-br from-[#a7ddb8] to-[#d3f5e8] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
 ```
 
 項目をクリックすると `notification_detail.html` に遷移し、
