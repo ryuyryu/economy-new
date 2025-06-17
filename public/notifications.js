@@ -30,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msg.color) {
       li.style.setProperty('--item-color', msg.color);
     }
-    li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
+    // タイトルを作成し、クラスとテキストを設定
+    const title = document.createElement('p');
+    title.className = 'font-semibold';
+    title.textContent = msg.title;
+    li.appendChild(title);
     li.addEventListener('click', () => {
       // 詳細画面へ遷移するときはインデックスをクエリパラメータで渡す
       window.location.href = `notification_detail.html?index=${idx}`;
