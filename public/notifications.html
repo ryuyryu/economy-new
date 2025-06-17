@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>お知らせ一覧</title>
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CDN と共通スタイル読み込み -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="notification_style.css" />
 </head>
 <body class="bg-gray-100 min-h-screen p-4">
-  <h1 class="text-xl font-bold mb-4">お知らせ一覧</h1>
+  <!-- タイトルバー -->
+  <header class="gradient-bar p-4 mb-4 text-center rounded-lg shadow">
+    <h1 class="text-xl font-bold">お知らせ一覧</h1>
+  </header>
   <!-- メッセージを表示するリスト -->
-  <ul id="notificationList" class="space-y-4"></ul>
+  <ul id="notificationList"></ul>
   <!-- 一覧表示用のスクリプト -->
   <script src="notifications.js"></script>
 </body>
