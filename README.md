@@ -127,7 +127,7 @@ bg-[#49796b] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
 ```
 
 項目をクリックすると `notification_detail.html` に遷移し、
-本文を確認して簡易フォームから返信できます。
+本文を確認したあと簡単なアンケートに回答できます。回答内容はブラウザに保存されます。
 
 ---
 
