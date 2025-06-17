@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 背景色を明るめの #cfe4de に変更し、通知をより見やすくする
     // 明るい色のため文字色は黒に設定する
     li.className = 'bg-[#cfe4de] text-black shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer';
+
     li.innerHTML = `<p class="font-semibold">${msg.title}</p>`;
     li.addEventListener('click', () => {
       // 詳細画面へ遷移するときはインデックスをクエリパラメータで渡す
