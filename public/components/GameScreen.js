@@ -478,15 +478,15 @@
         React.createElement(
           'ul',
           { className: 'space-y-4 list-none', id: 'notificationListReact' },
-          messages.map((msg, idx) =>
+          messages.map((msg) =>
             React.createElement(
               'li',
               {
-                key: idx,
+                key: msg.id,
                 className:
                   'bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400 cursor-pointer',
                 onClick: () => {
-                  window.location.href = `notification_detail.html?index=${idx}`;
+                  window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
                 }
               },
               React.createElement('p', { className: 'font-semibold' }, msg.title)
