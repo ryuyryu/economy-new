@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const list = document.getElementById('notificationList');
   // 各メッセージをリストに追加
-  saved.forEach((msg, idx) => {
+  saved.forEach((msg) => {
     const li = document.createElement('li');
     // デザイン用クラスを付与
     li.className = 'notification-item cursor-pointer';
@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     title.textContent = msg.title;
     li.appendChild(title);
     li.addEventListener('click', () => {
-      // 詳細画面へ遷移するときはインデックスをクエリパラメータで渡す
-      window.location.href = `notification_detail.html?index=${idx}`;
+      // id をクエリパラメータとして詳細ページへ
+      window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
     });
     list.appendChild(li);
   });

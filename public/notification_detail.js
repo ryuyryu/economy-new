@@ -1,9 +1,9 @@
 // お知らせ詳細画面用スクリプト
-// URL パラメータからメッセージのインデックスを取得し、内容を表示します
+// URL パラメータから通知IDを取得し、該当通知を表示します
 
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
-  const index = parseInt(params.get('index'), 10);
+  const id = params.get('id');
   // localStorage から通知リストを取得します
   // データ取得時のエラーに備えて try...catch で囲みます
   let saved = [];
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // JSON 解析に失敗した場合はエラーを出力しますが、空配列のまま処理を続けます
     console.error(e);
   }
-  const msg = saved[index] || { title: '不明', body: '', color: '#49796b' };
+  const msg = saved.find((n) => n.id === id) || { title: '不明', body: '', color: '#49796b' };
 
   // タイトルと本文を表示
   document.getElementById('detailTitle').textContent = msg.title;
