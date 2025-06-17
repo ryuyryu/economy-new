@@ -361,7 +361,13 @@
           { className: 'flex items-center' },
           React.createElement(
             'button',
-            { onClick: () => setShowMessages(o => !o), className: 'text-xl mr-2' },
+            {
+              // 一覧ページへ遷移
+              onClick: () => {
+                window.location.href = 'notifications.html';
+              },
+              className: 'text-xl mr-2'
+            },
             '🔔'
           ),
           React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')

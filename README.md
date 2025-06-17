@@ -116,6 +116,18 @@ npm install  # 依存パッケージのインストール
 npm test     # Jest でテストを実行
 ```
 
+## 🔔 お知らせ一覧機能
+
+`notifications.html` を開くと、ゲーム内で受け取ったお知らせを一覧できます。
+カード部分は次の Tailwind クラスを使用したシンプルなデザインです。
+
+```
+bg-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
+```
+
+項目をクリックすると `notification_detail.html` に遷移し、
+本文を確認して簡易フォームから返信できます。
+
 ---
 
 ## 🙋‍♂️ Contributors

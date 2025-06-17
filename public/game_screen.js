@@ -91,12 +91,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // オーバーレイをクリックした場合も閉じる
   overlay.addEventListener('click', closeDrawer);
 
-  // --- お知らせパネル表示処理 ----------------------
-  function toggleMessage() {
-    messagePanel.classList.toggle('hidden');
+  // --- お知らせ一覧ページへの遷移 --------------------
+  function openNotifications() {
+    // 別ページに移動して一覧を表示
+    window.location.href = 'notifications.html';
   }
-  messageBtn.addEventListener('click', toggleMessage);
-  closeMessage.addEventListener('click', toggleMessage);
+  messageBtn.addEventListener('click', openNotifications);
 
   // --- モーダル表示処理 ----------------------------
   statsBtn.addEventListener('click', () => {
