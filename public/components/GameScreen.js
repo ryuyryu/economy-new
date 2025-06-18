@@ -41,28 +41,35 @@
   function GameScreen() {
   // ゲーム内で扱う各種指標を状態としてまとめて保持
   const [stats, setStats] = useState({
+    // ゲーム開始時点の各種指標
     money: 0,
     cpi: 100,
-    unemp: 4.2,
-    gdp: 1.8,
-    rate: 0.0,
-    fx: 150.0,
+    // 完全失業率
+    unemp: 2.5,
+    // 実質GDP成長率（年率換算）
+    gdp: -0.7,
+    // 日銀政策金利
+    rate: 0.5,
+    // ドル/円レート
+    fx: 144.94,
     yield: 0.9,
     cci: 100,
-    pmi: 50,
+    // 製造業PMI
+    pmi: 49.4,
     debtGDP: -3.0,
     trade: 1200
   });
   // 指標ごとの履歴を保存
   const [historyMap, setHistoryMap] = useState({
+    // 履歴にも初期値を登録しておく
     cpi: [100],
-    unemp: [4.2],
-    gdp: [1.8],
-    rate: [0.0],
-    fx: [150.0],
+    unemp: [2.5],
+    gdp: [-0.7],
+    rate: [0.5],
+    fx: [144.94],
     yield: [0.9],
     cci: [100],
-    pmi: [50],
+    pmi: [49.4],
     debtGDP: [-3.0],
     trade: [1200]
   });
@@ -89,7 +96,8 @@
 
   const [demand, setDemand] = useState(5);
   const [supply, setSupply] = useState(5);
-  const [policyRate, setPolicyRate] = useState(0.0);
+  // 政策金利の初期値
+  const [policyRate, setPolicyRate] = useState(0.5);
 
   // お知らせメッセージ一覧を保持
   const [messages, setMessages] = useState(() => {
