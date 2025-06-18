@@ -129,6 +129,12 @@ bg-[#49796b] text-white shadow-lg rounded-xl p-4 border-l-4 border-blue-400
 項目をクリックすると `notification_detail.html` に遷移し、
 本文を確認したあと簡単なアンケートに回答できます。回答内容はブラウザに保存されます。
 
+### お知らせ画面の使い方
+
+1. `notifications.html` を開き、お知らせ一覧を表示します。
+2. 気になる項目をクリックすると詳細ページに移動します。
+3. ページ下部のアンケートに回答すると、結果がブラウザに保存されます。
+
 ---
 
 ## 🙋‍♂️ Contributors

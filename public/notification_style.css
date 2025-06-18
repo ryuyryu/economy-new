@@ -29,13 +29,22 @@ body {
 
 /* 詳細画面のコンテナ */
 .detail-container {
-  max-width: 900px;
-  margin: 2rem auto;
+  /* 最大幅を 800px にして中央揃えにする */
+  max-width: 800px;
+  margin: 0 auto;
+
+  /* 白背景で角を丸めるシンプルなカードデザイン */
   background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.08), 0 16px 32px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+
+  /* ほどよい影を付けて浮き上がらせる */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+  /* 内容がはみ出さないようにする */
   overflow: hidden;
-  border: 1px solid #f0f0f0;
+
+  /* 他要素との重なりを制御しやすくするため relative を指定 */
+  position: relative;
 }
 
 .detail-header {
