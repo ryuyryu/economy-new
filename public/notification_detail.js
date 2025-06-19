@@ -27,6 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     header.style.setProperty('--header-bg', msg.color);
   }
 
+  // アンケート送信後に既読フラグを更新して一覧へ戻る関数
+  const finishSurvey = () => {
+    const updated = saved.map((n) =>
+      n.id === id ? { ...n, read: true } : n
+    );
+    localStorage.setItem('notifications', JSON.stringify(updated));
+    window.location.href = 'notifications.html';
+  };
+
   // アンケートフォームを表示
   const root = document.getElementById('surveyRoot');
   if (root && window.SurveyForm && window.ReactDOM && window.React) {
@@ -37,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         question,
         options,
         storageKey: `survey_${id}`,
+        onSubmit: finishSurvey,
       })
     );
   }
