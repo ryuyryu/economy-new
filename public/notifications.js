@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     // デザイン用クラスを付与
     li.className = 'notification-item cursor-pointer';
+    // 既読であれば read-notification クラスを追加
+    if (msg.read) {
+      li.classList.add('read-notification');
+    }
     // 内容に応じた色を設定
     if (msg.color) {
       li.style.setProperty('--item-color', msg.color);

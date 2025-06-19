@@ -4,7 +4,7 @@
 
   // SurveyForm コンポーネント
   // 質問文と選択肢を表示し、選択結果を保存します
-  function SurveyForm({ question, options, storageKey }) {
+  function SurveyForm({ question, options, storageKey, onSubmit }) {
     // どの選択肢が選ばれているかを状態として保持
     const [selected, setSelected] = useState('');
 
@@ -25,6 +25,10 @@
       }
       // 保存した内容を簡易的に通知
       alert(`回答を送信しました: ${selected}`);
+      // コールバックが渡されていれば実行
+      if (typeof onSubmit === 'function') {
+        onSubmit(selected);
+      }
     };
 
     return React.createElement(
