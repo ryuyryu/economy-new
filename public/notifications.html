@@ -10,11 +10,18 @@
 </head>
 <body class="bg-gray-100 min-h-screen p-4">
   <!-- タイトルバー -->
-  <header class="gradient-bar p-4 mb-4 text-center rounded-lg shadow">
+  <header class="gradient-bar p-4 mb-4 rounded-lg shadow flex items-center justify-between">
     <h1 class="text-xl font-bold">お知らせ一覧</h1>
+    <!-- 選択モード切り替えボタン -->
+    <button id="selectModeBtn" class="bg-blue-500 text-white px-3 py-1 rounded">選択</button>
   </header>
   <!-- メッセージを表示するリスト -->
   <ul id="notificationList" class="notification-list"></ul>
+  <!-- 一括操作用ボタン。選択中のみ表示する -->
+  <div id="bulkActions" class="hidden fixed bottom-0 inset-x-0 bg-white border-t p-2 flex justify-center space-x-4">
+    <button id="bulkDelete" class="bg-red-500 text-white px-4 py-2 rounded">削除</button>
+    <button id="bulkFavorite" class="bg-yellow-500 text-white px-4 py-2 rounded">お気に入り</button>
+  </div>
   <!-- 共通ユーティリティと一覧表示用スクリプト -->
   <script src="notification_utils.js"></script>
   <script src="notifications.js"></script>
