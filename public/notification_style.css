@@ -29,6 +29,19 @@ body {
   transition: transform 0.2s ease;
 }
 
+/* 選択用チェックボックス */
+.select-box {
+  margin-left: 0.5rem;
+}
+
+/* お気に入りを示す星マーク */
+.favorite-mark {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  font-size: 1.25rem;
+}
+
 /* 最初と最後の要素だけ角を丸める */
 .notification-item:first-child {
   border-top-left-radius: 0.75rem;
