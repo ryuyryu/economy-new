@@ -6,7 +6,11 @@ body {
 /* グラデーションのヘッダーバー */
 .gradient-bar {
   /* ヘッダーの背景色は変数で上書き可能にする */
-  background: var(--header-bg, linear-gradient(135deg, #2c3e50 0%, #34495e 100%));
+  /* game_screen のヘッダーと同じグラデーションカラーを採用 */
+  background: var(
+    --header-bg,
+    linear-gradient(to right, #111827 0%, #1f2937 50%, rgba(17, 24, 39, 0.9) 100%)
+  );
   color: #fff;
 }
 
