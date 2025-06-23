@@ -11,15 +11,53 @@ body {
 }
 
 /* 一覧のバー(リスト項目)に適用するスタイル */
+.notification-list {
+  /* ul 自体の余白を取り除き、連続したカードに見せる */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 各通知アイテムの基本スタイル */
 .notification-item {
-  /* カードの色は CSS 変数から取得し、内容に応じて変更できるようにする */
   background-color: var(--item-color, #49796b);
   color: #fff;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid #333;
+  margin: 0;
+  transition: transform 0.2s ease;
+}
+
+/* 最初と最後の要素だけ角を丸める */
+.notification-item:first-child {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.notification-item:last-child {
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  border-bottom: none;
+}
+
+/* 通知内容部分。スワイプ時に左右へ動かす */
+.item-content {
   padding: 1rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
+}
+
+/* 削除ボタンが表示される領域 */
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  background: #e3342f;
+  color: #fff;
+  border: none;
+  font-weight: bold;
 }
 
 /* 既読の通知アイテムには半透明の影を付けて区別 */
