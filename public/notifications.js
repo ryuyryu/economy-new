@@ -87,11 +87,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 通知の内容部分
     const content = document.createElement('div');
-    content.className = 'item-content cursor-pointer';
+    content.className = 'item-content cursor-pointer flex flex-col p-3';
+
+    // ヘッダー行（タイトル、日付、未読アイコン）
+    const headerRow = document.createElement('div');
+    headerRow.className = 'flex justify-between items-start';
+
+    // 未読アイコン
+    if (!msg.read) {
+      const icon = document.createElement('span');
+      icon.textContent = '📩';
+      icon.className = 'mr-2';
+      headerRow.appendChild(icon);
+    }
+
     const title = document.createElement('p');
-    title.className = 'font-semibold';
+    title.className = 'font-semibold text-sm text-white flex-1';
     title.textContent = msg.title;
-    content.appendChild(title);
+    headerRow.appendChild(title);
+
+    const date = document.createElement('p');
+    date.className = 'text-xs text-gray-500';
+    try {
+      date.textContent = new Date(msg.createdAt).toLocaleDateString('ja-JP');
+    } catch (e) {
+      date.textContent = '';
+    }
+    headerRow.appendChild(date);
+
+    content.appendChild(headerRow);
+
+    // 本文
+    const body = document.createElement('p');
+    body.className = 'text-xs text-gray-300 mt-1';
+    body.textContent = msg.body || '';
+    content.appendChild(body);
 
     // 削除ボタン
     const delBtn = document.createElement('button');
