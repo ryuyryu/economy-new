@@ -55,9 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msg.read) {
       li.classList.add('read-notification');
     }
-    if (msg.color) {
-      li.style.setProperty('--item-color', msg.color);
-    }
 
     // お気に入りマーク
     if (msg.favorite) {
@@ -87,11 +84,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 通知の内容部分
     const content = document.createElement('div');
-    content.className = 'item-content cursor-pointer';
+    // 通知テキスト全体をまとめる要素
+    content.className = 'item-content cursor-pointer flex flex-col space-y-1';
+
+    // タイトル行を作成
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'flex items-start justify-between';
+
+    // 未読アイコン
+    if (!msg.read) {
+      const icon = document.createElement('span');
+      icon.textContent = '📩';
+      icon.className = 'mr-2';
+      titleWrap.appendChild(icon);
+    }
+
     const title = document.createElement('p');
-    title.className = 'font-semibold';
+    title.className = 'font-semibold text-sm text-white flex-1';
     title.textContent = msg.title;
-    content.appendChild(title);
+    titleWrap.appendChild(title);
+
+    const date = document.createElement('p');
+    date.className = 'text-xs text-gray-500';
+    date.textContent = new Date(msg.createdAt).toLocaleDateString('ja-JP');
+    titleWrap.appendChild(date);
+
+    content.appendChild(titleWrap);
+
+    const body = document.createElement('p');
+    body.className = 'text-xs text-gray-300';
+    body.textContent =
+      msg.body.length > 40 ? msg.body.slice(0, 40) + '…' : msg.body;
+    content.appendChild(body);
 
     // 削除ボタン
     const delBtn = document.createElement('button');
