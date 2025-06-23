@@ -123,10 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     body.textContent = msg.body || '';
     content.appendChild(body);
 
-    // 削除ボタン
-    const delBtn = document.createElement('button');
-    delBtn.className = 'delete-btn';
-    delBtn.textContent = '削除';
 
     // 詳細画面へ遷移または選択
     content.addEventListener('click', () => {
@@ -135,55 +131,15 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.dispatchEvent(new Event('change'));
         return;
       }
-      if (!content.classList.contains('opened')) {
-        window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
-      }
+      // 詳細画面に遷移
+      window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
     });
 
-    // 削除処理
-    delBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const updated = saved.filter((n) => n.id !== msg.id);
-      localStorage.setItem('notifications', JSON.stringify(updated));
-      li.remove();
-    });
 
-    // スワイプ操作
-    let startX;
-    let diffX;
-
-    const handleEnd = () => {
-      if (selectionMode) return;
-      content.style.transition = 'transform 0.2s ease';
-      if (diffX < -30) {
-        content.style.transform = 'translateX(-60px)';
-        content.classList.add('opened');
-      } else {
-        content.style.transform = '';
-        content.classList.remove('opened');
-      }
-      startX = null;
-    };
-
-    content.addEventListener('pointerdown', (e) => {
-      if (selectionMode) return;
-      startX = e.clientX;
-      diffX = 0;
-      content.style.transition = 'none';
-    });
-    content.addEventListener('pointermove', (e) => {
-      if (selectionMode || startX == null) return;
-      diffX = e.clientX - startX;
-      if (diffX < 0) {
-        content.style.transform = `translateX(${Math.max(diffX, -60)}px)`;
-      }
-    });
-    content.addEventListener('pointerup', handleEnd);
-    content.addEventListener('pointercancel', handleEnd);
+    // スワイプ操作および単独削除ボタンは廃止
 
     wrapper.appendChild(checkbox);
     wrapper.appendChild(content);
-    wrapper.appendChild(delBtn);
     li.appendChild(wrapper);
     list.appendChild(li);
   });

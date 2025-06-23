@@ -52,18 +52,6 @@ body {
   transition: transform 0.2s ease;
 }
 
-/* 削除ボタンが表示される領域 */
-.delete-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 60px;
-  background: #e3342f;
-  color: #fff;
-  border: none;
-  font-weight: bold;
-}
 
 /* 既読の通知アイテムには半透明の影を付けて区別 */
 .read-notification {
