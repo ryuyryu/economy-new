@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="notification_style.css" />
 </head>
-<body class="bg-gray-100 min-h-screen p-4">
+<body class="bg-gradient-to-b from-[#1a1a2f] to-[#2d2d4a] min-h-screen p-4">
   <!-- タイトルバー -->
   <header class="gradient-bar p-4 mb-4 rounded-lg shadow flex items-center justify-between">
     <h1 class="text-xl font-bold">お知らせ一覧</h1>
@@ -16,7 +16,10 @@
     <button id="selectModeBtn" class="bg-blue-500 text-white px-3 py-1 rounded">選択</button>
   </header>
   <!-- メッセージを表示するリスト -->
-  <ul id="notificationList" class="notification-list"></ul>
+  <ul
+    id="notificationList"
+    class="notification-list rounded-xl divide-y divide-gray-600 bg-gray-800 overflow-hidden"
+  ></ul>
   <!-- 一括操作用ボタン。選択中のみ表示する -->
   <div id="bulkActions" class="hidden fixed bottom-0 inset-x-0 bg-white border-t p-2 flex justify-center space-x-4">
     <button id="bulkDelete" class="bg-red-500 text-white px-4 py-2 rounded">削除</button>
