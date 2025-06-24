@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 各メッセージをリストに追加
   saved.forEach((msg) => {
     const li = document.createElement('li');
-    li.className = 'notification-item hover:bg-[#39485f] transition-all duration-200';
+    li.className = 'notification-item box4';
     if (msg.read) {
       li.classList.add('read-notification');
     }
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const wrapper = document.createElement('div');
-    wrapper.className = 'relative flex items-start p-3';
+    wrapper.className = 'relative flex items-start';
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
