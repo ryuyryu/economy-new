@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const bulkActions = document.getElementById('bulkActions');
   const bulkDelete = document.getElementById('bulkDelete');
   const bulkFav = document.getElementById('bulkFavorite');
+  // モーダル表示要素
+  const overlay = document.getElementById('detailOverlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayBody = document.getElementById('overlayBody');
+  const closeOverlay = document.getElementById('closeOverlay');
+  let currentMsgId = null;
+  let currentLi = null;
 
   let selectionMode = false;
   const selected = new Set();
@@ -47,6 +54,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (selectBtn) {
     selectBtn.addEventListener('click', toggleSelectionMode);
   }
+
+  // モーダルを閉じる関数
+  function hideOverlay() {
+    if (!overlay) return;
+    overlay.classList.add('hidden');
+    if (currentMsgId) {
+      // 閉じたタイミングで既読に更新
+      saved = saved.map((n) =>
+        n.id === currentMsgId ? { ...n, read: true } : n
+      );
+      updateStorage();
+      if (currentLi) currentLi.classList.add('read-notification');
+    }
+    currentMsgId = null;
+    currentLi = null;
+  }
+
+  if (closeOverlay) closeOverlay.addEventListener('click', hideOverlay);
 
   // 各メッセージをリストに追加
   saved.forEach((msg) => {
@@ -124,15 +149,23 @@ document.addEventListener('DOMContentLoaded', () => {
     content.appendChild(body);
 
 
-    // 詳細画面へ遷移または選択
+    // 詳細をモーダル表示または選択
     content.addEventListener('click', () => {
       if (selectionMode) {
         checkbox.checked = !checkbox.checked;
         checkbox.dispatchEvent(new Event('change'));
         return;
       }
-      // 詳細画面に遷移
-      window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
+      if (overlay && overlayTitle && overlayBody) {
+        overlayTitle.textContent = msg.title;
+        overlayBody.textContent = msg.body || '';
+        overlay.classList.remove('hidden');
+        currentMsgId = msg.id;
+        currentLi = li;
+      } else {
+        // フォールバックとして従来の遷移
+        window.location.href = `notification_detail.html?id=${encodeURIComponent(msg.id)}`;
+      }
     });
 
 
