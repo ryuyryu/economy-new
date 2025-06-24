@@ -76,11 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 各メッセージをリストに追加
   saved.forEach((msg) => {
     const li = document.createElement('li');
-    li.className = 'notification-item';
+    li.className = 'notification-item hover:bg-[#2a3245] transition-all duration-200';
     if (msg.read) {
       li.classList.add('read-notification');
     }
-    // カード背景色はデフォルトのまま使用します
 
     // お気に入りマーク
     if (msg.favorite) {
@@ -90,14 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
       li.appendChild(star);
     }
 
-    // スワイプ用のラッパーを用意
     const wrapper = document.createElement('div');
-    wrapper.className = 'relative flex items-center';
+    wrapper.className = 'relative flex items-start p-3';
 
-    // 選択用チェックボックス
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.className = 'select-box hidden';
+    checkbox.className = 'select-box hidden mr-2';
     checkbox.dataset.id = msg.id;
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) {
@@ -110,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 通知の内容部分
     const content = document.createElement('div');
-    content.className = 'item-content cursor-pointer flex flex-col p-3';
+    content.className = 'item-content cursor-pointer flex flex-col flex-1';
 
     // ヘッダー行（タイトル、日付、未読アイコン）
     const headerRow = document.createElement('div');
@@ -119,19 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 未読アイコン
     if (!msg.read) {
       const icon = document.createElement('span');
-      icon.textContent = '📩';
+      icon.textContent = msg.type || '📩';
       icon.className = 'mr-2';
       headerRow.appendChild(icon);
     }
 
     const title = document.createElement('p');
-    // タイトルは濃いめの文字色で表示
-    title.className = 'font-semibold text-sm text-gray-800 flex-1';
+    // タイトルは白文字で表示
+    title.className = 'font-semibold text-sm flex-1';
     title.textContent = msg.title;
     headerRow.appendChild(title);
 
     const date = document.createElement('p');
-    date.className = 'text-xs text-gray-500';
+    date.className = 'text-xs text-gray-500 ml-2';
     try {
       date.textContent = new Date(msg.createdAt).toLocaleDateString('ja-JP');
     } catch (e) {
@@ -144,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 本文
     const body = document.createElement('p');
     // 本文も読みやすい色に変更
-    body.className = 'text-xs text-gray-600 mt-1';
+    body.className = 'text-xs text-gray-400 mt-1';
     body.textContent = msg.body || '';
     content.appendChild(body);
 
