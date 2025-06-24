@@ -40,6 +40,9 @@ describe('notifications localStorage and detail view', () => {
     expect(stored).not.toBeNull();
     expect(stored.length).toBeGreaterThan(0);
     expect(stored[0].title).toBe('消費者信頼感指数調査のお知らせ');
+    // 2件目のお知らせも存在するか確認
+    expect(stored.length).toBeGreaterThan(1);
+    expect(stored[1].title).toBe('価格高騰重点支援給付金のお知らせ');
 
     const list = document.getElementById('notificationList');
     expect(list.children.length).toBe(stored.length);
