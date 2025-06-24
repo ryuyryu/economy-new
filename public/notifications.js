@@ -55,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msg.read) {
       li.classList.add('read-notification');
     }
-    if (msg.color) {
-      li.style.setProperty('--item-color', msg.color);
-    }
+    // カード背景色はデフォルトのまま使用します
 
     // お気に入りマーク
     if (msg.favorite) {
@@ -102,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const title = document.createElement('p');
-    title.className = 'font-semibold text-sm text-white flex-1';
+    // タイトルは濃いめの文字色で表示
+    title.className = 'font-semibold text-sm text-gray-800 flex-1';
     title.textContent = msg.title;
     headerRow.appendChild(title);
 
@@ -119,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 本文
     const body = document.createElement('p');
-    body.className = 'text-xs text-gray-300 mt-1';
+    // 本文も読みやすい色に変更
+    body.className = 'text-xs text-gray-600 mt-1';
     body.textContent = msg.body || '';
     content.appendChild(body);
 

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (msg.color) {
     const header = document.querySelector('.detail-header');
     header.style.setProperty('--header-bg', msg.color);
+    header.style.setProperty('--header-text', '#fff');
   }
 
   // アンケート送信後に既読フラグを更新して一覧へ戻る関数
