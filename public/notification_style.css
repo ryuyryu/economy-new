@@ -77,7 +77,7 @@ body {
 /* 詳細画面のコンテナ */
 .detail-container {
   /* 最大幅を 800px にして中央揃えにする */
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
 
   /* 白背景で角を丸めるシンプルなカードデザイン */
