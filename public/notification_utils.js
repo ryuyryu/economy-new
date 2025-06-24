@@ -19,6 +19,16 @@
         color: '#49796b',
         createdAt: new Date().toISOString(),
         read: false
+      },
+      {
+        id: generateId(),
+        title: '価格高騰重点支援給付金のお知らせ',
+        body:
+          '価格高騰の影響を受けた世帯に向けた給付金の申請受付が開始されました。' +
+          '\n詳細はお住まいの市区町村の窓口までお問い合わせください。',
+        color: '#49796b',
+        createdAt: new Date().toISOString(),
+        read: false
       }
     ];
   }
