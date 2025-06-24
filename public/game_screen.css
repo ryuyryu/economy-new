@@ -114,3 +114,16 @@ body {
   max-height: 80vh;
   overflow-y: auto;
 }
+
+/* ドロワー内のボタンやリスト項目のホバーアニメーション */
+#drawer button,
+#drawer li {
+  transition: transform 0.2s, color 0.2s;
+}
+
+#drawer button:hover,
+#drawer li:hover {
+  transform: translateX(8px);
+  color: #f36510;
+}
+
