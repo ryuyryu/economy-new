@@ -5,9 +5,9 @@ body {
 
 /* グラデーションのヘッダーバー */
 .gradient-bar {
-  /* ヘッダーの背景色は変数で上書き可能にする */
-  background: var(--header-bg, linear-gradient(135deg, #2c3e50 0%, #34495e 100%));
-  color: #fff;
+  /* ヘッダーの背景色と文字色を変数で上書き可能にする */
+  background: var(--header-bg, linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%));
+  color: var(--header-text, #333);
 }
 
 /* 一覧のバー(リスト項目)に適用するスタイル */
@@ -21,8 +21,8 @@ body {
     Tailwind の divide クラスの色と合わせるため、境界線色も変数で
     上書きできるようにします。
   */
-  background-color: var(--list-bg, #f7f5f1);
-  border-color: var(--list-border, #e0dcd6);
+  background-color: var(--list-bg, #ffffff);
+  border-color: var(--list-border, #d1d5db);
 }
 
 /* 各通知アイテムの基本スタイル */
@@ -31,8 +31,8 @@ body {
     各通知カードの背景色を変数で上書きできるようにします。
     指定がない場合は経済指数カードと同じ色を使います。
   */
-  background-color: var(--item-color, #f7f5f1);
-  color: #fff;
+  background-color: var(--item-color, #ffffff);
+  color: var(--item-text, #333);
   position: relative;
   overflow: hidden;
   margin: 0;
