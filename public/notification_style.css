@@ -16,27 +16,15 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  /*
-    背景色も変数で指定し、デフォルトは薄いベージュ系にします。
-    Tailwind の divide クラスの色と合わせるため、境界線色も変数で
-    上書きできるようにします。
-  */
-  background-color: var(--list-bg, #ffffff);
-  border-color: var(--list-border, #d1d5db);
+  background-color: transparent; /* 背景は Tailwind 側で指定 */
+  border-color: var(--list-border, rgba(255, 255, 255, 0.3));
 }
 
 /* 各通知アイテムの基本スタイル */
 .notification-item {
-  /*
-    各通知カードの背景色を変数で上書きできるようにします。
-    指定がない場合は経済指数カードと同じ色を使います。
-  */
-  background-color: var(--item-color, #ffffff);
-  color: var(--item-text, #333);
   position: relative;
   overflow: hidden;
   margin: 0;
-  transition: transform 0.2s ease;
 }
 
 /* 選択用チェックボックス */
@@ -65,14 +53,10 @@ body {
 
 /* 既読の通知アイテムには半透明の影を付けて区別 */
 .read-notification {
-  box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.2);
   opacity: 0.6;
 }
 
-.notification-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
+
 
 /* 詳細画面のコンテナ */
 .detail-container {
