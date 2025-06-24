@@ -16,12 +16,22 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+  /*
+    背景色も変数で指定し、デフォルトは薄いベージュ系にします。
+    Tailwind の divide クラスの色と合わせるため、境界線色も変数で
+    上書きできるようにします。
+  */
+  background-color: var(--list-bg, #f7f5f1);
+  border-color: var(--list-border, #e0dcd6);
 }
 
 /* 各通知アイテムの基本スタイル */
 .notification-item {
-  /* 背景色は親要素に任せ、境界線は divide-y で付ける */
-  background-color: transparent;
+  /*
+    各通知カードの背景色を変数で上書きできるようにします。
+    指定がない場合は経済指数カードと同じ色を使います。
+  */
+  background-color: var(--item-color, #f7f5f1);
   color: #fff;
   position: relative;
   overflow: hidden;
