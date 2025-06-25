@@ -154,10 +154,12 @@
               'div',
               {
                 className:
+
                   'detail-panel ' +
                   (closing ? 'slide-out ' : 'slide-in ') +
                   (expanded ? 'expanded ' : 'w-72 ') +
                   'bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600'
+
               },
               React.createElement(
                 'div',
