@@ -1,13 +1,15 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
 (function () {
-  let Sparkline, IndicatorDetailModal;
+  let Sparkline, IndicatorDetailModal, Bell;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./Sparkline.js'));
     ({ IndicatorDetailModal } = require('./IndicatorDetailModal.js'));
+    ({ Bell } = require('./EcoHeader.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
     IndicatorDetailModal = window.IndicatorDetailModal;
+    Bell = window.Bell;
   }
 
   const { useState, useEffect, useRef } = React;
@@ -381,7 +383,10 @@
               },
               className: 'text-xl mr-2'
             },
-            '🔔'
+            React.createElement(
+              Bell,
+              { className: 'w-6 h-6 text-cyan-400' } // ECOBOXと同じ色に統一
+            )
           ),
           React.createElement('button', { onClick: toggleDrawer, className: 'text-2xl' }, '☰')
         )
