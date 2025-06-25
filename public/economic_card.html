@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>経済カード例</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="globals.css">
+  <!-- React と ReactDOM (ローカル) -->
+  <script src="libs/react.development.js"></script>
+  <script src="libs/react-dom.development.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Babel Standalone (JSXをブラウザで変換) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- コンポーネント読み込み -->
+  <script type="text/babel" src="SparkChart.jsx"></script>
+  <script type="text/babel" src="EconomicCard.jsx"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div id="root"></div>
+  <script type="text/babel">
+    // EconomicCardコンポーネントを画面に描画
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <EconomicCard />
+    );
+  </script>
+</body>
+</html>

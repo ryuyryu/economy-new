@@ -1,0 +1,131 @@
+
+/* ゲーム画面用の追加スタイル */
+/* Tailwind CSS をメインに使うため、最低限の設定だけを記載します */
+
+body {
+  margin: 0;
+  /* デフォルトはOrbitron */
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* 小さめの文字には読みやすい日本語フォントを適用 */
+.text-sm,
+.text-base,
+.text-xs,
+.font-mono {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* ドロワーの重なり順を明示 */
+#drawer {
+  z-index: 40;
+}
+
+/* 経済指数の変化を示すアニメーション */
+.diff-change {
+  animation: diffFlash 0.8s ease-in-out;
+}
+
+@keyframes diffFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+/* ドロワーを開いた状態を表すクラス */
+.drawer-open {
+  /* 左右どちらからでも0位置へ移動 */
+  transform: translateX(0) !important;
+  transition: transform 0.3s;
+}
+
+/* ドロワー表示中に重ねるオーバーレイ */
+#drawerOverlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 30;
+}
+
+#drawerOverlay.overlay-show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 立体的な文字を表現するクラス */
+.three-d-text {
+  color: #fff;
+  text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+}
+
+/* スパークライン用のスタイル */
+.sparkline-container {
+  /* カード内で 8px の余白をとる */
+  padding: 8px;
+  /* ツールチップ配置の基準とするため相対位置に */
+  position: relative;
+  /* 親要素の幅に合わせつつ padding を含めた幅計算にする */
+  width: 100%;
+  box-sizing: border-box;
+  /* スパークラインを左寄せで表示し、縦方向は中央に揃える */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* 横幅を広げた際にスクロールできるようにする */
+  overflow-x: auto;
+}
+
+.sparkline {
+  /* サイズは React 側で指定するのでここでは自動 */
+  display: block;
+}
+
+/* ホバーした位置の値を表示するツールチップ */
+.sparkline-tooltip {
+  position: absolute;
+  transform: translate(-50%, -4px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.75rem; /* text-xs */
+  padding: 2px 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ホバー位置を示す点 */
+.sparkline-dot {
+  fill: #f87171; /* 赤系の色 */
+  stroke: #fff;
+  stroke-width: 1px;
+  /* ドットの移動を滑らかにする */
+  transition: transform 0.1s linear;
+}
+
+/* カードを閉じるためのバツボタン */
+.close-btn {
+  position: absolute;
+  top: 0.5rem; /* Tailwindでいうtop-2*/
+  right: 0.5rem; /* Tailwindでいうright-2*/
+  font-size: 1.25rem; /* text-xl */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 指数詳細カードのボックスは縦スクロール可能にしてスマホでも見やすく */
+.detail-box {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* ドロワー内のボタンやリスト項目のホバーアニメーション */
+#drawer button,
+#drawer li {
+  transition: transform 0.2s, color 0.2s;
+}
+
+#drawer button:hover,
+#drawer li:hover {
+  transform: translateX(8px);
+  color: #f36510;
+}
+
+

@@ -1,0 +1,75 @@
+
+/* スタート画面の背景画像設定 */
+body {
+    /* 背景画像として game_screen.webp を使用 */
+    background-image: url("images/title.webp");
+    background-position: center center; /* 画面中央に配置 */
+    background-repeat: no-repeat;       /* 画像の繰り返しをしない */
+    background-size: cover;             /* PCでは画面いっぱいに表示 */
+    margin: 0;
+    padding: 0;
+    /* フォントをGoogleフォントで統一 */
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+
+/* スマホでは画像全体が収まるように調整 */
+@media (max-width: 640px) {
+    body {
+        background-size: contain;   /* 画像全体が見えるように */
+    }
+}
+
+/* タイトルの文字色を設定 */
+h1 {
+    /* 黒色に変更 */
+    color: #000;
+}
+
+/* 立体的な文字を表すクラス */
+
+.three-d-text {
+    /* 立体感を出すために影を付ける */
+    text-shadow: 2px 2px 0 #999, 4px 4px 0 #666, 6px 6px 0 #333;
+    position: relative;             /* 擬似要素を重ねるために必要 */
+    overflow: hidden;               /* 光の演出がはみ出ないようにする */
+}
+
+/* ===============================================
+   タイトルテキスト用のカラー設定
+   - 黒色を基調とする
+   - 擬似要素で右から光が当たる演出を追加
+================================================ */
+.painted-text {
+    /* 黒色のタイトルカラー */
+    color: #000;
+}
+
+/* ===============================================
+   テキストの上をスポットライトが横切る演出
+   - 文字自身を明るく見せるため background-clip を利用
+   - 右から左へハイライトが移動する
+================================================ */
+.spotlight-text {
+    /* 文字色は黒 */
+    color: #000;
+    /* 背景グラデーションでハイライトを作る */
+    background-image: linear-gradient(
+        to left,
+        transparent 45%,
+        rgba(255,255,255,0.8) 50%,
+        transparent 55%
+    );
+    /* ハイライト部分だけ文字として表示 */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 100%;
+    background-position: 200% 0;
+    /* スポットライトの速さを6秒に変更 */
+    animation: spotlight 6s linear infinite;
+}
+
+@keyframes spotlight {
+    from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
