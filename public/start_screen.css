@@ -1,3 +1,4 @@
+
 /* スタート画面の背景画像設定 */
 body {
     /* 背景画像として game_screen.webp を使用 */
@@ -70,6 +71,5 @@ h1 {
 
 @keyframes spotlight {
     from { background-position: 200% 0; }
-    to   { background-position: -200% 0; }
+  to   { background-position: -200% 0; }
 }
-

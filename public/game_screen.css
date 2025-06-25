@@ -1,3 +1,4 @@
+
 /* ゲーム画面用の追加スタイル */
 /* Tailwind CSS をメインに使うため、最低限の設定だけを記載します */
 
@@ -126,4 +127,5 @@ body {
   transform: translateX(8px);
   color: #f36510;
 }
+
 
