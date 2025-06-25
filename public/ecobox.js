@@ -33,6 +33,10 @@
 
     // 選択された通知
     const [selected, setSelected] = useState(null);
+    // 閉じるアニメーション中かどうか
+    const [closing, setClosing] = useState(false);
+    // 拡大表示フラグ
+    const [expanded, setExpanded] = useState(false);
 
     // 既読にする処理
     const markAsRead = (id) => {
@@ -44,7 +48,21 @@
     // 通知をクリックしたとき
     const openDetail = (n) => {
       setSelected(n);
+      setClosing(false);
+      setExpanded(false);
       markAsRead(n.id);
+    };
+
+    // 詳細パネルを閉じるときの処理
+    const closeDetail = () => {
+      // アニメーションを開始
+      setClosing(true);
+      // アニメーション終了後にパネルを非表示に
+      setTimeout(() => {
+        setSelected(null);
+        setClosing(false);
+        setExpanded(false);
+      }, 300);
     };
 
     // 通知タイプごとの色
@@ -136,7 +154,12 @@
               'div',
               {
                 className:
-                  'detail-panel w-72 bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600'
+
+                  'detail-panel ' +
+                  (closing ? 'slide-out ' : 'slide-in ') +
+                  (expanded ? 'expanded ' : 'w-72 ') +
+                  'bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600'
+
               },
               React.createElement(
                 'div',
@@ -147,12 +170,24 @@
                   '詳細情報'
                 ),
                 React.createElement(
-                  'button',
-                  {
-                    className: 'text-slate-400',
-                    onClick: () => setSelected(null)
-                  },
-                  '✕'
+                  'div',
+                  { className: 'space-x-2' },
+                  React.createElement(
+                    'button',
+                    {
+                      className: 'text-slate-400',
+                      onClick: () => setExpanded(!expanded)
+                    },
+                    expanded ? '縮小' : '拡大'
+                  ),
+                  React.createElement(
+                    'button',
+                    {
+                      className: 'text-slate-400',
+                      onClick: closeDetail
+                    },
+                    '✕'
+                  )
                 )
               ),
               React.createElement(

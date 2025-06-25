@@ -23,5 +23,38 @@ body {
   }
 }
 .detail-panel {
+  /* パネルの拡大時にスムーズに幅が変わるよう設定 */
+  transition: width 0.3s ease;
+}
+
+/* 開くときのアニメーション */
+.detail-panel.slide-in {
   animation: slideIn 0.3s ease-out;
+}
+
+/* 閉じるときのアニメーション */
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+.detail-panel.slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+/* 拡大表示時のスタイル */
+.detail-panel.expanded {
+  width: 100%;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: 600px;
+  height: 90vh;
+  overflow-y: auto;
+  z-index: 50;
 }
