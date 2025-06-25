@@ -4,42 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>お知らせ一覧</title>
-  <!-- Tailwind CDN と共通スタイル読み込み -->
+  <!-- TailwindCSS を利用 -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="notification_style.css" />
+  <!-- 追加スタイル -->
+  <link rel="stylesheet" href="ecobox.css" />
+  <!-- React ライブラリ読み込み -->
+  <script src="libs/react.production.min.js"></script>
+  <script src="libs/react-dom.production.min.js"></script>
+  <!-- React コンポーネント -->
+  <script defer src="ecobox.js"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-4 text-gray-800">
-  <!-- タイトルバー -->
-  <header class="mb-4 flex items-center justify-between">
-    <h1 class="text-lg font-bold">📬 お知らせ一覧</h1>
-    <!-- 選択モード切り替えボタン -->
-    <button id="selectModeBtn" class="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">選択</button>
-  </header>
-  <!-- メッセージを表示するリスト -->
-  <ul id="notificationList" class="notification-list"></ul>
-  <!-- 一括操作用ボタン。選択中のみ表示する -->
-  <div id="bulkActions" class="hidden fixed bottom-0 inset-x-0 bg-white border-t p-2 flex justify-center space-x-4">
-    <button id="bulkDelete" class="bg-red-500 text-white px-4 py-2 rounded">削除</button>
-    <button id="bulkFavorite" class="bg-yellow-500 text-white px-4 py-2 rounded">お気に入り</button>
-  </div>
-  <!-- 詳細をモーダル表示するためのオーバーレイ -->
-  <div
-    id="detailOverlay"
-    class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-  >
-    <div id="detailCard" class="bg-white rounded-xl p-4 w-full max-w-[500px] shadow-lg">
-      <h2 id="overlayTitle" class="text-lg font-bold mb-2"></h2>
-      <p id="overlayBody" class="mb-4 whitespace-pre-wrap"></p>
-      <button
-        id="closeOverlay"
-        class="bg-blue-500 text-white px-4 py-2 rounded w-full"
-      >
-        閉じる
-      </button>
-    </div>
-  </div>
-  <!-- 共通ユーティリティと一覧表示用スクリプト -->
-  <script src="notification_utils.js"></script>
-  <script src="notifications.js"></script>
+<body class="bg-slate-900 text-white min-h-screen">
+  <div id="root"></div>
 </body>
 </html>
