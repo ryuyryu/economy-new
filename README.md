@@ -130,12 +130,15 @@ npm test     # Jest でテストを実行
 ## 🌆 都市マップ素材
 
 ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
-リポジトリには zip 形式で格納されているため、以下のコマンドで展開してください。
+リポジトリには ZIP 形式で格納されています。サイズが大きいため、5 段階に分けて解凍するスクリプトを用意しています。
+
+まずは以下のコマンドでステップ 1 を実行し、ライセンスファイルのみを展開します。
 
 ```bash
-unzip "public/images/kenney_city-kit-commercial_20 (1).zip" -d public/images/city-kit
-unzip public/images/kenney_roguelike-modern-city.zip -d public/images/roguelike
+bash scripts/unpack_step1.sh
 ```
+
+残りのステップは順次追加予定です。
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
 
