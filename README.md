@@ -127,6 +127,39 @@ npm test     # Jest でテストを実行
 2. 項目をクリックすると右側に詳細が展開され、同時に既読になります。
 3. 閉じるボタンで詳細パネルを閉じることができます。
 
+## 🌆 都市マップ素材
+
+ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
+リポジトリには zip 形式で格納されているため、以下のコマンドで展開してください。
+
+```bash
+unzip "public/images/kenney_city-kit-commercial_20 (1).zip" -d public/images/city-kit
+unzip public/images/kenney_roguelike-modern-city.zip -d public/images/roguelike
+```
+
+展開後、`public/tileManifest.js` で各画像を参照できるようになります。
+
+### city-kit（アイソメトリック）
+
+| ファイル名 | 内容 | 使用用途 |
+|------------|------|----------|
+| `Building_Background.png` | 建物のベース背景 | 建物構成用 |
+| `Road_Straight.png` | 道路（直線） | 道路構成用 |
+| `Tree_01.png` | 街路樹 | 自然装飾用 |
+| `Car_Blue.png` | 車両 | 交通表現用 |
+| `People_01.png` | 歩行キャラ | キャラクター表示用 |
+
+### roguelike（トップダウン）
+
+| ファイル名 | 内容 | 使用用途 |
+|------------|------|----------|
+| `tile_0001.png` | アスファルト | 地面（ベース） |
+| `tile_0012.png` | 道路（横） | 横方向道路 |
+| `tile_0025.png` | 建物の壁 | 壁・構造物 |
+| `tile_0033.png` | 芝生 | 公園・緑地帯 |
+| `tile_0040.png` | 横断歩道 | 歩行者用通路 |
+
+
 ---
 
 ## 🙋‍♂️ Contributors
