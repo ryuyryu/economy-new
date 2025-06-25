@@ -2,3 +2,26 @@
 body {
   font-family: 'Noto Sans JP', sans-serif;
 }
+/* 通知項目のホバー効果 */
+.notification-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.notification-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 詳細パネルが右からスライドインするアニメーション */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.detail-panel {
+  animation: slideIn 0.3s ease-out;
+}
