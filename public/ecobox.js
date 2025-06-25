@@ -81,7 +81,7 @@
               {
                 key: n.id,
                 className:
-                  'notification-item bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600 cursor-pointer',
+                  'notification-item bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-4 border-2 border-cyan-400 cursor-pointer',
                 onClick: () => openDetail(n)
               },
               React.createElement(
@@ -136,7 +136,7 @@
               'div',
               {
                 className:
-                  'w-72 bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600'
+                  'detail-panel w-72 bg-gradient-to-b from-slate-800 to-slate-700 rounded-xl p-4 border border-slate-600'
               },
               React.createElement(
                 'div',
