@@ -58,11 +58,30 @@
     return updated;
   }
 
+  // ゲームの進行に合わせて新しい通知を追加する関数
+  function addNotification({ title, body, color = '#49796b', type = 'info', icon = 'ℹ️' }) {
+    const current = loadNotifications();
+    const newItem = {
+      id: generateId(),
+      title,
+      body,
+      color,
+      type,
+      icon,
+      createdAt: new Date().toISOString(),
+      read: false
+    };
+    const updated = [...current, newItem];
+    localStorage.setItem('notifications', JSON.stringify(updated));
+    return updated;
+  }
+
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { getDefaultNotifications, loadNotifications };
+    module.exports = { getDefaultNotifications, loadNotifications, addNotification };
   }
   if (typeof window !== 'undefined') {
     window.getDefaultNotifications = getDefaultNotifications;
     window.loadNotifications = loadNotifications;
+    window.addNotification = addNotification;
   }
 })();
