@@ -1,13 +1,15 @@
 // GameScreen コンポーネント
 // ゲーム画面全体を管理するメインコンポーネント
 (function () {
-  let Sparkline, IndicatorDetailModal;
+  let Sparkline, IndicatorDetailModal, GameMap;
   if (typeof require !== 'undefined') {
     ({ Sparkline } = require('./Sparkline.js'));
     ({ IndicatorDetailModal } = require('./IndicatorDetailModal.js'));
+    ({ GameMap } = require('./GameMap.js'));
   } else if (typeof window !== 'undefined') {
     Sparkline = window.Sparkline;
     IndicatorDetailModal = window.IndicatorDetailModal;
+    GameMap = window.GameMap;
   }
 
   const { useState, useEffect, useRef } = React;
@@ -415,6 +417,8 @@
         )
       )
     ),
+    // ヘッダーの下にゲームマップを配置
+    React.createElement(GameMap, null),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
           title: indicatorInfo[activeIndicator].label,

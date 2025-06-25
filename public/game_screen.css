@@ -127,3 +127,25 @@ body {
   color: #f36510;
 }
 
+
+/* ------------------------------
+   ゲームマップ表示用のスタイル
+   ------------------------------ */
+.game-map {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-top: 1rem;
+  background: #e2e8f0; /* 薄いグレー */
+  border: 1px solid #94a3b8;
+  overflow: hidden;
+  z-index: 0; /* 他要素より下に表示 */
+}
+
+.player {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #f87171; /* 赤系の色 */
+  border-radius: 4px;
+}
