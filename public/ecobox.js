@@ -1,6 +1,13 @@
 (function () {
   // React のフックを取り出します
   const { useState } = React;
+  // EcoHeader コンポーネントを取得
+  let EcoHeader;
+  if (typeof require !== 'undefined') {
+    ({ EcoHeader } = require('./components/EcoHeader.js'));
+  } else if (typeof window !== 'undefined') {
+    EcoHeader = window.EcoHeader;
+  }
 
   // メインコンポーネント
   function EcoBoxUI() {
@@ -60,30 +67,7 @@
       'div',
       { className: 'p-4' },
       // ヘッダー
-      React.createElement(
-        'header',
-        { className: 'mb-6 flex items-center justify-between' },
-        React.createElement(
-          'h1',
-          { className: 'text-2xl font-bold flex items-center' },
-          '🔔 ECOBOX',
-          unreadCount > 0
-            ? React.createElement(
-                'span',
-                {
-                  className:
-                    'ml-2 inline-block bg-red-500 text-white text-xs rounded-full px-2'
-                },
-                unreadCount
-              )
-            : null
-        ),
-        React.createElement(
-          'span',
-          { className: 'text-sm text-gray-300' },
-          new Date().toLocaleDateString('ja-JP')
-        )
-      ),
+      React.createElement(EcoHeader, { unreadCount }),
       // 通知一覧
       React.createElement(
         'div',
