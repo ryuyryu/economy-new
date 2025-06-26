@@ -2,19 +2,39 @@
   // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
   let TILE_SIZE = 32;
   // マップのレイアウトを表す2次元配列
-  // 今回は10x10のサンプルマップを用意しています
-  const mapData = [
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','character_01','car_blue','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-  ];
+  // まず全体を草タイルで初期化し、あとから道路や建物を上書きします
+  const MAP_WIDTH = 20;   // 横のタイル数
+  const MAP_HEIGHT = 15;  // 縦のタイル数
+  const mapData = Array.from({ length: MAP_HEIGHT }, () => Array(MAP_WIDTH).fill('grass'));
+
+  // ---- 道路の描画位置を設定 ----------------------------------
+  // 中央を横切る大通り
+  for (let x = 0; x < MAP_WIDTH; x++) {
+    mapData[7][x] = 'road_horizontal';
+  }
+  // 交差する縦の道路（表示は横向きタイルを使う）
+  for (let y = 0; y < MAP_HEIGHT; y++) {
+    mapData[y][10] = 'road_horizontal';
+  }
+  // 交差点だけ横断歩道を設置
+  mapData[7][10] = 'pedestrian_crossing';
+
+  // ---- 建物エリアを作成 --------------------------------------
+  for (let y = 2; y <= 5; y++) {
+    for (let x = 3; x <= 8; x++) {
+      mapData[y][x] = y === 2 ? 'building_wall' : 'building_bg';
+    }
+  }
+
+  // ---- 樹木や車などの装飾 ----------------------------------
+  mapData[5][5] = 'tree';
+  mapData[5][6] = 'tree';
+  mapData[5][7] = 'tree';
+  mapData[5][8] = 'tree';
+  mapData[6][5] = 'tree';
+  mapData[6][8] = 'tree';
+  mapData[6][12] = 'character_01'; // 立っている人
+  mapData[7][12] = 'car_blue';      // 駐車中の車
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
@@ -86,9 +106,7 @@
   function drawMap(canvas, ctx, images) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // キャンバス全体を黒で塗りつぶして背景色を固定
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // 背景塗りは行わず、透過させてタイル画像をそのまま表示
 
     // カメラの位置に合わせて原点を移動
     ctx.save();
@@ -125,9 +143,9 @@
     canvas.height = canvas.clientHeight;
     // キャンバス幅からタイル1枚のサイズを計算
     TILE_SIZE = canvas.width / mapData[0].length;
-    // プレイヤーの初期座標もタイルサイズに合わせて設定
-    player.x = 4 * TILE_SIZE;
-    player.y = 5 * TILE_SIZE;
+    // プレイヤーの初期座標もタイルサイズに合わせて設定（交差点から開始）
+    player.x = 10 * TILE_SIZE;
+    player.y = 7 * TILE_SIZE;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
