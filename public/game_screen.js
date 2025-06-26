@@ -109,4 +109,9 @@ window.addEventListener('DOMContentLoaded', () => {
       modal.classList.add('hidden');
     });
   });
+
+  // すべての初期設定が完了したらマップを描画開始
+  if (typeof initMapCanvas === 'function') {
+    initMapCanvas();
+  }
 }, { capture: true });
