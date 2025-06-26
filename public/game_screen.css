@@ -133,6 +133,8 @@ canvas#mapCanvas {
   width: 100%;
   height: 100%;
   flex-grow: 1;
+  /* 黒ベースの背景色を指定してマップを際立たせる */
+  background-color: #000;
 }
 
 

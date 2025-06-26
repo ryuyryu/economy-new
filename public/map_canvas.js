@@ -86,6 +86,9 @@
   function drawMap(canvas, ctx, images) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // キャンバス全体を黒で塗りつぶして背景色を固定
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // カメラの位置に合わせて原点を移動
     ctx.save();
