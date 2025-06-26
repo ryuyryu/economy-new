@@ -69,6 +69,10 @@
     ReactDOM.createRoot(document.getElementById('root')).render(
       React.createElement(GameScreen)
     );
+    // マップCanvasの初期化も行う
+    if (typeof initMapCanvas === 'function') {
+      initMapCanvas();
+    }
   });
 
   // ブラウザからも参照できるようグローバルに登録

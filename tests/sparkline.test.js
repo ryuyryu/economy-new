@@ -49,4 +49,23 @@ describe('IndicatorCard Sparkline', () => {
     const nextEl = container.querySelector('.next-value');
     expect(nextEl).not.toBeNull();
   });
+
+  test('履歴が1件の場合は1点のみ描画される', () => {
+    document.body.innerHTML = '<div id="root"></div>';
+    global.React = React;
+    global.ReactDOM = ReactDOM;
+    const { Sparkline } = require('../public/components/Sparkline.js');
+
+    const container = document.createElement('div');
+    act(() => {
+      ReactDOM.createRoot(container).render(
+        React.createElement(Sparkline, { history: [1] })
+      );
+    });
+
+    const poly = container.querySelector('polyline');
+    expect(poly).not.toBeNull();
+    const pointCount = poly.getAttribute('points').trim().split(/\s+/).length;
+    expect(pointCount).toBe(1);
+  });
 });

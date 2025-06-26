@@ -362,7 +362,10 @@
 
   return React.createElement(
     'div',
-    { className: 'bg-gray-100 select-none' },
+    {
+      // 画面全体を占めるように高さ100%のFlexコンテナにする
+      className: 'h-screen flex flex-col bg-gray-100 select-none'
+    },
     React.createElement(
       'header',
       { className: 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white px-4 py-1' },
@@ -420,6 +423,13 @@
         )
       )
     ),
+    // ヘッダーと指標表示の下にマップCanvasを配置する
+    React.createElement('canvas', {
+      id: 'mapCanvas',
+      // 高さ可変にするためflex-growを付与し幅いっぱいに広げる
+      // 背景色を黒にしてマップを見やすくする
+      className: 'flex-grow w-full border bg-black'
+    }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
           title: indicatorInfo[activeIndicator].label,
