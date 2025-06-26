@@ -139,9 +139,45 @@ npm test     # Jest でテストを実行
 bash scripts/unpack_step1.sh
 ```
 
-残りのステップは順次追加予定です。
+続けてステップ 2 〜 5 を順に実行してください。
+
+#### ステップ 2：主要画像の展開
+```bash
+bash scripts/unpack_step2.sh
+```
+`Tilemap/` や `Tiles/`、city-kit の基本 PNG が `public/images/` 以下に展開されます。
+
+#### ステップ 3：オプション素材の展開
+```bash
+bash scripts/unpack_step3.sh
+```
+残りの 3D モデルやテキストファイルが展開されます。
+
+#### ステップ 4：不要ファイルの削除
+```bash
+bash scripts/unpack_step4.sh
+```
+`Sample.png` や `Preview*.png`、`.url` ファイルを削除して整理します。
+
+#### ステップ 5：ZIP の削除（任意）
+```bash
+bash scripts/unpack_step5.sh
+```
+アーカイブを削除してディスク容量を節約します。
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
+
+主なディレクトリ構成例:
+
+```
+public/images/
+├─ city-kit/
+│  ├─ Previews/
+│  └─ Models/...
+├─ roguelike/
+│  ├─ Tilemap/
+│  └─ Tiles/
+```
 
 ### city-kit（アイソメトリック）
 
