@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="globals.css">
   <link rel="stylesheet" href="game_screen.css">
 </head>
-<body class="h-screen overflow-hidden font-[Orbitron]">
+<body class="h-screen overflow-hidden font-[Orbitron] flex flex-col">
 
   <!-- ヘッダー: 収入と評価を表示 -->
   <header class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white flex justify-between items-center px-4 py-2">
@@ -36,6 +36,8 @@
       </span>
     </div>
   </header>
+  <!-- マップ表示用キャンバス -->
+  <canvas id="mapCanvas" class="flex-grow w-full"></canvas>
   <!-- ドロワー用のオーバーレイ -->
   <div id="drawerOverlay" class="fixed inset-0 bg-black/30"></div>
   <!-- サイドドロワー -->
@@ -81,6 +83,9 @@
       <p id="detailText" class="text-sm whitespace-pre-line"></p>
     </div>
   </div>
+  <!-- マップ描画に必要なスクリプト -->
+  <script src="tileManifest.js"></script>
+  <script src="map_canvas.js"></script>
   <!-- ゲーム用スクリプトを読み込み -->
   <script src="game_screen.js"></script>
 
