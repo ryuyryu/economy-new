@@ -1,20 +1,24 @@
 (function () {
   // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
   let TILE_SIZE = 32;
-  // マップのレイアウトを表す2次元配列
-  // 今回は10x10のサンプルマップを用意しています
-  const mapData = [
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','character_01','car_blue','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
+  // もとの10x10マップ
+  const baseMap = [
+    ['grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass'],
+    ['grass', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_bg', 'tree', 'tree', 'tree', 'tree', 'building_bg', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_bg', 'tree', 'character_01', 'car_blue', 'tree', 'building_bg', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_bg', 'tree', 'tree', 'tree', 'tree', 'building_bg', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'road_horizontal', 'grass'],
+    ['grass', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'pedestrian_crossing', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'grass'],
+    ['grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass'],
   ];
+
+  // baseMap を2倍に拡大して20x20のマップを作成
+  const mapData = [];
+  baseMap.forEach(row => mapData.push([...row, ...row]));
+  baseMap.forEach(row => mapData.push([...row, ...row]));
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
@@ -86,9 +90,7 @@
   function drawMap(canvas, ctx, images) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // キャンバス全体を黒で塗りつぶして背景色を固定
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // 余計な背景塗りつぶしを行わず、タイルを直接描画
 
     // カメラの位置に合わせて原点を移動
     ctx.save();
@@ -108,6 +110,10 @@
     // プレイヤーを一番上に描画
     if (images['character_01']) {
       ctx.drawImage(images['character_01'], player.x, player.y, TILE_SIZE, TILE_SIZE);
+    } else {
+      // 素材がない場合は赤い四角で代用
+      ctx.fillStyle = 'red';
+      ctx.fillRect(player.x, player.y, TILE_SIZE, TILE_SIZE);
     }
 
     ctx.restore();
