@@ -34,8 +34,11 @@
   const max = Math.max(...history);
   const range = max - min || 1;
 
+  // -----------------------------
   // 各データ点の位置を計算
-  const step = size.w / (history.length - 1);
+  // 履歴が1件以下の時は線を引けないので step を0にする
+  // -----------------------------
+  const step = history.length <= 1 ? 0 : size.w / (history.length - 1);
   const points = history
     .map((v, i) => {
       const x = i * step;
@@ -49,8 +52,9 @@
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left + containerRef.current.scrollLeft;
-    const step = size.w / (history.length - 1);
-    const idx = Math.round(x / step);
+    // 履歴が1点のみの場合は常にその点を選択
+    const step = history.length <= 1 ? 0 : size.w / (history.length - 1);
+    const idx = step === 0 ? 0 : Math.round(x / step);
     if (idx >= 0 && idx < history.length) {
       const value = history[idx];
       const y = size.h - ((value - min) / range) * size.h;
