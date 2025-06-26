@@ -427,7 +427,8 @@
     React.createElement('canvas', {
       id: 'mapCanvas',
       // 高さ可変にするためflex-growを付与し幅いっぱいに広げる
-      className: 'flex-grow w-full border'
+      // 背景色を黒にしてマップを見やすくする
+      className: 'flex-grow w-full border bg-black'
     }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
