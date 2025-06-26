@@ -3,7 +3,7 @@
 set -e
 
 # city-kit のライセンス展開
-unzip -o "public/images/kenney_city-kit-commercial_20 (1).zip" License.txt -d public/images/city-kit
+unzip -o public/images/kenney_city-kit-commercial_20.zip License.txt -d public/images/city-kit
 
 # roguelike のライセンス展開
 unzip -o public/images/kenney_roguelike-modern-city.zip License.txt -d public/images/roguelike
