@@ -1,5 +1,7 @@
 (function () {
   const TILE_SIZE = 32;
+  // マップのレイアウトを表す2次元配列
+  // 今回は10x10のサンプルマップを用意しています
   const mapData = [
     ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
     ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
@@ -12,6 +14,55 @@
     ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
     ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
   ];
+
+  // --- プレイヤー情報 ------------------------------------
+  // プレイヤーの座標(px単位)と移動速度を保持
+  const player = {
+    // character_01 の初期位置に合わせる
+    x: 4 * TILE_SIZE,
+    y: 5 * TILE_SIZE,
+    // 1回のキー入力で移動するピクセル数
+    speed: 4
+  };
+
+  // --- カメラ情報 ----------------------------------------
+  // プレイヤーを中心に表示するためのカメラ位置
+  let cameraX = 0;
+  let cameraY = 0;
+
+  // --- 通行不可マップの作成 ------------------------------
+  // 当たり判定に備え、通行できないタイルを true とする
+  const blockedTiles = ['building_wall', 'building_bg', 'tree', 'car_blue'];
+  const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
+
+  // --- プレイヤー移動処理 --------------------------------
+  function movePlayer(dx, dy, state) {
+    // 新しい位置を計算
+    const newX = player.x + dx;
+    const newY = player.y + dy;
+
+    // 移動先タイルの座標
+    const tileX = Math.floor((newX + TILE_SIZE / 2) / TILE_SIZE);
+    const tileY = Math.floor((newY + TILE_SIZE / 2) / TILE_SIZE);
+
+    // 通行可能なら位置を更新
+    if (!obstacleMap[tileY]?.[tileX]) {
+      player.x = newX;
+      player.y = newY;
+    }
+
+    // カメラをプレイヤー中心に移動
+    cameraX = player.x + TILE_SIZE / 2 - state.canvas.width / 2;
+    cameraY = player.y + TILE_SIZE / 2 - state.canvas.height / 2;
+
+    // マップ端でカメラがはみ出さないよう制限
+    const maxX = mapData[0].length * TILE_SIZE - state.canvas.width;
+    const maxY = mapData.length * TILE_SIZE - state.canvas.height;
+    cameraX = Math.max(0, Math.min(cameraX, maxX));
+    cameraY = Math.max(0, Math.min(cameraY, maxY));
+
+    drawMap(state.canvas, state.ctx, state.images);
+  }
 
   function loadImages(manifest, callback) {
     const keys = Object.keys(manifest);
@@ -30,7 +81,16 @@
     });
   }
 
+  // マップ全体を描画する関数
   function drawMap(canvas, ctx, images) {
+    // いったん画面をクリア
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // カメラの位置に合わせて原点を移動
+    ctx.save();
+    ctx.translate(-cameraX, -cameraY);
+
+    // マップタイルの描画
     for (let y = 0; y < mapData.length; y++) {
       for (let x = 0; x < mapData[y].length; x++) {
         const tile = mapData[y][x];
@@ -40,6 +100,13 @@
         }
       }
     }
+
+    // プレイヤーを一番上に描画
+    if (images['character_01']) {
+      ctx.drawImage(images['character_01'], player.x, player.y, TILE_SIZE, TILE_SIZE);
+    }
+
+    ctx.restore();
   }
 
   function initMapCanvas() {
@@ -47,13 +114,40 @@
     if (!canvas || typeof tileManifest === 'undefined') {
       return;
     }
+
     const ctx = canvas.getContext('2d');
     canvas.width = mapData[0].length * TILE_SIZE;
     canvas.height = mapData.length * TILE_SIZE;
-    const usedKeys = [...new Set(mapData.flat())];
+
+    const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
     usedKeys.forEach(k => { if (tileManifest[k]) manifest[k] = tileManifest[k]; });
-    loadImages(manifest, (images) => { drawMap(canvas, ctx, images); });
+
+    const state = { canvas, ctx, images: null };
+
+    loadImages(manifest, (images) => {
+      state.images = images;
+      drawMap(canvas, ctx, images);
+    });
+
+    // キー入力でプレイヤーを移動
+    document.addEventListener('keydown', (e) => {
+      if (!state.images) return; // 画像読み込み前は無視
+      switch (e.key) {
+        case 'ArrowLeft':
+          movePlayer(-player.speed, 0, state);
+          break;
+        case 'ArrowRight':
+          movePlayer(player.speed, 0, state);
+          break;
+        case 'ArrowUp':
+          movePlayer(0, -player.speed, state);
+          break;
+        case 'ArrowDown':
+          movePlayer(0, player.speed, state);
+          break;
+      }
+    });
   }
 
   if (typeof module !== 'undefined' && module.exports) {
