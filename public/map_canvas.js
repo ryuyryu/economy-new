@@ -1,5 +1,6 @@
 (function () {
-  const TILE_SIZE = 32;
+  // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
+  let TILE_SIZE = 32;
   // マップのレイアウトを表す2次元配列
   // 今回は10x10のサンプルマップを用意しています
   const mapData = [
@@ -18,9 +19,9 @@
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
   const player = {
-    // character_01 の初期位置に合わせる
-    x: 4 * TILE_SIZE,
-    y: 5 * TILE_SIZE,
+    // 初期座標は後で計算する
+    x: 0,
+    y: 0,
     // 1回のキー入力で移動するピクセル数
     speed: 4
   };
@@ -116,8 +117,14 @@
     }
 
     const ctx = canvas.getContext('2d');
-    canvas.width = mapData[0].length * TILE_SIZE;
-    canvas.height = mapData.length * TILE_SIZE;
+    // CSSでサイズを指定しているため、実際の描画サイズを取得して設定
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    // キャンバス幅からタイル1枚のサイズを計算
+    TILE_SIZE = canvas.width / mapData[0].length;
+    // プレイヤーの初期座標もタイルサイズに合わせて設定
+    player.x = 4 * TILE_SIZE;
+    player.y = 5 * TILE_SIZE;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
