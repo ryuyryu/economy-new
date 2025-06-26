@@ -420,6 +420,11 @@
         )
       )
     ),
+    // ヘッダーと指標表示の下にマップCanvasを配置する
+    React.createElement('canvas', {
+      id: 'mapCanvas',
+      className: 'mx-auto my-2 border'
+    }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
           title: indicatorInfo[activeIndicator].label,
