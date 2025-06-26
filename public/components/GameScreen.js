@@ -362,7 +362,10 @@
 
   return React.createElement(
     'div',
-    { className: 'bg-gray-100 select-none' },
+    {
+      // 画面全体を占めるように高さ100%のFlexコンテナにする
+      className: 'h-screen flex flex-col bg-gray-100 select-none'
+    },
     React.createElement(
       'header',
       { className: 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900/90 text-white px-4 py-1' },
@@ -423,7 +426,8 @@
     // ヘッダーと指標表示の下にマップCanvasを配置する
     React.createElement('canvas', {
       id: 'mapCanvas',
-      className: 'mx-auto my-2 border'
+      // 高さ可変にするためflex-growを付与し幅いっぱいに広げる
+      className: 'flex-grow w-full border'
     }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
