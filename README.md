@@ -145,7 +145,7 @@ bash scripts/unpack_step1.sh
 ```bash
 bash scripts/unpack_step2.sh
 ```
-`Tilemap/` や `Tiles/`、city-kit の基本 PNG が `public/images/` 以下に展開されます。
+`Tilemap/` や `Tiles/`、city-kit の基本 PNG が `images/` 以下に展開されます。
 
 #### ステップ 3：オプション素材の展開
 ```bash
@@ -170,7 +170,7 @@ bash scripts/unpack_step5.sh
 主なディレクトリ構成例:
 
 ```
-public/images/
+images/
 ├─ city-kit/
 │  ├─ Previews/
 │  └─ Models/...
