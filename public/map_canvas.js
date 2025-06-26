@@ -1,20 +1,18 @@
 (function () {
   // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
   let TILE_SIZE = 32;
-  // マップのレイアウトを表す2次元配列
-  // 今回は10x10のサンプルマップを用意しています
-  const mapData = [
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','character_01','car_blue','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-  ];
+  // --- マップデータ --------------------------------------
+  // 10×10 のマップをランダムに生成します
+  // tileManifest からプレイヤー以外のキーを取得
+  const tileKeys = Object.keys(tileManifest).filter(k => k !== 'character_01');
+  const MAP_WIDTH = 10;
+  const MAP_HEIGHT = 10;
+  const mapData = Array.from({ length: MAP_HEIGHT }, () =>
+    Array.from({ length: MAP_WIDTH }, () => {
+      const i = Math.floor(Math.random() * tileKeys.length);
+      return tileKeys[i];
+    })
+  );
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
@@ -86,9 +84,6 @@
   function drawMap(canvas, ctx, images) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // キャンバス全体を黒で塗りつぶして背景色を固定
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // カメラの位置に合わせて原点を移動
     ctx.save();
