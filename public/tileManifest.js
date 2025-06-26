@@ -2,7 +2,7 @@
 // 都市マップ用タイル画像のパスをまとめたマニフェストです
 // 画像ファイルは images フォルダ以下に展開してください
 
-export const tileManifest = {
+const tileManifest = {
   // Roguelike素材
   asphalt: "/images/roguelike/tile_0001.png",
   road_horizontal: "/images/roguelike/tile_0012.png",
@@ -17,3 +17,13 @@ export const tileManifest = {
   car_blue: "/images/city-kit/Car_Blue.png",
   character_01: "/images/city-kit/People_01.png",
 };
+
+// CommonJS エクスポート
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { tileManifest };
+}
+
+// ブラウザ環境ではグローバル変数として使えるようにする
+if (typeof window !== 'undefined') {
+  window.tileManifest = tileManifest;
+}
