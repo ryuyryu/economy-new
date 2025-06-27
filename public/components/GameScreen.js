@@ -437,8 +437,8 @@
     React.createElement('canvas', {
       id: 'mapCanvas',
       // 高さ可変にするため flex-grow を付与し、幅いっぱいに広げる
-      // 背景色は薄いグレーにしてマップ画像を見やすくする
-      className: 'flex-grow w-full border bg-gray-200'
+      // 背景色を付けず透過させる
+      className: 'flex-grow w-full border'
     }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
