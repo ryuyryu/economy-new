@@ -75,19 +75,37 @@
     drawMap(state.canvas, state.ctx, state.images);
   }
 
+  // 画像をまとめて読み込み、完了したら callback を呼ぶ関数
+  // 読み込み失敗時にはエラー内容を表示して続行します
   function loadImages(manifest, callback) {
     const keys = Object.keys(manifest);
     const images = {};
     let loaded = 0;
+
+    // すべての画像のロードが終わったか確認するヘルパー
+    const checkAllLoaded = () => {
+      if (loaded === keys.length) {
+        callback(images);
+      }
+    };
+
     keys.forEach(key => {
       const img = new Image();
       img.src = manifest[key];
+
+      // 読み込みが完了した場合
       img.onload = () => {
         loaded++;
-        if (loaded === keys.length) {
-          callback(images);
-        }
+        checkAllLoaded();
       };
+
+      // 読み込みに失敗した場合
+      img.onerror = () => {
+        console.error(`画像の読み込みに失敗しました: ${manifest[key]}`);
+        loaded++;
+        checkAllLoaded();
+      };
+
       images[key] = img;
     });
   }
@@ -157,15 +175,19 @@
       if (!state.images) return; // 画像読み込み前は無視
       switch (e.key) {
         case 'ArrowLeft':
+          e.preventDefault(); // ブラウザのスクロールを無効化
           movePlayer(-player.speed, 0, state);
           break;
         case 'ArrowRight':
+          e.preventDefault();
           movePlayer(player.speed, 0, state);
           break;
         case 'ArrowUp':
+          e.preventDefault();
           movePlayer(0, -player.speed, state);
           break;
         case 'ArrowDown':
+          e.preventDefault();
           movePlayer(0, player.speed, state);
           break;
       }
