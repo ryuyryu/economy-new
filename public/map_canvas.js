@@ -3,16 +3,16 @@
   let TILE_SIZE = 32;
   // もとの10x10マップ
   const baseMap = [
-    ['grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass'],
-    ['grass', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'building_wall', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_bg', 'tree', 'tree', 'tree', 'tree', 'building_bg', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_bg', 'tree', 'character_01', 'car_blue', 'tree', 'building_bg', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_bg', 'tree', 'tree', 'tree', 'tree', 'building_bg', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'building_bg', 'road_horizontal', 'grass'],
-    ['grass', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'pedestrian_crossing', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'road_horizontal', 'grass'],
-    ['grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass'],
+    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
+    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
+    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
+    ['grass','road_horizontal','building-a','building-b','building-c','building-d','building-e','building-f','road_horizontal','grass'],
+    ['grass','road_horizontal','building-g','grass','grass','grass','grass','building-h','road_horizontal','grass'],
+    ['grass','road_horizontal','building-i','grass','grass','grass','grass','building-j','road_horizontal','grass'],
+    ['grass','road_horizontal','building-k','grass','grass','grass','grass','building-l','road_horizontal','grass'],
+    ['grass','road_horizontal','building-m','building-n','building-n','building-n','building-n','building-n','road_horizontal','grass'],
+    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
+    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
   ];
 
   // baseMap を2倍に拡大して20x20のマップを作成
@@ -37,7 +37,13 @@
 
   // --- 通行不可マップの作成 ------------------------------
   // 当たり判定に備え、通行できないタイルを true とする
-  const blockedTiles = ['building_wall', 'building_bg', 'tree', 'car_blue'];
+  const blockedTiles = [
+    'building_wall',
+    'building-a', 'building-b', 'building-c', 'building-d',
+    'building-e', 'building-f', 'building-g', 'building-h',
+    'building-i', 'building-j', 'building-k', 'building-l',
+    'building-m', 'building-n'
+  ];
   const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
 
   // --- プレイヤー移動処理 --------------------------------
