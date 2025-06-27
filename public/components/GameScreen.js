@@ -117,6 +117,16 @@
     localStorage.setItem('notifications', JSON.stringify(messages));
   }, [messages]);
 
+  // -----------------------------
+  // マップCanvasの初期化
+  // -----------------------------
+  // React で GameScreen が描画された後に呼び出します
+  useEffect(() => {
+    if (typeof initMapCanvas === 'function') {
+      initMapCanvas();
+    }
+  }, []);
+
   // カード表示用のラベルと説明。
   // desc には HTML 文字列を渡し、指標の概要と簡単な影響を文章で示します
 
