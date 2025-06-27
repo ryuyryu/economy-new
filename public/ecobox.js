@@ -9,6 +9,15 @@
     EcoHeader = window.EcoHeader;
   }
 
+  // スマホかどうかを判定するヘルパー関数
+  // ユーザーエージェントと画面幅の両方を用いて簡易チェックします
+  function isMobileDevice() {
+    if (typeof window === 'undefined') return false;
+    const ua = navigator.userAgent;
+    const mobileRE = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return mobileRE.test(ua) || window.innerWidth <= 768;
+  }
+
   // メインコンポーネント
   function EcoBoxUI() {
     // 通知リストをステートで保持
@@ -47,9 +56,11 @@
 
     // 通知をクリックしたとき
     const openDetail = (n) => {
+      // 通知内容をセット
       setSelected(n);
       setClosing(false);
-      setExpanded(false);
+      // スマホでは最初から拡大表示にする
+      setExpanded(isMobileDevice());
       markAsRead(n.id);
     };
 
@@ -172,14 +183,17 @@
                 React.createElement(
                   'div',
                   { className: 'space-x-2' },
-                  React.createElement(
-                    'button',
-                    {
-                      className: 'text-slate-400',
-                      onClick: () => setExpanded(!expanded)
-                    },
-                    expanded ? '縮小' : '拡大'
-                  ),
+                  // スマホ以外の場合のみ拡大縮小ボタンを表示
+                  !isMobileDevice()
+                    ? React.createElement(
+                        'button',
+                        {
+                          className: 'text-slate-400',
+                          onClick: () => setExpanded(!expanded)
+                        },
+                        expanded ? '縮小' : '拡大'
+                      )
+                    : null,
                   React.createElement(
                     'button',
                     {
