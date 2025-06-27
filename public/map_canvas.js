@@ -1,24 +1,23 @@
 (function () {
-  // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
+  // タイル1枚の表示サイズ(px)を計算時に決めるため変数で保持
   let TILE_SIZE = 32;
-  // もとの10x10マップ
-  const baseMap = [
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
-    ['grass','road_horizontal','building-a','building-b','building-c','building-d','building-e','building-f','road_horizontal','grass'],
-    ['grass','road_horizontal','building-g','grass','grass','grass','grass','building-h','road_horizontal','grass'],
-    ['grass','road_horizontal','building-i','grass','grass','grass','grass','building-j','road_horizontal','grass'],
-    ['grass','road_horizontal','building-k','grass','grass','grass','grass','building-l','road_horizontal','grass'],
-    ['grass','road_horizontal','building-m','building-n','building-n','building-n','building-n','building-n','road_horizontal','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-  ];
+  // もとの10x10マップを道路と草だけで構成する
+  const baseMap = Array.from({ length: 10 }, (_, y) =>
+    Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
+  );
 
-  // baseMap を2倍に拡大して20x20のマップを作成
+  // baseMap を20倍に拡大して 200×200 のマップを作成
+  const SCALE = 20;
   const mapData = [];
-  baseMap.forEach(row => mapData.push([...row, ...row]));
-  baseMap.forEach(row => mapData.push([...row, ...row]));
+  for (let i = 0; i < SCALE; i++) {
+    baseMap.forEach(row => {
+      const expanded = [];
+      for (let j = 0; j < SCALE; j++) {
+        expanded.push(...row);
+      }
+      mapData.push(expanded);
+    });
+  }
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
