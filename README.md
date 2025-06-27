@@ -52,6 +52,13 @@
 - [ ] 仮想経済データの動的変化処理
 
 ## 使い方
+まず以下のスクリプトを実行し、画像素材を展開してください。
+
+1. `bash scripts/unpack_phase1.sh`
+2. `bash scripts/unpack_phase2.sh`
+
+これにより `public/images/material` と `public/images/material2` フォルダに画像が配置されます。
+
 ブラウザで `public/index.html` を開き、画面をタップするとゲームがスタートします。
 ゲーム画面では5〜7秒ごとにターンが進み、上部のステータスがリアルタイムに更新されます。
 右上の「☰」ボタンでメニューを開閉でき、まれに発生するイベントは画面右上にトースト表示されます。
@@ -135,7 +142,8 @@ npm test     # Jest でテストを実行
 ## 🌆 都市マップ素材
 
 ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
-`public/images/` フォルダーには以下の ZIP ファイルを配置しています。
+`public/images/` フォルダーには以下の ZIP ファイルを配置しており、
+スクリプト実行後に `material` と `material2` ディレクトリへ展開されます。
 
 ```
 public/images/
@@ -160,25 +168,13 @@ bash scripts/unpack_phase2.sh
 
 ```
 images/
-├─ city-kit/
-│  ├─ Previews/
-│  └─ Models/...
-├─ roguelike/
-│  ├─ Tilemap/
+├─ material/
 │  └─ Tiles/
+├─ material2/
+│  └─ Previews/
 ```
 
-### city-kit（アイソメトリック）
-
-| ファイル名 | 内容 | 使用用途 |
-|------------|------|----------|
-| `Building_Background.png` | 建物のベース背景 | 建物構成用 |
-| `Road_Straight.png` | 道路（直線） | 道路構成用 |
-| `Tree_01.png` | 街路樹 | 自然装飾用 |
-| `Car_Blue.png` | 車両 | 交通表現用 |
-| `People_01.png` | 歩行キャラ | キャラクター表示用 |
-
-### roguelike（トップダウン）
+### material（タイルセット）
 
 | ファイル名 | 内容 | 使用用途 |
 |------------|------|----------|
@@ -187,6 +183,16 @@ images/
 | `tile_0025.png` | 建物の壁 | 壁・構造物 |
 | `tile_0033.png` | 芝生 | 公園・緑地帯 |
 | `tile_0040.png` | 横断歩道 | 歩行者用通路 |
+
+### material2（建物プレビュー）
+
+| ファイル名 | 内容 | 使用用途 |
+|------------|------|----------|
+| `building-a.png` | 建物A | マップ用建物 |
+| `building-b.png` | 建物B | マップ用建物 |
+| `building-c.png` | 建物C | マップ用建物 |
+| `building-d.png` | 建物D | マップ用建物 |
+| `detail-parasol-a.png` | 傘付きパラソル | キャラクター装飾 |
 
 
 ---
