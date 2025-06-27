@@ -27,8 +27,9 @@ const tileManifest = {
   'building-l': "images/material2/Previews/building-l.png",
   'building-m': "images/material2/Previews/building-m.png",
   'building-n': "images/material2/Previews/building-n.png",
-  // プレイヤー用の小物画像
-  character_01: "images/material2/Previews/detail-parasol-a.png",
+  // プレイヤーキャラクター画像
+  // roguelike 素材に含まれる人型タイルを利用する
+  character_01: "images/roguelike/tile_0156.png",
 };
 
 // CommonJS エクスポート
