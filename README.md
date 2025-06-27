@@ -142,39 +142,17 @@ public/images/
 ├─ kenney_city-kit-commercial_20.zip
 └─ kenney_roguelike-modern-city.zip
 ```
-サイズが大きいため、5 段階に分けて解凍するスクリプトを用意しています。
+サイズが大きいため、2 段階に分けて解凍するスクリプトを用意しています。
 
-まずは以下のコマンドでステップ 1 を実行し、ライセンスファイルのみを展開します。
+以下のコマンドを順に実行してください。
 
 ```bash
-bash scripts/unpack_step1.sh
-```
+# フェーズ1: ライセンスと主要画像を展開
+bash scripts/unpack_phase1.sh
 
-続けてステップ 2 〜 5 を順に実行してください。
-
-#### ステップ 2：主要画像の展開
-```bash
-bash scripts/unpack_step2.sh
+# フェーズ2: 残り素材を展開しZIPを削除
+bash scripts/unpack_phase2.sh
 ```
-`Tilemap/` や `Tiles/`、city-kit の基本 PNG が `images/` 以下に展開されます。
-
-#### ステップ 3：オプション素材の展開
-```bash
-bash scripts/unpack_step3.sh
-```
-残りの 3D モデルやテキストファイルが展開されます。
-
-#### ステップ 4：不要ファイルの削除
-```bash
-bash scripts/unpack_step4.sh
-```
-`Sample.png` や `Preview*.png`、`.url` ファイルを削除して整理します。
-
-#### ステップ 5：ZIP の削除（任意）
-```bash
-bash scripts/unpack_step5.sh
-```
-アーカイブを削除してディスク容量を節約します。
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
 
