@@ -5,6 +5,12 @@
   const baseMap = Array.from({ length: 10 }, (_, y) =>
     Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
   );
+  // プレイヤー初期位置周辺は広場としてアスファルトに変更
+  for (let y = 4; y <= 6; y++) {
+    for (let x = 4; x <= 6; x++) {
+      baseMap[y][x] = 'asphalt';
+    }
+  }
 
   // baseMap を20倍に拡大して 200×200 のマップを作成
   const SCALE = 20;
@@ -155,7 +161,8 @@
     // キャンバス幅からタイル1枚のサイズを計算
     TILE_SIZE = canvas.width / mapData[0].length;
     // プレイヤーの初期座標もタイルサイズに合わせて設定
-    player.x = 4 * TILE_SIZE;
+    // 十字路の中央に配置する
+    player.x = 5 * TILE_SIZE;
     player.y = 5 * TILE_SIZE;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
