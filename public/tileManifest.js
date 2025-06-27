@@ -3,19 +3,30 @@
 // 画像ファイルは images フォルダ以下に展開してください
 
 const tileManifest = {
-  // Roguelike素材
-  asphalt: "/images/roguelike/tile_0001.png",
-  road_horizontal: "/images/roguelike/tile_0012.png",
-  building_wall: "/images/roguelike/tile_0025.png",
-  grass: "/images/roguelike/tile_0033.png",
-  pedestrian_crossing: "/images/roguelike/tile_0040.png",
+  // material フォルダ (番号付きタイル)
+  asphalt: "/images/material/Tiles/tile_0001.png",
+  road_horizontal: "/images/material/Tiles/tile_0012.png",
+  building_wall: "/images/material/Tiles/tile_0025.png",
+  grass: "/images/material/Tiles/tile_0033.png",
+  pedestrian_crossing: "/images/material/Tiles/tile_0040.png",
 
-  // City-kit素材（アイソメ）
-  building_bg: "/images/city-kit/Building_Background.png",
-  road_straight: "/images/city-kit/Road_Straight.png",
-  tree: "/images/city-kit/Tree_01.png",
-  car_blue: "/images/city-kit/Car_Blue.png",
-  character_01: "/images/city-kit/People_01.png",
+  // material2 フォルダ (建物プレビュー画像)
+  'building-a': "/images/material2/Previews/building-a.png",
+  'building-b': "/images/material2/Previews/building-b.png",
+  'building-c': "/images/material2/Previews/building-c.png",
+  'building-d': "/images/material2/Previews/building-d.png",
+  'building-e': "/images/material2/Previews/building-e.png",
+  'building-f': "/images/material2/Previews/building-f.png",
+  'building-g': "/images/material2/Previews/building-g.png",
+  'building-h': "/images/material2/Previews/building-h.png",
+  'building-i': "/images/material2/Previews/building-i.png",
+  'building-j': "/images/material2/Previews/building-j.png",
+  'building-k': "/images/material2/Previews/building-k.png",
+  'building-l': "/images/material2/Previews/building-l.png",
+  'building-m': "/images/material2/Previews/building-m.png",
+  'building-n': "/images/material2/Previews/building-n.png",
+  // プレイヤー用の小物画像
+  character_01: "/images/material2/Previews/detail-parasol-a.png",
 };
 
 // CommonJS エクスポート
