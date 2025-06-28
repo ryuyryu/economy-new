@@ -77,50 +77,41 @@
     cameraX = Math.max(0, Math.min(cameraX, maxX));
     cameraY = Math.max(0, Math.min(cameraY, maxY));
 
-    drawMap(state.canvas, state.ctx, state.images);
+    drawMap(state.canvas, state.ctx, state.getImage);
   }
 
   // 画像をまとめて読み込み、完了したら callback を呼ぶ関数
   // 読み込み失敗時にはエラー内容を表示して続行します
-  function loadImages(manifest, callback) {
-    const keys = Object.keys(manifest);
-    const images = {};
-    let loaded = 0;
-
-    // すべての画像のロードが終わったか確認するヘルパー
-    const checkAllLoaded = () => {
-      if (loaded === keys.length) {
-        callback(images);
+  // 画像を必要になったタイミングで読み込むローダーを生成
+  function loadImages(manifest, onLoad) {
+    const cache = {};
+    return function getImage(key) {
+      const cached = cache[key];
+      // すでに読み込み済みならそのまま返す
+      if (cached && cached.complete) {
+        return cached;
       }
+      // 初回呼び出し時に画像を作成して読み込み開始
+      if (!cached && manifest[key]) {
+        const img = new Image();
+        img.src = manifest[key];
+        if (typeof spriteInfo !== 'undefined' && spriteInfo[key]) {
+          img.desc = spriteInfo[key].desc;
+        }
+        img.onload = onLoad;
+        img.onerror = () => {
+          console.error(`画像の読み込みに失敗しました: ${manifest[key]}`);
+        };
+        cache[key] = img;
+      }
+      // 読み込み中は null を返す
+      return null;
     };
-
-    keys.forEach(key => {
-      const img = new Image();
-      img.src = manifest[key];
-      // spriteInfo があれば説明を紐付けておく
-      if (typeof spriteInfo !== 'undefined' && spriteInfo[key]) {
-        img.desc = spriteInfo[key].desc;
-      }
-
-      // 読み込みが完了した場合
-      img.onload = () => {
-        loaded++;
-        checkAllLoaded();
-      };
-
-      // 読み込みに失敗した場合
-      img.onerror = () => {
-        console.error(`画像の読み込みに失敗しました: ${manifest[key]}`);
-        loaded++;
-        checkAllLoaded();
-      };
-
-      images[key] = img;
-    });
   }
 
   // マップ全体を描画する関数
-  function drawMap(canvas, ctx, images) {
+  // マップ全体を描画する関数
+  function drawMap(canvas, ctx, getImage) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // 余計な背景塗りつぶしを行わず、タイルを直接描画
@@ -133,7 +124,7 @@
     for (let y = 0; y < mapData.length; y++) {
       for (let x = 0; x < mapData[y].length; x++) {
         const tile = mapData[y][x];
-        const img = images[tile];
+        const img = getImage(tile);
         if (img) {
           ctx.drawImage(img, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
@@ -141,8 +132,9 @@
     }
 
     // プレイヤーを一番上に描画
-    if (images['character_01']) {
-      ctx.drawImage(images['character_01'], player.x, player.y, TILE_SIZE, TILE_SIZE);
+    const charImg = getImage('character_01');
+    if (charImg) {
+      ctx.drawImage(charImg, player.x, player.y, TILE_SIZE, TILE_SIZE);
     } else {
       // 素材がない場合は赤い四角で代用
       ctx.fillStyle = 'red';
@@ -183,17 +175,13 @@
       }
     });
 
-    const state = { canvas, ctx, images: null, descriptions };
-
-    loadImages(manifest, (images) => {
-      state.images = images;
-      drawMap(canvas, ctx, images);
-      console.log('使用タイル情報', descriptions);
-    });
+    const getImage = loadImages(manifest, () => drawMap(canvas, ctx, getImage));
+    const state = { canvas, ctx, getImage, descriptions };
+    drawMap(canvas, ctx, getImage);
+    console.log('使用タイル情報', descriptions);
 
     // キー入力でプレイヤーを移動
     document.addEventListener('keydown', (e) => {
-      if (!state.images) return; // 画像読み込み前は無視
       switch (e.key) {
         case 'ArrowLeft':
           e.preventDefault(); // ブラウザのスクロールを無効化
