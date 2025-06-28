@@ -183,14 +183,17 @@
                 React.createElement(
                   'div',
                   { className: 'space-x-2' },
-                  React.createElement(
-                    'button',
-                    {
-                      className: 'text-slate-400',
-                      onClick: () => setExpanded(!expanded)
-                    },
-                    expanded ? '縮小' : '拡大'
-                  ),
+                  // スマホ以外の場合のみ拡大縮小ボタンを表示
+                  !isMobileDevice()
+                    ? React.createElement(
+                        'button',
+                        {
+                          className: 'text-slate-400',
+                          onClick: () => setExpanded(!expanded)
+                        },
+                        expanded ? '縮小' : '拡大'
+                      )
+                    : null,
                   React.createElement(
                     'button',
                     {
