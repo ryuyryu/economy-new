@@ -52,10 +52,11 @@
 - [ ] 仮想経済データの動的変化処理
 
 ## 使い方
-まず以下のスクリプトを実行し、画像素材を展開してください。
+まず以下のコマンドを実行し、画像素材を展開してください。
 
-1. `bash scripts/unpack_phase1.sh`
-2. `bash scripts/unpack_phase2.sh`
+```bash
+npm run unpack
+```
 
 これにより `public/images/sprites` フォルダに画像がまとめて展開されます。
 
@@ -155,14 +156,10 @@ public/images/
 ```
 サイズが大きいため、2 段階に分けて解凍するスクリプトを用意しています。
 
-以下のコマンドを順に実行してください。
+以下のコマンドを実行してください。
 
 ```bash
-# フェーズ1: ライセンスと主要画像を展開
-bash scripts/unpack_phase1.sh
-
-# フェーズ2: 残り素材を展開しZIPを削除
-bash scripts/unpack_phase2.sh
+npm run unpack
 ```
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
