@@ -1,7 +1,7 @@
 (function () {
   // タイル1枚の表示サイズ(px)を計算時に決めるため変数で保持
   let TILE_SIZE = 32;
-  // もとの10x10マップを道路と草だけで構成する
+  // もとの10x10マップを道路と土(草)で構成する
   const baseMap = Array.from({ length: 10 }, (_, y) =>
     Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
   );
@@ -12,18 +12,33 @@
     }
   }
 
-  // baseMap を20倍に拡大して 200×200 のマップを作成
+  // 建物を配置するレイヤーのベースを作成
+  const objectBase = Array.from({ length: 10 }, () => Array(10).fill(null));
+  // 道路の四隅に建物を置くサンプル配置
+  objectBase[2][2] = 'building-a';
+  objectBase[2][7] = 'building-b';
+  objectBase[7][2] = 'building-c';
+  objectBase[7][7] = 'building-d';
+
+  // baseMap と objectBase を20倍に拡大して 200×200 のレイヤーを作成
   const SCALE = 20;
-  const mapData = [];
+  const groundLayer = [];
+  const objectLayer = [];
   for (let i = 0; i < SCALE; i++) {
-    baseMap.forEach(row => {
-      const expanded = [];
+    baseMap.forEach((row, y) => {
+      const groundRow = [];
+      const objectRow = [];
       for (let j = 0; j < SCALE; j++) {
-        expanded.push(...row);
+        groundRow.push(...row);
+        objectRow.push(...objectBase[y]);
       }
-      mapData.push(expanded);
+      groundLayer.push(groundRow);
+      objectLayer.push(objectRow);
     });
   }
+
+  // レイヤーをまとめたオブジェクトを保持
+  const mapData = { ground: groundLayer, objects: objectLayer };
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
@@ -49,7 +64,10 @@
     'building-i', 'building-j', 'building-k', 'building-l',
     'building-m', 'building-n'
   ];
-  const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
+  // objectLayer 上で通行できないタイルを true にする
+  const obstacleMap = mapData.objects.map(row =>
+    row.map(tile => blockedTiles.includes(tile))
+  );
 
   // --- プレイヤー移動処理 --------------------------------
   function movePlayer(dx, dy, state) {
@@ -72,8 +90,8 @@
     cameraY = player.y + TILE_SIZE / 2 - state.canvas.height / 2;
 
     // マップ端でカメラがはみ出さないよう制限
-    const maxX = mapData[0].length * TILE_SIZE - state.canvas.width;
-    const maxY = mapData.length * TILE_SIZE - state.canvas.height;
+    const maxX = mapData.ground[0].length * TILE_SIZE - state.canvas.width;
+    const maxY = mapData.ground.length * TILE_SIZE - state.canvas.height;
     cameraX = Math.max(0, Math.min(cameraX, maxX));
     cameraY = Math.max(0, Math.min(cameraY, maxY));
 
@@ -126,12 +144,19 @@
     ctx.translate(-cameraX, -cameraY);
 
     // マップタイルの描画
-    for (let y = 0; y < mapData.length; y++) {
-      for (let x = 0; x < mapData[y].length; x++) {
-        const tile = mapData[y][x];
-        const img = images[tile];
-        if (img) {
-          ctx.drawImage(img, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    for (let y = 0; y < mapData.ground.length; y++) {
+      for (let x = 0; x < mapData.ground[y].length; x++) {
+        // まず地面を描画
+        const groundTile = mapData.ground[y][x];
+        const gImg = images[groundTile];
+        if (gImg) {
+          ctx.drawImage(gImg, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        }
+        // その上にオブジェクトを重ねる
+        const objTile = mapData.objects[y][x];
+        const oImg = images[objTile];
+        if (oImg) {
+          ctx.drawImage(oImg, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
         }
       }
     }
@@ -159,13 +184,15 @@
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
     // キャンバス幅からタイル1枚のサイズを計算
-    TILE_SIZE = canvas.width / mapData[0].length;
+    TILE_SIZE = canvas.width / mapData.ground[0].length;
     // プレイヤーの初期座標もタイルサイズに合わせて設定
     // 十字路の中央に配置する
     player.x = 5 * TILE_SIZE;
     player.y = 5 * TILE_SIZE;
 
-    const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
+    const usedKeys = [...new Set(
+      mapData.ground.flat().concat(mapData.objects.flat()).filter(Boolean).concat('character_01')
+    )];
     const manifest = {};
     usedKeys.forEach(k => { if (tileManifest[k]) manifest[k] = tileManifest[k]; });
 

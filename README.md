@@ -66,6 +66,24 @@
 マップ上では矢印キーでキャラクターを移動できます。
 カメラは常にプレイヤーを中央に捉えるため、移動に応じてスクロールします。
 
+### マップレイヤーの例
+以下のように、地面用とオブジェクト用の2つのレイヤーを組み合わせてマップを構成します。
+
+```javascript
+const groundLayer = [
+  ['road_horizontal', 'road_horizontal', 'road_horizontal'],
+  ['grass', 'grass', 'grass'],
+  ['grass', 'grass', 'grass']
+];
+
+const objectLayer = [
+  [null, null, null],
+  [null, 'building-a', null],
+  [null, null, null]
+];
+```
+この例では道路や芝生を地面として描き、その上に建物を重ねて表示します。
+
 ### React 版について
 スタート画面 (`index.html`) では React を利用した `start_screen_react.js` が読み込まれます。
 今回、ゲーム画面も React で試せるよう `game_screen_react.html` と `game_screen_react.js` を追加しました。
