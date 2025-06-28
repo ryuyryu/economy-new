@@ -1,20 +1,29 @@
 (function () {
-  // タイルサイズはキャンバスの幅に応じて後で計算するので変数で保持
+  // タイル1枚の表示サイズ(px)を計算時に決めるため変数で保持
   let TILE_SIZE = 32;
-  // マップのレイアウトを表す2次元配列
-  // 今回は10x10のサンプルマップを用意しています
-  const mapData = [
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','road_horizontal','building_wall','building_wall','building_wall','building_wall','building_wall','building_wall','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','character_01','car_blue','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','tree','tree','tree','tree','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','building_bg','building_bg','building_bg','building_bg','building_bg','building_bg','road_horizontal','grass'],
-    ['grass','road_horizontal','road_horizontal','road_horizontal','pedestrian_crossing','road_horizontal','road_horizontal','road_horizontal','road_horizontal','grass'],
-    ['grass','grass','grass','grass','grass','grass','grass','grass','grass','grass'],
-  ];
+  // もとの10x10マップを道路と草だけで構成する
+  const baseMap = Array.from({ length: 10 }, (_, y) =>
+    Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
+  );
+  // プレイヤー初期位置周辺は広場としてアスファルトに変更
+  for (let y = 4; y <= 6; y++) {
+    for (let x = 4; x <= 6; x++) {
+      baseMap[y][x] = 'asphalt';
+    }
+  }
+
+  // baseMap を20倍に拡大して 200×200 のマップを作成
+  const SCALE = 20;
+  const mapData = [];
+  for (let i = 0; i < SCALE; i++) {
+    baseMap.forEach(row => {
+      const expanded = [];
+      for (let j = 0; j < SCALE; j++) {
+        expanded.push(...row);
+      }
+      mapData.push(expanded);
+    });
+  }
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
@@ -33,7 +42,13 @@
 
   // --- 通行不可マップの作成 ------------------------------
   // 当たり判定に備え、通行できないタイルを true とする
-  const blockedTiles = ['building_wall', 'building_bg', 'tree', 'car_blue'];
+  const blockedTiles = [
+    'building_wall',
+    'building-a', 'building-b', 'building-c', 'building-d',
+    'building-e', 'building-f', 'building-g', 'building-h',
+    'building-i', 'building-j', 'building-k', 'building-l',
+    'building-m', 'building-n'
+  ];
   const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
 
   // --- プレイヤー移動処理 --------------------------------
@@ -65,19 +80,37 @@
     drawMap(state.canvas, state.ctx, state.images);
   }
 
+  // 画像をまとめて読み込み、完了したら callback を呼ぶ関数
+  // 読み込み失敗時にはエラー内容を表示して続行します
   function loadImages(manifest, callback) {
     const keys = Object.keys(manifest);
     const images = {};
     let loaded = 0;
+
+    // すべての画像のロードが終わったか確認するヘルパー
+    const checkAllLoaded = () => {
+      if (loaded === keys.length) {
+        callback(images);
+      }
+    };
+
     keys.forEach(key => {
       const img = new Image();
       img.src = manifest[key];
+
+      // 読み込みが完了した場合
       img.onload = () => {
         loaded++;
-        if (loaded === keys.length) {
-          callback(images);
-        }
+        checkAllLoaded();
       };
+
+      // 読み込みに失敗した場合
+      img.onerror = () => {
+        console.error(`画像の読み込みに失敗しました: ${manifest[key]}`);
+        loaded++;
+        checkAllLoaded();
+      };
+
       images[key] = img;
     });
   }
@@ -86,9 +119,7 @@
   function drawMap(canvas, ctx, images) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // キャンバス全体を黒で塗りつぶして背景色を固定
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // 余計な背景塗りつぶしを行わず、タイルを直接描画
 
     // カメラの位置に合わせて原点を移動
     ctx.save();
@@ -108,6 +139,10 @@
     // プレイヤーを一番上に描画
     if (images['character_01']) {
       ctx.drawImage(images['character_01'], player.x, player.y, TILE_SIZE, TILE_SIZE);
+    } else {
+      // 素材がない場合は赤い四角で代用
+      ctx.fillStyle = 'red';
+      ctx.fillRect(player.x, player.y, TILE_SIZE, TILE_SIZE);
     }
 
     ctx.restore();
@@ -126,7 +161,8 @@
     // キャンバス幅からタイル1枚のサイズを計算
     TILE_SIZE = canvas.width / mapData[0].length;
     // プレイヤーの初期座標もタイルサイズに合わせて設定
-    player.x = 4 * TILE_SIZE;
+    // 十字路の中央に配置する
+    player.x = 5 * TILE_SIZE;
     player.y = 5 * TILE_SIZE;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
@@ -145,15 +181,19 @@
       if (!state.images) return; // 画像読み込み前は無視
       switch (e.key) {
         case 'ArrowLeft':
+          e.preventDefault(); // ブラウザのスクロールを無効化
           movePlayer(-player.speed, 0, state);
           break;
         case 'ArrowRight':
+          e.preventDefault();
           movePlayer(player.speed, 0, state);
           break;
         case 'ArrowUp':
+          e.preventDefault();
           movePlayer(0, -player.speed, state);
           break;
         case 'ArrowDown':
+          e.preventDefault();
           movePlayer(0, player.speed, state);
           break;
       }

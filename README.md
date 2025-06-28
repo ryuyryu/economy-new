@@ -2,7 +2,7 @@
 # economy-new
 # 今やっていること
 キャラ＆マップ実装中
-
+kenneyの素材を使ってマップを制作中Tailedを使って一枚のマップタイルシートをつくる
 実際のスタートページは `public/index.html` です。ルートの `index.html` はこのページへリダイレクトします。
 # 🧠 コンサルタント経済シミュレーションゲーム（開発中）
 
@@ -52,6 +52,13 @@
 - [ ] 仮想経済データの動的変化処理
 
 ## 使い方
+まず以下のスクリプトを実行し、画像素材を展開してください。
+
+1. `bash scripts/unpack_phase1.sh`
+2. `bash scripts/unpack_phase2.sh`
+
+これにより `public/images/material` と `public/images/material2` フォルダに画像が配置されます。
+
 ブラウザで `public/index.html` を開き、画面をタップするとゲームがスタートします。
 ゲーム画面では5〜7秒ごとにターンが進み、上部のステータスがリアルタイムに更新されます。
 右上の「☰」ボタンでメニューを開閉でき、まれに発生するイベントは画面右上にトースト表示されます。
@@ -132,49 +139,31 @@ npm test     # Jest でテストを実行
 2. 項目をクリックすると右側に詳細が展開され、同時に既読になります。
 3. 閉じるボタンで詳細パネルを閉じることができます。
 
+4. **スマホから利用している場合は、通知をタップした時点で詳細が全画面に拡大表示されます。拡大・縮小ボタンは表示されず、PC版のみ操作できます。**
+
+
 ## 🌆 都市マップ素材
 
 ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
-`public/images/` フォルダーには以下の ZIP ファイルを配置しています。
+`public/images/` フォルダーには以下の ZIP ファイルを配置しており、
+スクリプト実行後に `material` と `material2` ディレクトリへ展開されます。
 
 ```
 public/images/
 ├─ kenney_city-kit-commercial_20.zip
 └─ kenney_roguelike-modern-city.zip
 ```
-サイズが大きいため、5 段階に分けて解凍するスクリプトを用意しています。
+サイズが大きいため、2 段階に分けて解凍するスクリプトを用意しています。
 
-まずは以下のコマンドでステップ 1 を実行し、ライセンスファイルのみを展開します。
+以下のコマンドを順に実行してください。
 
 ```bash
-bash scripts/unpack_step1.sh
-```
+# フェーズ1: ライセンスと主要画像を展開
+bash scripts/unpack_phase1.sh
 
-続けてステップ 2 〜 5 を順に実行してください。
-
-#### ステップ 2：主要画像の展開
-```bash
-bash scripts/unpack_step2.sh
+# フェーズ2: 残り素材を展開しZIPを削除
+bash scripts/unpack_phase2.sh
 ```
-`Tilemap/` や `Tiles/`、city-kit の基本 PNG が `images/` 以下に展開されます。
-
-#### ステップ 3：オプション素材の展開
-```bash
-bash scripts/unpack_step3.sh
-```
-残りの 3D モデルやテキストファイルが展開されます。
-
-#### ステップ 4：不要ファイルの削除
-```bash
-bash scripts/unpack_step4.sh
-```
-`Sample.png` や `Preview*.png`、`.url` ファイルを削除して整理します。
-
-#### ステップ 5：ZIP の削除（任意）
-```bash
-bash scripts/unpack_step5.sh
-```
-アーカイブを削除してディスク容量を節約します。
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
 
@@ -182,25 +171,13 @@ bash scripts/unpack_step5.sh
 
 ```
 images/
-├─ city-kit/
-│  ├─ Previews/
-│  └─ Models/...
-├─ roguelike/
-│  ├─ Tilemap/
+├─ material/
 │  └─ Tiles/
+├─ material2/
+│  └─ Previews/
 ```
 
-### city-kit（アイソメトリック）
-
-| ファイル名 | 内容 | 使用用途 |
-|------------|------|----------|
-| `Building_Background.png` | 建物のベース背景 | 建物構成用 |
-| `Road_Straight.png` | 道路（直線） | 道路構成用 |
-| `Tree_01.png` | 街路樹 | 自然装飾用 |
-| `Car_Blue.png` | 車両 | 交通表現用 |
-| `People_01.png` | 歩行キャラ | キャラクター表示用 |
-
-### roguelike（トップダウン）
+### material（タイルセット）
 
 | ファイル名 | 内容 | 使用用途 |
 |------------|------|----------|
@@ -209,6 +186,16 @@ images/
 | `tile_0025.png` | 建物の壁 | 壁・構造物 |
 | `tile_0033.png` | 芝生 | 公園・緑地帯 |
 | `tile_0040.png` | 横断歩道 | 歩行者用通路 |
+
+### material2（建物プレビュー）
+
+| ファイル名 | 内容 | 使用用途 |
+|------------|------|----------|
+| `building-a.png` | 建物A | マップ用建物 |
+| `building-b.png` | 建物B | マップ用建物 |
+| `building-c.png` | 建物C | マップ用建物 |
+| `building-d.png` | 建物D | マップ用建物 |
+| `detail-parasol-a.png` | 傘付きパラソル | キャラクター装飾 |
 
 
 ---
