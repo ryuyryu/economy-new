@@ -1,28 +1,31 @@
-(function () {
-  // タイル1枚の表示サイズ(px)を計算時に決めるため変数で保持
-  let TILE_SIZE = 32;
-  // もとの10x10マップを道路と草だけで構成する
-  const baseMap = Array.from({ length: 10 }, (_, y) =>
-    Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
-  );
-  // プレイヤー初期位置周辺は広場としてアスファルトに変更
-  for (let y = 4; y <= 6; y++) {
-    for (let x = 4; x <= 6; x++) {
-      baseMap[y][x] = 'asphalt';
-    }
-  }
+// ------------------------------------------------------------
+// map_canvas.js
+// キャンバス上にマップとプレイヤーを表示するモジュール
+// ------------------------------------------------------------
 
-  // baseMap を20倍に拡大して 200×200 のマップを作成
-  const SCALE = 20;
+(function () {
+  // --- マップ定義 ------------------------------------------
+  // 1タイルのサイズは常に 16px とします
+  const TILE_SIZE = 16;
+
+  // マップの横・縦タイル数
+  // 64x64 なので全体で 4096 タイル分のマップを生成します
+  const MAP_WIDTH = 64;
+  const MAP_HEIGHT = 64;
+
+  // tileManifest から番号付きタイル一覧を取得
+  const tileKeys = Object.keys(tileManifest).filter(k => k.startsWith('tile_'));
+
+  // マップデータ配列を作成し、できるだけ多くのタイルを順番に配置
   const mapData = [];
-  for (let i = 0; i < SCALE; i++) {
-    baseMap.forEach(row => {
-      const expanded = [];
-      for (let j = 0; j < SCALE; j++) {
-        expanded.push(...row);
-      }
-      mapData.push(expanded);
-    });
+  let index = 0;
+  for (let y = 0; y < MAP_HEIGHT; y++) {
+    const row = [];
+    for (let x = 0; x < MAP_WIDTH; x++) {
+      row.push(tileKeys[index % tileKeys.length]);
+      index++;
+    }
+    mapData.push(row);
   }
 
   // --- プレイヤー情報 ------------------------------------
@@ -40,16 +43,9 @@
   let cameraX = 0;
   let cameraY = 0;
 
-  // --- 通行不可マップの作成 ------------------------------
-  // 当たり判定に備え、通行できないタイルを true とする
-  const blockedTiles = [
-    'building_wall',
-    'building-a', 'building-b', 'building-c', 'building-d',
-    'building-e', 'building-f', 'building-g', 'building-h',
-    'building-i', 'building-j', 'building-k', 'building-l',
-    'building-m', 'building-n'
-  ];
-  const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
+  // --- 通行不可タイル定義 ------------------------------
+  // 今回は全て通行可能とし、障害物マップは作成しません
+  const obstacleMap = mapData.map(row => row.map(() => false));
 
   // --- プレイヤー移動処理 --------------------------------
   function movePlayer(dx, dy, state) {
@@ -158,12 +154,9 @@
     // CSSでサイズを指定しているため、実際の描画サイズを取得して設定
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
-    // キャンバス幅からタイル1枚のサイズを計算
-    TILE_SIZE = canvas.width / mapData[0].length;
-    // プレイヤーの初期座標もタイルサイズに合わせて設定
-    // 十字路の中央に配置する
-    player.x = 5 * TILE_SIZE;
-    player.y = 5 * TILE_SIZE;
+    // プレイヤーの初期座標をマップ中央に配置
+    player.x = (MAP_WIDTH * TILE_SIZE) / 2;
+    player.y = (MAP_HEIGHT * TILE_SIZE) / 2;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
