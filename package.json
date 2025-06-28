@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "http-server public -p 8080"
+    "start": "http-server public -p 8080",
+    "unpack": "node scripts/unpack_assets.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "chart.js": "^4.4.1",
-    "react-chartjs-2": "^5.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "unzipper": "^0.10.11"
   }
 }
 
