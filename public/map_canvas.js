@@ -97,6 +97,10 @@
     keys.forEach(key => {
       const img = new Image();
       img.src = manifest[key];
+      // spriteInfo があれば説明を紐付けておく
+      if (typeof spriteInfo !== 'undefined' && spriteInfo[key]) {
+        img.desc = spriteInfo[key].desc;
+      }
 
       // 読み込みが完了した場合
       img.onload = () => {
@@ -150,6 +154,7 @@
 
   function initMapCanvas() {
     const canvas = document.getElementById('mapCanvas');
+    // 必要なデータがなければ処理しない
     if (!canvas || typeof tileManifest === 'undefined') {
       return;
     }
@@ -167,13 +172,23 @@
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
-    usedKeys.forEach(k => { if (tileManifest[k]) manifest[k] = tileManifest[k]; });
+    const descriptions = {};
+    usedKeys.forEach(k => {
+      if (tileManifest[k]) {
+        manifest[k] = tileManifest[k];
+        // spriteInfo があれば説明も取得
+        if (typeof spriteInfo !== 'undefined' && spriteInfo[k]) {
+          descriptions[k] = spriteInfo[k].desc;
+        }
+      }
+    });
 
-    const state = { canvas, ctx, images: null };
+    const state = { canvas, ctx, images: null, descriptions };
 
     loadImages(manifest, (images) => {
       state.images = images;
       drawMap(canvas, ctx, images);
+      console.log('使用タイル情報', descriptions);
     });
 
     // キー入力でプレイヤーを移動

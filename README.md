@@ -192,6 +192,25 @@ images/
 | `building-d.png` | 建物D | マップ用建物 |
 | `detail-parasol-a.png` | 傘付きパラソル | キャラクター装飾 |
 
+### spriteInfo.js について
+
+`public/spriteInfo.js` には各スプライトの日本語説明をまとめています。キーは `tileManifest.js` と同じ名前を使っているため、マップ生成時に参照できます。
+
+```javascript
+// 例
+const spriteInfo = {
+  asphalt: { file: 'images/sprites/tile_0001.png', desc: 'アスファルト舗装' }
+};
+```
+
+新しい画像を追加した場合は以下の手順で登録してください。
+
+1. `public/images/sprites` に画像を配置し、`tileManifest.js` にパスを追記します。
+2. 同じキーを `spriteInfo.js` に追加し、`desc` に短い説明を書きます。
+3. `game_screen.html` などで `spriteInfo.js` が読み込まれているか確認します。
+
+これにより、マップ生成時に使用タイルの一覧がコンソールへ表示され、選択ミスを防げます。
+
 
 ---
 
