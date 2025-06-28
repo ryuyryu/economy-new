@@ -57,7 +57,7 @@
 1. `bash scripts/unpack_phase1.sh`
 2. `bash scripts/unpack_phase2.sh`
 
-これにより `public/images/material` と `public/images/material2` フォルダに画像が配置されます。
+これにより `public/images/sprites` フォルダに画像がまとめて展開されます。
 
 ブラウザで `public/index.html` を開き、画面をタップするとゲームがスタートします。
 ゲーム画面では5〜7秒ごとにターンが進み、上部のステータスがリアルタイムに更新されます。
@@ -144,7 +144,7 @@ npm test     # Jest でテストを実行
 
 ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
 `public/images/` フォルダーには以下の ZIP ファイルを配置しており、
-スクリプト実行後に `material` と `material2` ディレクトリへ展開されます。
+スクリプト実行後に `sprites` ディレクトリへ展開されます。
 
 ```
 public/images/
@@ -169,13 +169,10 @@ bash scripts/unpack_phase2.sh
 
 ```
 images/
-├─ material/
-│  └─ Tiles/
-├─ material2/
-│  └─ Previews/
+└─ sprites/
 ```
 
-### material（タイルセット）
+### sprites ディレクトリの主なタイル
 
 | ファイル名 | 内容 | 使用用途 |
 |------------|------|----------|
@@ -185,7 +182,7 @@ images/
 | `tile_0033.png` | 芝生 | 公園・緑地帯 |
 | `tile_0040.png` | 横断歩道 | 歩行者用通路 |
 
-### material2（建物プレビュー）
+### 建物プレビュー画像
 
 | ファイル名 | 内容 | 使用用途 |
 |------------|------|----------|
