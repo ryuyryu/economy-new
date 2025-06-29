@@ -189,7 +189,22 @@ images/
 | `building-b.png` | 建物B | マップ用建物 |
 | `building-c.png` | 建物C | マップ用建物 |
 | `building-d.png` | 建物D | マップ用建物 |
+
 | `detail-parasol-a.png` | 傘付きパラソル | キャラクター装飾 |
+
+### 素材プレビュー
+
+以下は `public/images/sprites` に含まれる代表的なタイルの一部です。画像は縮小表示されます。
+
+<p>
+  <img src="public/images/sprites/tile_0001.png" width="64" alt="tile_0001" />
+  <img src="public/images/sprites/tile_0012.png" width="64" alt="tile_0012" />
+  <img src="public/images/sprites/tile_0025.png" width="64" alt="tile_0025" />
+  <img src="public/images/sprites/tile_0033.png" width="64" alt="tile_0033" />
+  <img src="public/images/sprites/tile_0040.png" width="64" alt="tile_0040" />
+  <img src="public/images/sprites/building-a.png" width="64" alt="building-a" />
+  <img src="public/images/sprites/building-b.png" width="64" alt="building-b" />
+</p>
 
 ### spriteInfo.js について
 
