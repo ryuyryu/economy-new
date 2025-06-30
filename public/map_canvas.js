@@ -110,7 +110,6 @@
   }
 
   // マップ全体を描画する関数
-  // マップ全体を描画する関数
   function drawMap(canvas, ctx, getImage) {
     // いったん画面をクリア
     ctx.clearRect(0, 0, canvas.width, canvas.height);
