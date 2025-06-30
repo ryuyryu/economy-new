@@ -85,17 +85,7 @@
   const prevStatsRef = useRef(stats);
   const [diffStats, setDiffStats] = useState({ cpi: 0, unemp: 0, gdp: 0, rate: 0 });
 
-  // -----------------------------
-  // 現在の指標と需給・金利から次ターンの指標を計算する補助関数
-  // -----------------------------
-  const calcNextStats = () => {
-    // updateEconomy 関数が利用可能か確認し、無ければ現在値を返す
-    if (typeof updateEconomy === 'function') {
-      return updateEconomy(stats, { demand, supply, policyRate });
-    }
-    return stats;
-  };
-
+  // 需要・供給・政策金利の状態を管理
   const [demand, setDemand] = useState(5);
   const [supply, setSupply] = useState(5);
   // 政策金利の初期値
