@@ -130,9 +130,8 @@ body {
 
 /* マップ用キャンバスを親要素いっぱいに広げる */
 canvas#mapCanvas {
-  width: 100%;
-  height: 100%;
-  flex-grow: 1;
+  /* キャンバスサイズはスクリプト側で指定するため CSS では広げない */
+  image-rendering: pixelated;
 }
 
 

@@ -426,9 +426,9 @@
     // ヘッダーと指標表示の下にマップCanvasを配置する
     React.createElement('canvas', {
       id: 'mapCanvas',
-      // 高さ可変にするため flex-grow を付与し、幅いっぱいに広げる
-      // 背景色を付けず透過させる
-      className: 'flex-grow w-full border'
+      // 高さ可変にするため flex-grow を付与し、
+      // 背景色を付けず透過させる。境界線も付けない
+      className: 'flex-grow'
     }),
     activeIndicator
       ? React.createElement(IndicatorDetailModal, {
