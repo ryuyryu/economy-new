@@ -145,9 +145,11 @@ npm test     # Jest でテストを実行
 
 ゲーム内マップで利用する画像パーツは Kenney 氏の素材を使用します。
 これらは **CC0 ライセンス** で公開されており、公式サイト [Kenney](https://www.kenney.nl/) から入手できます。
-ライセンス文書は `public/images/city-kit/License.txt` など各フォルダに配置してあるので、詳細はそちらをご覧ください。
-`public/images/` フォルダーには以下の ZIP ファイルを配置しており、
-スクリプト実行後に `sprites` ディレクトリへ展開されます。
+ライセンス文書は `public/images/city-kit/License.txt` など各フォルダに配置してあります。
+画像素材そのものは展開後にすべて `public/images/sprites` フォルダへまとめられるため、
+旧来使用していた `material` `material2` ディレクトリは利用しません。
+下記の ZIP ファイルを配置したうえでスクリプトを実行すると、
+すべての画像が `sprites` ディレクトリに展開されます。
 
 ```
 public/images/
