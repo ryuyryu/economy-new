@@ -166,6 +166,12 @@ npm run unpack
 
 展開後、`public/tileManifest.js` で各画像を参照できるようになります。
 
+さらに以下のコマンドを実行すると、`tileManifest.js` と `spriteInfo.js` が自動生成されます。
+
+```bash
+npm run generate-manifest
+```
+
 主なディレクトリ構成例:
 
 ```
@@ -219,11 +225,13 @@ const spriteInfo = {
 };
 ```
 
-新しい画像を追加した場合は以下の手順で登録してください。
+新しい画像を追加したら、次のコマンドを実行するだけで `tileManifest.js` と `spriteInfo.js` が再生成されます。
 
-1. `public/images/sprites` に画像を配置し、`tileManifest.js` にパスを追記します。
-2. 同じキーを `spriteInfo.js` に追加し、`desc` に短い説明を書きます。
-3. `game_screen.html` などで `spriteInfo.js` が読み込まれているか確認します。
+```bash
+npm run generate-manifest
+```
+
+その後、`game_screen.html` などで `spriteInfo.js` が読み込まれているか確認してください。
 
 これにより、マップ生成時に使用タイルの一覧がコンソールへ表示され、選択ミスを防げます。
 
