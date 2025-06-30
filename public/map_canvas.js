@@ -1,28 +1,48 @@
 (function () {
-  // タイル1枚の表示サイズ(px)を計算時に決めるため変数で保持
-  let TILE_SIZE = 32;
-  // もとの10x10マップを道路と草だけで構成する
-  const baseMap = Array.from({ length: 10 }, (_, y) =>
-    Array.from({ length: 10 }, (_, x) => (x === 5 || y === 5 ? 'road_horizontal' : 'grass'))
-  );
-  // プレイヤー初期位置周辺は広場としてアスファルトに変更
-  for (let y = 4; y <= 6; y++) {
-    for (let x = 4; x <= 6; x++) {
-      baseMap[y][x] = 'asphalt';
-    }
-  }
+  // ---------------------------------------------
+  // 基本設定
+  // ---------------------------------------------
+  // タイル1枚のサイズは 16px 固定
+  const TILE_SIZE = 16;
+  // キャラクターの表示サイズは 10px 四方
+  const CHAR_SIZE = 10;
 
-  // baseMap を20倍に拡大して 200×200 のマップを作成
-  const SCALE = 20;
+  // マップ全体のタイル数（縦横）
+  const MAP_SIZE = 40;
+  // 道路を敷く間隔。都心らしく碁盤目状の道路にする
+  const ROAD_INTERVAL = 8;
+
+  // --- タイル種別の準備 ------------------------
+  // tileManifest から建物用・地面用タイルを抽出
+  // ファイル名ルールを利用して簡単に分類する
+  const buildingTiles = Object.keys(tileManifest).filter((k) =>
+    k.startsWith('building')
+  );
+  const groundTiles = Object.keys(tileManifest).filter((k) => k.startsWith('tile_'));
+
+  // 道路用タイルは地面用の中から数枚を指定（手動で選定）
+  // 横道路として tile_0012、横断歩道として tile_0040 を使用
+  const roadTiles = ['tile_0012', 'tile_0040'];
+
+  // --- マップデータ生成 --------------------------
   const mapData = [];
-  for (let i = 0; i < SCALE; i++) {
-    baseMap.forEach(row => {
-      const expanded = [];
-      for (let j = 0; j < SCALE; j++) {
-        expanded.push(...row);
+  for (let y = 0; y < MAP_SIZE; y++) {
+    const row = [];
+    for (let x = 0; x < MAP_SIZE; x++) {
+      // 道路の位置かどうかを判定
+      if (x % ROAD_INTERVAL === ROAD_INTERVAL / 2 || y % ROAD_INTERVAL === ROAD_INTERVAL / 2) {
+        // 道路は複数タイルからランダムに選ぶ
+        row.push(roadTiles[Math.floor(Math.random() * roadTiles.length)]);
+      } else {
+        // それ以外は建物か地面をランダム配置（建物多めで都心感を出す）
+        if (Math.random() < 0.7) {
+          row.push(buildingTiles[Math.floor(Math.random() * buildingTiles.length)]);
+        } else {
+          row.push(groundTiles[Math.floor(Math.random() * groundTiles.length)]);
+        }
       }
-      mapData.push(expanded);
-    });
+    }
+    mapData.push(row);
   }
 
   // --- プレイヤー情報 ------------------------------------
@@ -42,13 +62,8 @@
 
   // --- 通行不可マップの作成 ------------------------------
   // 当たり判定に備え、通行できないタイルを true とする
-  const blockedTiles = [
-    'building_wall',
-    'building-a', 'building-b', 'building-c', 'building-d',
-    'building-e', 'building-f', 'building-g', 'building-h',
-    'building-i', 'building-j', 'building-k', 'building-l',
-    'building-m', 'building-n'
-  ];
+  // 建物タイルはすべて通行不可とする
+  const blockedTiles = buildingTiles.concat('building_wall');
   const obstacleMap = mapData.map(row => row.map(tile => blockedTiles.includes(tile)));
 
   // --- プレイヤー移動処理 --------------------------------
@@ -133,11 +148,12 @@
     // プレイヤーを一番上に描画
     const charImg = getImage('character_01');
     if (charImg) {
-      ctx.drawImage(charImg, player.x, player.y, TILE_SIZE, TILE_SIZE);
+      // キャラクター画像があれば 10px 四方で描画
+      ctx.drawImage(charImg, player.x, player.y, CHAR_SIZE, CHAR_SIZE);
     } else {
-      // 素材がない場合は赤い四角で代用
-      ctx.fillStyle = 'red';
-      ctx.fillRect(player.x, player.y, TILE_SIZE, TILE_SIZE);
+      // 画像がない場合は黒い四角で代用
+      ctx.fillStyle = 'black';
+      ctx.fillRect(player.x, player.y, CHAR_SIZE, CHAR_SIZE);
     }
 
     ctx.restore();
@@ -151,15 +167,13 @@
     }
 
     const ctx = canvas.getContext('2d');
-    // CSSでサイズを指定しているため、実際の描画サイズを取得して設定
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-    // キャンバス幅からタイル1枚のサイズを計算
-    TILE_SIZE = canvas.width / mapData[0].length;
-    // プレイヤーの初期座標もタイルサイズに合わせて設定
-    // 十字路の中央に配置する
-    player.x = 5 * TILE_SIZE;
-    player.y = 5 * TILE_SIZE;
+    // キャンバスサイズはタイル数 × TILE_SIZE
+    canvas.width = mapData[0].length * TILE_SIZE;
+    canvas.height = mapData.length * TILE_SIZE;
+
+    // プレイヤー初期位置はマップ中央付近
+    player.x = Math.floor(MAP_SIZE / 2) * TILE_SIZE;
+    player.y = Math.floor(MAP_SIZE / 2) * TILE_SIZE;
 
     const usedKeys = [...new Set(mapData.flat().concat('character_01'))];
     const manifest = {};
