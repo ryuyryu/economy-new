@@ -3,38 +3,71 @@
   let TILE_SIZE = 32;
 
   // ---------------------------------------------------------
-  // ランダムに地面だけでマップを生成する関数
+  // 迷路風マップを生成する関数
   // ---------------------------------------------------------
   function generateMap(width, height) {
     // 使用するタイルキー
     const TILES = {
-      asphalt: 'tile_0001',   // アスファルト
-      road: 'tile_0012',      // 道路 (横向き想定)
-      grass: 'tile_0033',     // 芝生
-      cross: 'tile_0040'      // 横断歩道
+      asphalt: 'tile_0001',   // アスファルト (左側で使用)
+      grass: 'tile_0033',     // 芝生 (右側で使用)
+      path: 'tile_0040'       // 迷路の通路 (横断歩道を流用)
     };
 
+    // ----- 迷路データを作成 ----------------------------------
+    // 壁(true)/通路(false)を表す2次元配列を生成
+    const maze = Array.from({ length: height }, () => Array(width).fill(true));
+
+    // 幅高さが偶数の場合は1つ減らしてアルゴリズムを単純化
+    const mazeW = width % 2 === 0 ? width - 1 : width;
+    const mazeH = height % 2 === 0 ? height - 1 : height;
+
+    // スタックを使った再帰的バックトラック法で迷路を生成
+    const stack = [[1, 1]];
+    maze[1][1] = false;
+
+    while (stack.length) {
+      const [cx, cy] = stack[stack.length - 1];
+      const dirs = [
+        [0, -2], // 上
+        [2, 0],  // 右
+        [0, 2],  // 下
+        [-2, 0]  // 左
+      ].sort(() => Math.random() - 0.5); // ランダム並び替え
+
+      let carved = false;
+      for (const [dx, dy] of dirs) {
+        const nx = cx + dx;
+        const ny = cy + dy;
+        if (nx > 0 && nx < mazeW && ny > 0 && ny < mazeH && maze[ny][nx]) {
+          maze[cy + dy / 2][cx + dx / 2] = false; // 壁を壊して通路に
+          maze[ny][nx] = false;
+          stack.push([nx, ny]);
+          carved = true;
+          break;
+        }
+      }
+      if (!carved) stack.pop();
+    }
+
+    // 中央を少し広く空ける
+    const centerX = Math.floor(width / 2);
+    const centerY = Math.floor(height / 2);
+    for (let y = centerY - 2; y <= centerY + 2; y++) {
+      for (let x = centerX - 2; x <= centerX + 2; x++) {
+        if (maze[y] && typeof maze[y][x] !== 'undefined') {
+          maze[y][x] = false;
+        }
+      }
+    }
+
+    // ----- タイルマップへ変換 --------------------------------
     const map = [];
     for (let y = 0; y < height; y++) {
       const row = [];
       for (let x = 0; x < width; x++) {
-        // 中央付近は広場としてアスファルトで固定
-        if (
-          x >= Math.floor(width / 2) - 3 &&
-          x <= Math.floor(width / 2) + 2 &&
-          y >= Math.floor(height / 2) - 3 &&
-          y <= Math.floor(height / 2) + 2
-        ) {
-          row.push(TILES.asphalt);
-          continue;
-        }
-
-        // それ以外はランダムにタイルを決定
-        const r = Math.random();
-        if (r < 0.1) row.push(TILES.road);
-        else if (r < 0.2) row.push(TILES.cross);
-        else if (r < 0.6) row.push(TILES.asphalt);
-        else row.push(TILES.grass);
+        // 右半分は芝生、左半分はアスファルト
+        const base = x < Math.floor(width / 2) ? TILES.asphalt : TILES.grass;
+        row.push(maze[y][x] ? base : TILES.path);
       }
       map.push(row);
     }
