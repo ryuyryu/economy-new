@@ -247,6 +247,21 @@ npm run generate-manifest
 
 これにより、マップ生成時に使用タイルの一覧がコンソールへ表示され、選択ミスを防げます。
 
+### 自作マップの読み込み
+
+`public/custom_map_sample.js` を参考に、`window.customMapData` という2次元配列を
+定義したファイルを用意します。`game_screen.html` に追加で読み込むことで、ランダム
+生成ではなくこの配列を使ってマップを描画できます。
+
+```html
+<!-- 例: 自作マップを読み込む -->
+<script src="custom_map_sample.js"></script>
+<script src="map_canvas.js"></script>
+```
+
+配列内には `tileManifest.js` に記載されているキー名をそのまま書きます。自由にタイル
+を並べられるので、思い通りのマップを作成できます。
+
 
 ---
 
