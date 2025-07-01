@@ -41,10 +41,23 @@
     return map;
   }
 
-  // 30×30 の不規則な街マップを生成
-  const MAP_WIDTH = 30;
-  const MAP_HEIGHT = 30;
-  const mapData = generateMap(MAP_WIDTH, MAP_HEIGHT);
+  // ---------------------------------------------------------
+  // マップデータの準備
+  // ---------------------------------------------------------
+  // デフォルトは 30×30 のランダム生成
+  let MAP_WIDTH = 30;
+  let MAP_HEIGHT = 30;
+  let mapData;
+
+  // もし window.customMapData が存在すればそれを利用
+  if (typeof window !== 'undefined' && Array.isArray(window.customMapData)) {
+    mapData = window.customMapData;
+    MAP_HEIGHT = mapData.length;
+    MAP_WIDTH = mapData[0]?.length || 0;
+  } else {
+    // 無ければランダム生成
+    mapData = generateMap(MAP_WIDTH, MAP_HEIGHT);
+  }
 
   // --- プレイヤー情報 ------------------------------------
   // プレイヤーの座標(px単位)と移動速度を保持
