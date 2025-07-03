@@ -40,7 +40,7 @@
         'div',
         {
           className:
-            'relative mx-auto max-w-3xl bg-[#f7f5f1] border border-gray-300 shadow-lg rounded-xl px-10 py-8 hover:bg-[#f9f8f6]'
+            'relative mx-auto max-w-3xl bg-gradient-to-b from-slate-800 to-slate-700 text-white border border-slate-600 shadow-lg rounded-xl px-10 py-8'
         },
         // 左側の縦ライン
         h('div', {
@@ -70,7 +70,7 @@
           // 右側詳細
           h(
             'div',
-            { className: 'w-full md:w-2/5 bg-white rounded-xl shadow-inner p-4 space-y-4' },
+            { className: 'w-full md:w-2/5 bg-slate-900/60 rounded-xl shadow-inner p-4 space-y-4 border border-slate-500 text-slate-200' },
             h(
               'h2',
               { className: `text-3xl font-bold ${diffColor}` },
@@ -80,7 +80,7 @@
             correlation !== null && correlLabel
               ? h(
                   'div',
-                  { className: 'bg-gray-50 rounded-md p-3 text-sm' },
+                  { className: 'bg-slate-800/70 rounded-md p-3 text-sm' },
                   `${correlLabel}との相関: ${correlation.toFixed(2)}`
                 )
               : null,
@@ -88,7 +88,7 @@
           )
         ),
         comment
-          ? h('div', { className: 'border-t mt-6 pt-3 text-sm text-gray-600 italic' }, comment)
+          ? h('div', { className: 'border-t border-slate-500 mt-6 pt-3 text-sm text-slate-300 italic' }, comment)
           : null
       )
     );
