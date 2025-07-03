@@ -6,7 +6,8 @@
   <title>経済カード例</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Noto Sans JP のみを読み込み、ECOBOX と同じフォントを使用 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="globals.css">
   <!-- React と ReactDOM (ローカル) -->
   <script src="libs/react.development.js"></script>
@@ -19,7 +20,7 @@
   <script type="text/babel" src="SparkChart.jsx"></script>
   <script type="text/babel" src="EconomicCard.jsx"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="bg-gray-100 flex items-center justify-center h-screen font-sans">
   <div id="root"></div>
   <script type="text/babel">
     // EconomicCardコンポーネントを画面に描画
