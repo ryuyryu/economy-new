@@ -21,7 +21,8 @@ const EconomicCard = () => {
 
   return (
     // ECOBOX と同じダーク系のデザインに変更
-    <div className="p-4 bg-gradient-to-b from-slate-800 to-slate-700 text-white rounded-xl shadow-md border border-slate-600 w-full max-w-md">
+    // アクセントとして境界線に cyan 系の色を追加
+    <div className="p-4 font-sans bg-gradient-to-b from-slate-800 to-slate-700 text-white rounded-xl shadow-md border-2 border-cyan-400 w-full max-w-md">
       {/* タイトル */}
       <p className="text-sm font-bold mb-2">CPI（消費者物価指数）</p>
       {/* スパークラインと使い方メモ */}
