@@ -32,11 +32,12 @@
       className: 'absolute inset-0 bg-black/40',
       onClick: props.onClose,
     }),
-    // カード本体
+    // カード本体 - ECOBOX 風のダークデザインに変更
     React.createElement(
       'div',
       {
-        className: 'relative bg-white rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10 flex flex-col',
+        className:
+          'relative bg-gradient-to-b from-slate-800 to-slate-700 text-white border border-slate-600 rounded-xl shadow-lg w-11/12 h-5/6 max-w-none p-4 space-y-3 z-10 flex flex-col',
       },
       React.createElement(
         'button',
@@ -55,14 +56,14 @@
         { className: 'flex items-center mt-2' },
         React.createElement(
           'div',
-          { className: 'flex-shrink-0 w-1/3 pr-2 border-r border-gray-300' },
+        { className: 'flex-shrink-0 w-1/3 pr-2 border-r border-slate-500' },
           React.createElement(Sparkline, { history: props.history })
         ),
         React.createElement(
           'div',
           {
             className:
-              'usage-note flex-1 text-sm text-gray-600 ml-2 p-2 rounded-lg shadow-inner border border-gray-300 bg-gray-50',
+              'usage-note flex-1 text-sm text-slate-200 ml-2 p-2 rounded-lg shadow-inner border border-slate-500 bg-slate-900/40',
             dangerouslySetInnerHTML: { __html: props.desc },
           }
         )
@@ -70,7 +71,7 @@
       // スパークライン下部に統計値を表示
       React.createElement(
         'div',
-        { className: 'text-xs ml-2 mt-1 space-y-1' },
+        { className: 'text-xs ml-2 mt-1 space-y-1 text-slate-300' },
         React.createElement(
           'p',
           { className: 'max-value' },

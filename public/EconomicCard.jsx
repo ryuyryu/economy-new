@@ -20,21 +20,22 @@ const EconomicCard = () => {
     </p>`;
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-md w-full max-w-md">
+    // ECOBOX と同じダーク系のデザインに変更
+    <div className="p-4 bg-gradient-to-b from-slate-800 to-slate-700 text-white rounded-xl shadow-md border border-slate-600 w-full max-w-md">
       {/* タイトル */}
-      <p className="text-sm font-bold text-gray-600 mb-2">CPI（消費者物価指数）</p>
+      <p className="text-sm font-bold mb-2">CPI（消費者物価指数）</p>
       {/* スパークラインと使い方メモ */}
       <div className="flex items-start">
-        <div className="w-1/3 pr-2 border-r border-gray-300">
+        <div className="w-1/3 pr-2 border-r border-slate-500">
           <SparkChart data={values} labels={labels} />
         </div>
         <div
-          className="usage-note ml-2 flex-1 text-sm text-gray-600 p-2 rounded-lg shadow-inner border border-gray-300 bg-gray-50"
+          className="usage-note ml-2 flex-1 text-sm text-slate-200 p-2 rounded-lg shadow-inner border border-slate-500 bg-slate-900/40"
           dangerouslySetInnerHTML={{ __html: usageHTML }}
         />
       </div>
       {/* 補足説明 */}
-      <p className="text-xs text-gray-500 mt-2">前月比 +2.3%</p>
+      <p className="text-xs text-slate-300 mt-2">前月比 +2.3%</p>
     </div>
   );
 };
