@@ -83,11 +83,6 @@
       React.createElement('text', { x: size.w - 24, y: size.h - 2, fontSize: '10', fill: '#555' }, '時間'),
       hoverInfo && React.createElement('circle', { r: 4, className: 'sparkline-dot', style: { transform: `translate(${hoverInfo.x}px, ${hoverInfo.y}px)` } })
     ),
-    hoverInfo && React.createElement(
-      'div',
-      { className: 'sparkline-tooltip', style: { left: `${hoverInfo.x}px` } },
-      history[hoverInfo.index].toFixed(1)
-    ),
     React.createElement(
       'div',
       { className: 'sparkline-stats flex justify-between text-xs text-gray-500 mt-1' },
