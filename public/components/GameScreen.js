@@ -108,6 +108,18 @@
   }, [messages]);
 
   // -----------------------------
+  // 主人公のスキル状態
+  // -----------------------------
+  // 商談力・計算力・運 の初期値を1に設定
+  const [playerSkills, setPlayerSkills] = useState({
+    negotiation: 1,
+    calc: 1,
+    luck: 1
+  });
+  // スキルリストの表示状態
+  const [showSkills, setShowSkills] = useState(false);
+
+  // -----------------------------
   // マップCanvasの初期化
   // -----------------------------
   // React で GameScreen が描画された後に呼び出します
@@ -338,6 +350,7 @@
   const closeDrawer = () => {
     setDrawerOpen(false);
     setShowIndicators(false);
+    setShowSkills(false);
   };
 
   const drawerClasses = [
@@ -476,6 +489,32 @@
               },
               indicatorInfo[key].label,
               React.createElement('span', null, indicatorInfo[key].unit === '%' ? `${stats[key].toFixed(1)}%` : `${stats[key].toFixed(1)}${indicatorInfo[key].unit}`)
+            )
+          )
+        ),
+
+      React.createElement(
+        'button',
+        { id: 'skillsBtn', className: 'text-left p-3 bg-gray-100 border-t border-b', onClick: () => setShowSkills(o => !o) },
+        '🧑\u200D💼 スキル強化'
+      ),
+      showSkills &&
+        React.createElement(
+          'ul',
+          { id: 'skillList', className: 'p-4 space-y-2 text-sm list-none flex-1 overflow-y-auto' },
+          Object.entries({ negotiation: '商談力', calc: '計算力', luck: '運' }).map(([key, label]) =>
+            React.createElement(
+              'li',
+              { key, className: 'flex justify-between items-center p-2 bg-gray-50 rounded' },
+              React.createElement('span', null, `${label}: Lv.${playerSkills[key]}`),
+              React.createElement(
+                'button',
+                {
+                  className: 'bg-blue-500 text-white px-2 py-1 rounded',
+                  onClick: () => setPlayerSkills(s => ({ ...s, [key]: s[key] + 1 }))
+                },
+                '強化'
+              )
             )
           )
         )
